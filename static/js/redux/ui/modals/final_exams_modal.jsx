@@ -467,6 +467,7 @@ FinalExamsModal.defaultProps = {
   shareLink: '',
   loadingCachedTT: false,
   finalExamSchedule: null,
+  year: null,
 };
 
 FinalExamsModal.propTypes = {
@@ -478,7 +479,7 @@ FinalExamsModal.propTypes = {
   loading: PropTypes.bool.isRequired,
   courseToColourIndex: PropTypes.shape({
     id: PropTypes.string,
-  }),
+  }).isRequired,
   courseDetails: PropTypes.shape({
     '*': PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -497,5 +498,6 @@ FinalExamsModal.propTypes = {
   getFinalExamShareLink: PropTypes.func.isRequired,
   launchUserAcquisitionModal: PropTypes.func.isRequired,
   isShare: PropTypes.bool.isRequired,
+  year: PropTypes.string,
 };
 

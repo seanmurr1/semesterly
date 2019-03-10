@@ -66,7 +66,7 @@ const mapStateToProps = (state) => {
     hasRecievedSchedule: Boolean(state.finalExamsModal.finalExams),
     loading: state.finalExamsModal.isLoading,
     courseToColourIndex: hasFinalExams ? getCourseToColorIdx(state.ui.courseToColourIndex,
-      state.finalExamsModal.finalExams.schedule) : null,
+      state.finalExamsModal.finalExams.schedule) : {},
     courseDetails: hasFinalExams ?
       remapCourseDetails(state.finalExamsModal.finalExams.schedule) : {},
     activeLoadedTimetableName: state.finalExamsModal.fromShare ?
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => {
     loadingCachedTT: state.timetables.loadingCachedTT,
     userInfo: state.userInfo.data,
     shareLink: state.finalExamsModal.link,
-    year: hasFinalExams ? state.finalExamsModal.finalExams.year : null
+    year: hasFinalExams ? state.finalExamsModal.finalExams.year : null,
   };
 };
 
