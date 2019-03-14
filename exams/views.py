@@ -56,7 +56,8 @@ class ExamLink(FeatureFlowView):
         new_link = FinalExamShare.objects.create(
             school=request.subdomain,
             student=get_student(request),
-            exam_json=request.data
+            exam_json=request.data,
+            exam_year=request.year
         )
         new_link.save()
 
