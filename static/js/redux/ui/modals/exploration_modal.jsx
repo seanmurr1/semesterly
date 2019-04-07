@@ -57,6 +57,7 @@ class ExplorationModal extends React.Component {
     this.handleTimesChange = this.handleTimesChange.bind(this);
     this.removeTimeFilter = this.removeTimeFilter.bind(this);
     this.addDayForTimesFilter = this.addDayForTimesFilter.bind(this);
+    this.paginateAndFetch = this.paginateAndFetch.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -246,6 +247,11 @@ class ExplorationModal extends React.Component {
     this.fetchAdvancedSearchResults(Object.assign({}, this.state, stateUpdate));
   }
 
+  paginateAndFetch() {
+    this.props.paginate();
+    this.fetchAdvancedSearchResultsWrapper();
+  }
+
   render() {
     const modalStyle = {
       width: '100%',
@@ -402,6 +408,7 @@ class ExplorationModal extends React.Component {
 
             </SelectedFilterSection>
           </div>
+          <button onClick={() => this.paginateAndFetch()}>See More </button>
           <div className="col-5-16 exp-search-results">
             <div id="exp-search-list">
               { numSearchResults }
