@@ -71,12 +71,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super(SeleniumTestCase, cls).setUpClass()
-        cls.TIMEOUT = 10        
+
+        cls.TIMEOUT = 10
         cls.chrome_options = webdriver.ChromeOptions()
         cls.chrome_options.add_experimental_option(
             "prefs",
             {"profile.default_content_setting_values.notifications" : 2}
         )
+        cls.chrome_options.add_argument("--no-sandbox") # Allow running chrome as root in Docker
+        cls.chrome_options.add_argument("--headless") # Do not require a display
 
     def setUp(self):
         self.img_dir = os.path.dirname(os.path.realpath(__file__)) + '/test_failures'
@@ -360,8 +363,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             url (str): the url to follow and validate
             validate (func): the function which validates the new page
         """
+        if not str(url).startswith("http"):
+            url = "http://" + url
         self.driver.execute_script("window.open()")
         self.driver.switch_to_window(self.driver.window_handles[1])
+        
+        print("Wanna go to: %s" % url)
         self.driver.get(url)
         validate()
         self.driver.close()
