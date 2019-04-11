@@ -25,6 +25,7 @@ import {
 import * as SemesterlyPropTypes from '../../constants/semesterlyPropTypes';
 import { VERBOSE_DAYS } from '../../constants/constants';
 import TimeSelector from '../time_selector';
+import { AreaBubble, WritingIntensive } from '../search_result';
 
 class ExplorationModal extends React.Component {
   constructor(props) {
@@ -157,6 +158,7 @@ class ExplorationModal extends React.Component {
       return;
     }
     const updatedFilter = [...this.state[filterType], filter];
+    console.log(updatedFilter);
     this.fetchAdvancedSearchResults(Object.assign({}, this.state, { [filterType]: updatedFilter }));
 
     this.setState({ [filterType]: updatedFilter });
@@ -255,7 +257,7 @@ class ExplorationModal extends React.Component {
     const numSearchResults = advancedSearchResults.length > 0 ?
       <p>returned { advancedSearchResults.length } Search Results</p> : null;
     const searchResults = advancedSearchResults.map((c, i) => (<ExplorationSearchResult
-      key={c.id} code={c.code} name={c.name}
+      key={c.id} code={c.code} name={c.name} areas={c.areas} isWritingIntensive={c.writing_intensive}
       onClick={() => this.props.setAdvancedSearchResultIndex(i, c.id)}
     />));
     let courseModal = null;
@@ -441,16 +443,21 @@ class ExplorationModal extends React.Component {
   }
 }
 
-const ExplorationSearchResult = ({ name, code, onClick }) => (
+const ExplorationSearchResult = ({ name, code, areas, isWritingIntensive, onClick }) => (
   <div className="exp-s-result" onClick={onClick}>
     <h4>{ name } </h4>
-    <h5> { code }</h5>
+    <h5 className="subtitle">
+      { code }
+      <AreaBubble areas={areas} />
+      <WritingIntensive isWritingIntensive={isWritingIntensive} />
+    </h5>
   </div>
 );
 
 ExplorationSearchResult.propTypes = {
   name: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
+  isWritingIntensive: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
