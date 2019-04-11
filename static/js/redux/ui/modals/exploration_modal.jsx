@@ -368,6 +368,7 @@ class ExplorationModal extends React.Component {
     });
     const explorationLoader = this.props.isFetching ?
       <i className="fa fa-spin fa-refresh" /> : null;
+    const seeMoreButton = this.props.hasMore ? <button onClick={() => this.paginateAndFetch()}>See More </button> : null;
     const content = (
       <div className={classNames('exploration-content', { loading: this.props.isFetching })}>
         <div
@@ -408,7 +409,7 @@ class ExplorationModal extends React.Component {
 
             </SelectedFilterSection>
           </div>
-          <button onClick={() => this.paginateAndFetch()}>See More </button>
+          { seeMoreButton }
           <div className="col-5-16 exp-search-results">
             <div id="exp-search-list">
               { numSearchResults }
@@ -479,6 +480,7 @@ ExplorationModal.propTypes = {
   paginate: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  hasMore: PropTypes.bool.isRequired,
   page: PropTypes.number.isRequired,
   hideExplorationModal: PropTypes.func.isRequired,
   schoolSpecificInfo: SemesterlyPropTypes.schoolSpecificInfo.isRequired,
