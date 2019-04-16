@@ -21,7 +21,6 @@ const school = (state = {
   departments: [],
   levels: [],
   dataLastUpdated: '',
-  pos: [],
 }, action) => {
   switch (action.type) {
     case ActionTypes.INIT_STATE:
@@ -30,8 +29,8 @@ const school = (state = {
       }
       return state;
     case ActionTypes.RECEIVE_SCHOOL_INFO: {
-      const { areas, departments, levels, pos, last_updated: dataLastUpdated } = action.schoolInfo;
-      return Object.assign({}, state, { areas, departments, levels, pos, dataLastUpdated });
+      const { areas, departments, levels, last_updated: dataLastUpdated } = action.schoolInfo;
+      return Object.assign({}, state, { areas, departments, levels, dataLastUpdated });
     }
     default:
       return state;

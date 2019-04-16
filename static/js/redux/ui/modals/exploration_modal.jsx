@@ -35,11 +35,9 @@ class ExplorationModal extends React.Component {
       show_departments: false,
       show_levels: false,
       show_times: false,
-      show_pos: false,
       areas: [],
       departments: [],
       levels: [],
-      pos: [],
       times: [], // will contain 5 objects, containing keys "min" and "max" (times), for each day
       addedDays: [],
       shareLinkShown: false,
@@ -78,14 +76,13 @@ class ExplorationModal extends React.Component {
     if (this.props.isVisible) {
       this.modal.show();
     }
-    const { areas, departments, times, levels, pos } = this.state;
-    const filters = { areas, departments, times, levels, pos };
+    const { areas, departments, times, levels } = this.state;
+    const filters = { areas, departments, times, levels };
     const prevFilters = {
       areas: prevState.areas,
       departments: prevState.departments,
       times: prevState.times,
       levels: prevState.levels,
-      pos: prevState.pos,
     };
     if (!isEqual(filters, prevFilters) && this.props.page > 1) {
       this.props.clearPagination();
@@ -131,13 +128,12 @@ class ExplorationModal extends React.Component {
       return;
     }
     const query = this.input.value;
-    const { areas, departments, times, levels, pos } = filters;
+    const { areas, departments, times, levels } = filters;
     this.props.fetchAdvancedSearchResults(query, {
       areas,
       departments,
       times,
       levels,
-      pos,
     });
   }
 
@@ -183,7 +179,6 @@ class ExplorationModal extends React.Component {
       show_areas: false,
       show_times: false,
       show_levels: false,
-      show_pos: false,
     });
   }
 
@@ -313,7 +308,7 @@ class ExplorationModal extends React.Component {
         </div>
       );
     }
-    const filterTypes = ['departments', 'areas', 'levels', 'pos'];
+    const filterTypes = ['departments', 'areas', 'levels'];
     const filters = filterTypes.map(filterType => (
             this.props[filterType].length === 0 ? null :
             <Filter
@@ -335,7 +330,6 @@ class ExplorationModal extends React.Component {
       const sortedFilters = this.state[filterType].concat().sort((a, b) => (
                 availableFilters.indexOf(a) - availableFilters.indexOf(b)
             ));
-      console.log(sortedFilters);
       const selectedItems = sortedFilters.map(name => (
         <SelectedFilter
           key={name} name={name}
