@@ -18,6 +18,7 @@ from django.forms.models import model_to_dict
 from django.db import models
 from picklefield.fields import PickledObjectField
 from django.contrib.postgres.fields import ArrayField
+from student.models import Student
 
 
 class Semester(models.Model):
@@ -61,6 +62,16 @@ class Textbook(models.Model):
     def get_info(self):
         return model_to_dict(self)
 
+class Answer(models.Model):
+    text = models.TextField()
+    time_created = models.DateTimeField(auto_now_add=True)
+    responder = models.OnetoOneField(Student)
+
+class Question(models.Model):
+    text = models.TextField()
+    time_created = models.DateTimeField(auto_now_add=True)
+    asker = models.OnetoOneField(Student)
+    answers = models.ManyToManyField(Answer)
 
 class Course(models.Model):
     """
@@ -120,6 +131,7 @@ class Course(models.Model):
     areas = ArrayField(models.TextField(default='', null=True), default=list)
     sub_school = models.TextField(default='', null=True)
     writing_intensive = models.TextField(default='', null=True)
+    questions = models.ManyToManyField(Question)
 
 
     def __str__(self):
