@@ -66,6 +66,8 @@ class CourseSearchList(CsrfExemptMixin, ValidateSubdomainMixin, APIView):
             course_match_objs = course_match_objs.filter(department__in=filters.get('departments'))
         if filters.get('levels'):
             course_match_objs = course_match_objs.filter(level__in=filters.get('levels'))
+        if filters.get('pos'):
+            course_match_objs = course_match_objs.filter(pos__contains=filters.get('pos'))
         if filters.get('times'):
             day_map = {"Monday": "M", "Tuesday": "T", "Wednesday": "W", "Thursday": "R",
                        "Friday": "F"}
