@@ -60,6 +60,7 @@ class ExplorationModal extends React.Component {
     this.handleTimesChange = this.handleTimesChange.bind(this);
     this.removeTimeFilter = this.removeTimeFilter.bind(this);
     this.addDayForTimesFilter = this.addDayForTimesFilter.bind(this);
+    this.paginateAndFetch = this.paginateAndFetch.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -253,6 +254,11 @@ class ExplorationModal extends React.Component {
     this.fetchAdvancedSearchResults(Object.assign({}, this.state, stateUpdate));
   }
 
+  paginateAndFetch() {
+    this.props.paginate();
+    this.fetchAdvancedSearchResultsWrapper();
+  }
+
   render() {
     const modalStyle = {
       width: '100%',
@@ -370,6 +376,7 @@ class ExplorationModal extends React.Component {
     });
     const explorationLoader = this.props.isFetching ?
       <i className="fa fa-spin fa-refresh" /> : null;
+    const seeMoreButton = this.props.hasMore ? <button onClick={() => this.paginateAndFetch()}>See More </button> : null;
     const content = (
       <div className={classNames('exploration-content', { loading: this.props.isFetching })}>
         <div
@@ -410,6 +417,7 @@ class ExplorationModal extends React.Component {
 
             </SelectedFilterSection>
           </div>
+          { seeMoreButton }
           <div className="col-5-16 exp-search-results">
             <div id="exp-search-list">
               { numSearchResults }
@@ -485,6 +493,7 @@ ExplorationModal.propTypes = {
   paginate: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  hasMore: PropTypes.bool.isRequired,
   page: PropTypes.number.isRequired,
   hideExplorationModal: PropTypes.func.isRequired,
   schoolSpecificInfo: SemesterlyPropTypes.schoolSpecificInfo.isRequired,

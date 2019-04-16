@@ -39,7 +39,7 @@ import { getCourseShareLinkFromModal } from '../../../constants/endpoints';
 
 
 const mapStateToProps = (state) => {
-  const { isVisible, isFetching, active, page } = state.explorationModal;
+  const { isVisible, isFetching, active, page, hasMore } = state.explorationModal;
   const advancedSearchResults = getDenormAdvancedSearchResults(state);
   const courseSections = state.courseSections.objects;
   const course = advancedSearchResults[active];
@@ -57,6 +57,7 @@ const mapStateToProps = (state) => {
     levels,
     pos,
     page,
+    hasMore,
     semesterName: `${semester.name} ${semester.year}`,
     schoolSpecificInfo: getSchoolSpecificInfo(state.school.school),
     hasHoveredResult: getHoveredSlots(state) !== null,
