@@ -409,12 +409,12 @@ class ExplorationModal extends React.Component {
 
             </SelectedFilterSection>
           </div>
-          { seeMoreButton }
           <div className="col-5-16 exp-search-results">
             <div id="exp-search-list">
               { numSearchResults }
               { searchResults }
               {explorationLoader}
+              { seeMoreButton }
             </div>
           </div>
           { filters }
