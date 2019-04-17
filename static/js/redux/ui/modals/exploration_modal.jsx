@@ -58,6 +58,7 @@ class ExplorationModal extends React.Component {
     this.removeTimeFilter = this.removeTimeFilter.bind(this);
     this.addDayForTimesFilter = this.addDayForTimesFilter.bind(this);
     this.paginateAndFetch = this.paginateAndFetch.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -251,6 +252,12 @@ class ExplorationModal extends React.Component {
     this.props.paginate();
     this.fetchAdvancedSearchResultsWrapper();
   }
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.props.clearPagination();
+      this.fetchAdvancedSearchResultsWrapper();
+    }
+  }
 
   render() {
     const modalStyle = {
@@ -384,12 +391,16 @@ class ExplorationModal extends React.Component {
             <input
               ref={(c) => { this.input = c; }}
               placeholder={`Searching ${this.props.semesterName}`}
-              onInput={() => {
-                this.props.clearPagination();
-                this.fetchAdvancedSearchResultsWrapper();
-              }
-                            }
+              onKeyPress={(e) => this.handleKeyDown(e)}
             />
+            <button
+              onClick={() => {
+                  this.props.clearPagination();
+                  this.fetchAdvancedSearchResultsWrapper();
+                }
+              }>
+              Enter
+            </button>
           </div>
           <div
             className="exploration-close"
