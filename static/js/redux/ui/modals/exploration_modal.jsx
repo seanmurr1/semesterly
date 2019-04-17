@@ -158,7 +158,6 @@ class ExplorationModal extends React.Component {
       return;
     }
     const updatedFilter = [...this.state[filterType], filter];
-    console.log(updatedFilter);
     this.fetchAdvancedSearchResults(Object.assign({}, this.state, { [filterType]: updatedFilter }));
 
     this.setState({ [filterType]: updatedFilter });
@@ -257,7 +256,8 @@ class ExplorationModal extends React.Component {
     const numSearchResults = advancedSearchResults.length > 0 ?
       <p>returned { advancedSearchResults.length } Search Results</p> : null;
     const searchResults = advancedSearchResults.map((c, i) => (<ExplorationSearchResult
-      key={c.id} code={c.code} name={c.name} areas={c.areas} isWritingIntensive={c.writing_intensive}
+      key={c.id} code={c.code} name={c.name}
+      areas={c.areas} isWritingIntensive={c.writing_intensive}
       onClick={() => this.props.setAdvancedSearchResultIndex(i, c.id)}
     />));
     let courseModal = null;
@@ -455,6 +455,7 @@ const ExplorationSearchResult = ({ name, code, areas, isWritingIntensive, onClic
 );
 
 ExplorationSearchResult.propTypes = {
+  areas: PropTypes.arrayOf(PropTypes.string).isRequired,
   name: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
   isWritingIntensive: PropTypes.string.isRequired,
