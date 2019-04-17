@@ -273,7 +273,13 @@ class ExplorationModal extends React.Component {
         <div className="modal-content">
           <div className="modal-header">
             <h1>{ selectedCourse.name }</h1>
-            <h2>{ selectedCourse.code }</h2>
+            <h2>
+              <div className="subtitle">
+                {selectedCourse.code}
+                { <AreaBubble areas={selectedCourse.areas} /> }
+                { <WritingIntensive isWritingIntensive={selectedCourse.writing_intensive} /> }
+            </div>
+            </h2>
             <div className="modal-share" onClick={this.showShareLink}>
               <i className="fa fa-share-alt" />
             </div>
