@@ -390,16 +390,18 @@ class ExplorationModal extends React.Component {
           <div className="col-5-16">
             <input
               ref={(c) => { this.input = c; }}
-              placeholder={`Searching ${this.props.semesterName}`}
+              placeholder={'Press Enter to Search'}
               onKeyPress={(e) => this.handleKeyDown(e)}
             />
+          </div>
+          <div>
             <button
               onClick={() => {
-                  this.props.clearPagination();
-                  this.fetchAdvancedSearchResultsWrapper();
-                }
-              }>
-              Enter
+                this.props.clearPagination();
+                this.fetchAdvancedSearchResultsWrapper();
+              }
+              }
+            >Enter
             </button>
           </div>
           <div
