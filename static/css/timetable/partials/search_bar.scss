@@ -416,8 +416,10 @@
   .search-course-add,
   .search-course-save,
   .search-bar__side,
-  .search-course .label {
+  .search-course .label,
+  .search-course .bubble {
     background-color: transparent;
+    color: transparent;
   }
 
   .see-more__inner {
