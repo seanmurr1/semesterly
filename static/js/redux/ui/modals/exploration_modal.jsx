@@ -375,7 +375,8 @@ class ExplorationModal extends React.Component {
     });
     const explorationLoader = this.props.isFetching ?
       <i className="fa fa-spin fa-refresh" /> : null;
-    const seeMoreButton = this.props.hasMore ? <button onClick={() => this.paginateAndFetch()}>See More </button> : null;
+    const seeMoreButton = this.props.hasMore ?
+      <button onClick={() => this.paginateAndFetch()}>See More </button> : null;
     const content = (
       <div className={classNames('exploration-content', { loading: this.props.isFetching })}>
         <div
