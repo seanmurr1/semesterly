@@ -71,10 +71,12 @@
   align-items: center;
   margin: 6px;
   >.areas {
-    margin-right: 2%;
     display: flex;
     > div {
       border-radius: 25%;
+    }
+    &.search {
+      margin-right: 2%;
     }
   }
 }

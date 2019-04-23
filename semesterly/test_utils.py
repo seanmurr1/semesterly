@@ -599,6 +599,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         res = self.find((By.CLASS_NAME, 'exp-s-result'), get_all=True)
         code = self.find((By.XPATH, "//h5[contains(@class, 'subtitle')]/h5"), root=res[index]).text
         course = Course.objects.get(code=code)
+        print(course)
         ActionChains(self.driver).move_to_element(res[index]).click().perform()
         WebDriverWait(self.driver, self.TIMEOUT) \
             .until(EC.text_to_be_present_in_element(
