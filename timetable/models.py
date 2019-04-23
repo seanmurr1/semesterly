@@ -18,7 +18,7 @@ from django.forms.models import model_to_dict
 from django.db import models
 from picklefield.fields import PickledObjectField
 from django.contrib.postgres.fields import ArrayField
-from student.models import Student
+# from student.models import Student
 
 
 class Semester(models.Model):
@@ -65,12 +65,12 @@ class Textbook(models.Model):
 class Answer(models.Model):
     text = models.TextField()
     time_created = models.DateTimeField(auto_now_add=True)
-    responder = models.OnetoOneField(Student)
+    responder = models.OneToOneField('student.Student')
 
 class Question(models.Model):
     text = models.TextField()
     time_created = models.DateTimeField(auto_now_add=True)
-    asker = models.OnetoOneField(Student)
+    asker = models.OneToOneField('student.Student')
     answers = models.ManyToManyField(Answer)
 
 class Course(models.Model):
