@@ -159,8 +159,10 @@ def get_distinct_areas(areas_group):
 def get_distinct_pos(pos_group):
     distinct_pos = []
     for group in pos_group:
-        distinct_pos.append(group)
-    return distinct_pos
+        if group != list('None'):
+            for pos in group:
+                distinct_pos.append(pos)
+    return set(distinct_pos)
 
 class SchoolList(APIView):
     def get(self, request, school):

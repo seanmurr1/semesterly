@@ -163,7 +163,6 @@ class ExplorationModal extends React.Component {
       return;
     }
     const updatedFilter = [...this.state[filterType], filter];
-    console.log(updatedFilter);
     this.fetchAdvancedSearchResults(Object.assign({}, this.state, { [filterType]: updatedFilter }));
 
     this.setState({ [filterType]: updatedFilter });
