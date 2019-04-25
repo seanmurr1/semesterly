@@ -81,7 +81,7 @@ class EndToEndTest(SeleniumTestCase):
             sem = Semester.objects.get(year=2017, name='Fall')
             self.open_and_query_adv_search('ca', n_results=3)
             self.select_nth_adv_search_result(0, sem)
-            self.select_nth_adv_search_result(2, sem)
+            self.select_nth_adv_search_result(1, sem)
 
     @unittest.skip('TODO: fix on mac')
     def test_logged_in_via_fb_flow(self):
