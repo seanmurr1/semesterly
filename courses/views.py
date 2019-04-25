@@ -199,6 +199,10 @@ class SchoolList(APIView):
                                                   .exclude(pos__exact=[])
                                                   .values_list('pos', flat=True)
                                                   .distinct()))),
+            'writing_intensive': sorted(list(Course.objects.filter(school=school)
+                                             .exclude(writing_intensive__exact='')
+                                             .values_list('writing_intensive', flat=True)
+                                             .distinct())),
             'last_updated': last_updated
         }
 

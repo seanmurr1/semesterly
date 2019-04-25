@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
   const courseSections = state.courseSections.objects;
   const course = advancedSearchResults[active];
   const inRoster = course && (courseSections[course.id] !== undefined);
-  const { areas, departments, levels, pos } = state.school;
+  const { areas, departments, levels, pos, writing_intensive } = state.school;
   const semester = getCurrentSemester(state);
   return {
     isVisible,
@@ -58,6 +58,7 @@ const mapStateToProps = (state) => {
     pos,
     page,
     hasMore,
+    writing_intensive,
     semesterName: `${semester.name} ${semester.year}`,
     schoolSpecificInfo: getSchoolSpecificInfo(state.school.school),
     hasHoveredResult: getHoveredSlots(state) !== null,
