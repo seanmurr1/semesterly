@@ -43,8 +43,14 @@ class CourseSerializer(serializers.ModelSerializer):
     regexed_courses = serializers.SerializerMethodField()
     popularity_percent = serializers.SerializerMethodField()
     is_waitlist_only = serializers.SerializerMethodField()
+    questions = serializers.SerializerMethodField()
 
     sections = serializers.SerializerMethodField()
+
+    def get_question(self, course):
+        # TODO: Create dictionary for Question fields
+        # Create dictionary for Answer fields
+        # Add Answers to Questions
 
     def get_evals(self, course):
         """
@@ -148,9 +154,7 @@ class CourseSerializer(serializers.ModelSerializer):
             'corequisites',
             'areas',
             'is_waitlist_only',
-            'pos',
-            'writing_intensive',
-            'sub_school',
+            'questions' #TODO
         )
 
 
