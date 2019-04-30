@@ -70,13 +70,16 @@
   display: flex;
   align-items: center;
   margin: 6px;
+  &.search {
+    margin: 0 -5px;
+    .item {
+      margin: 0 5px;
+    }
+  }
   >.areas {
     display: flex;
     > div {
       border-radius: 25%;
-    }
-    &.search {
-      margin-right: 2%;
     }
   }
 }

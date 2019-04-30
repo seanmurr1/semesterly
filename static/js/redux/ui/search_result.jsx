@@ -177,12 +177,12 @@ class SearchResult extends React.Component {
           <h4
             className={classNames('label', 'bubble')}
           >{this.props.campuses[course.campus]}</h4>
-          <h5 className="subtitle">
+          <h5 className="subtitle search">
             <AreaBubble areas={course.areas} />
             <WritingIntensive isWritingIntensive={course.writing_intensive} />
-            { pilotLogo }
-            { learningDenLogo }
-            { waitlistOnlyFlag }
+            <div className="item"> { pilotLogo } </div>
+            <div className="item"> { learningDenLogo } </div>
+            <div className="item"> { waitlistOnlyFlag } </div>
           </h5>
         </div>
       </li>);

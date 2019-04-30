@@ -452,7 +452,7 @@ class ExplorationModal extends React.Component {
 const ExplorationSearchResult = ({ name, code, areas, isWritingIntensive, onClick }) => (
   <div className="exp-s-result" onClick={onClick}>
     <h4>{ name } </h4>
-    <h5 className="subtitle search">
+    <h5 className="subtitle">
       <h5>{ code }</h5>
       <AreaBubble areas={areas} />
       <WritingIntensive isWritingIntensive={isWritingIntensive} />
