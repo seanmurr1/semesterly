@@ -45,7 +45,6 @@ const mapStateToProps = (state) => {
   const course = advancedSearchResults[active];
   const inRoster = course && (courseSections[course.id] !== undefined);
   const { areas, departments, levels, pos, writing_intensive } = state.school;
-  console.log(writing_intensive);
   const semester = getCurrentSemester(state);
   return {
     isVisible,
