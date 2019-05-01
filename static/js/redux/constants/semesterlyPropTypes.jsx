@@ -178,7 +178,7 @@ export const schoolSpecificInfo = PropTypes.shape({
   courseRegex: PropTypes.string.isRequired,
   departmentsName: PropTypes.string.isRequired,
   levelsName: PropTypes.string.isRequired,
-  posName: PropTypes.string.isRequired,
+  // posName: PropTypes.string.isRequired,
   primaryDisplay: PropTypes.string.isRequired,
   timesName: PropTypes.string.isRequired,
 });

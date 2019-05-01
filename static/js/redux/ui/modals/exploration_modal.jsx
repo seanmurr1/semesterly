@@ -323,7 +323,7 @@ class ExplorationModal extends React.Component {
         </div>
       );
     }
-    const filterTypes = ['departments', 'areas', 'levels', 'writing_intensive'];
+    const filterTypes = ['departments', 'areas', 'levels', 'pos', 'writing_intensive'];
     const filters = filterTypes.map(filterType => (
             this.props[filterType].length === 0 ? null :
             <Filter
