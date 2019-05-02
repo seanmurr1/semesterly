@@ -376,8 +376,7 @@ class ExplorationModal extends React.Component {
     const explorationLoader = this.props.isFetching ?
       <i className="fa fa-spin fa-refresh" /> : null;
     const seeMoreButton = this.props.hasMore && !this.props.isFetching ?
-      <div style={{textAlign: 'center'}}>
-        <button className="enter-button" onClick={() => this.paginateAndFetch()}>See More </button> </div> : null;
+      <button className="enter-button" onClick={() => this.paginateAndFetch()}>See More </button> : null;
     const content = (
       <div className={classNames('exploration-content', { loading: this.props.isFetching })}>
         <div
@@ -403,7 +402,7 @@ class ExplorationModal extends React.Component {
                 this.fetchAdvancedSearchResultsWrapper();
               }
               }
-            >Enter
+            > <i className="fa fa-search" /> Search
             </button>
           </div>
           <div

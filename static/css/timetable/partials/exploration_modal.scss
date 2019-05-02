@@ -88,11 +88,17 @@
 	visibility: hidden;
 }
 
+.see-more {
+  text-align: center;
+  color: #007eff;
+  text-underline: #007eff;
+  font-size: 15px;
+}
 .enter-button {
   border-radius: 15%;
   margin-left: 0.5%;
-  background-color: #2b406e;
-  color: #d9d9d9;
+  background-color: #eee;
+  color: #2b406e;
 }
 
 // Exploration Header
