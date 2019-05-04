@@ -18,7 +18,8 @@ from django.forms.models import model_to_dict
 from django.db import models
 from picklefield.fields import PickledObjectField
 from django.contrib.postgres.fields import ArrayField
-# from student.models import Student
+#from student.models import Student
+#from timetable.models import Section, Question, Answer
 
 
 class Semester(models.Model):

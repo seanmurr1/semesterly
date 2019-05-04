@@ -24,6 +24,7 @@ from oauth2client.client import GoogleCredentials
 from timetable import models as timetable_models
 from semesterly.settings import get_secret
 
+
 hashids = Hashids(salt=get_secret('HASHING_SALT'))
 
 

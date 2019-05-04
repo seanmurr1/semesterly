@@ -16,7 +16,7 @@ from django.forms import model_to_dict
 from django.db import models
 from rest_framework import serializers
 
-from timetable.models import Course, Section, Evaluation,  CourseIntegration, Integration, Semester
+from timetable.models import Course, Section, Evaluation, CourseIntegration, Integration, Semester, Question, Answer
 import utils
 
 
@@ -44,13 +44,24 @@ class CourseSerializer(serializers.ModelSerializer):
     popularity_percent = serializers.SerializerMethodField()
     is_waitlist_only = serializers.SerializerMethodField()
     questions = serializers.SerializerMethodField()
-
     sections = serializers.SerializerMethodField()
 
     def get_question(self, course):
         # TODO: Create dictionary for Question fields
         # Create dictionary for Answer fields
         # Add Answers to Questions
+        answers = course.questions.answers.all()
+        answers_list = {}
+        for answer in answers:
+            answer = model_to_dict(answer)
+            answers_list.add(answer)
+        print(answers_list)
+        #trying to get answers = {'text': __, 'time_created': ___, 'responder':_____}
+        question = map(model_to_dict()).add(answers_list)
+        print(question)
+
+        return question
+
 
     def get_evals(self, course):
         """
@@ -154,7 +165,7 @@ class CourseSerializer(serializers.ModelSerializer):
             'corequisites',
             'areas',
             'is_waitlist_only',
-            'questions' #TODO
+            'questions'
         )
 
 
