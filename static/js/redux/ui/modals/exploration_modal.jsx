@@ -428,7 +428,7 @@ class ExplorationModal extends React.Component {
               { numSearchResults }
               { searchResults }
               {explorationLoader}
-              { seeMoreButton }
+              <div className="see-more"> { seeMoreButton } </div>
             </div>
           </div>
           { filters }
