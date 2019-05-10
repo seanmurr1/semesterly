@@ -88,13 +88,16 @@
 	visibility: hidden;
 }
 
-.see-more {
-  margin-left: 10%;
+.see-more-search {
+  text-align: center;
+  color: dimgrey;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 5px;
 }
 
 .enter-button {
-  border-radius: 15%;
-  margin-left: 0.5%;
   background-color: #eee;
   color: #2b406e;
 }
