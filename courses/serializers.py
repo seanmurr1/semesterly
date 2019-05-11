@@ -46,23 +46,6 @@ class CourseSerializer(serializers.ModelSerializer):
     questions = serializers.SerializerMethodField()
     sections = serializers.SerializerMethodField()
 
-    def get_question(self, course):
-        # TODO: Create dictionary for Question fields
-        # Create dictionary for Answer fields
-        # Add Answers to Questions
-        answers = course.questions.answers.all()
-        answers_list = {}
-        for answer in answers:
-            answer = model_to_dict(answer)
-            answers_list.add(answer)
-        print(answers_list)
-        #trying to get answers = {'text': __, 'time_created': ___, 'responder':_____}
-        question = map(model_to_dict()).add(answers_list)
-        print(question)
-
-        return question
-
-
     def get_evals(self, course):
         """
         Flag all eval instances s.t. there exists repeated term+year values.
@@ -167,7 +150,15 @@ class CourseSerializer(serializers.ModelSerializer):
             'is_waitlist_only',
             'questions'
         )
-
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = (
+            'text',
+            'time_created',
+            'asker'
+        )
+        depth = 1
 
 class SectionSerializer(serializers.ModelSerializer):
     class Meta:
