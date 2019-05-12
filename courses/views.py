@@ -156,6 +156,14 @@ def get_distinct_areas(areas_group):
                     distinct_areas.append(area)
     return set(distinct_areas)
 
+def get_distinct_pos(pos_group):
+    distinct_pos = []
+    for group in pos_group:
+        if group != list('None'):
+            for pos in group:
+                distinct_pos.append(pos)
+    return set(distinct_pos)
+
 class SchoolList(APIView):
     def get(self, request, school):
         """
@@ -187,6 +195,14 @@ class SchoolList(APIView):
                                   .exclude(level__exact='')
                                   .values_list('level', flat=True)
                                   .distinct())),
+            'pos': get_distinct_pos(sorted(list(Course.objects.filter(school=school)
+                                                  .exclude(pos__exact=[])
+                                                  .values_list('pos', flat=True)
+                                                  .distinct()))),
+            'writing_intensive': sorted(list(Course.objects.filter(school=school)
+                                             .exclude(writing_intensive__exact='')
+                                             .values_list('writing_intensive', flat=True)
+                                             .distinct())),
             'last_updated': last_updated
         }
 

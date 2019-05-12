@@ -47,6 +47,8 @@ export const getSchoolSpecificInfo = (school) => {
         areasName: 'Areas',
         departmentsName: 'Departments',
         levelsName: 'Levels',
+        posName: 'Program of Study ',
+        writing_intensiveName: 'Writing Intensive ',
         timesName: 'Times',
         courseRegex: '([A-Z]{2}\\.\\d{3}\\.\\d{3})',
         campuses: {
