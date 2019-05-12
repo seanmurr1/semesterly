@@ -396,7 +396,8 @@ class ExplorationModal extends React.Component {
             />
           </div>
           <div>
-            <button className="enter-button"
+            <button
+              className="enter-button"
               onClick={() => {
                 this.props.clearPagination();
                 this.fetchAdvancedSearchResultsWrapper();
