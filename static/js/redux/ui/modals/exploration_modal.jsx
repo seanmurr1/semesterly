@@ -58,6 +58,8 @@ class ExplorationModal extends React.Component {
     this.handleTimesChange = this.handleTimesChange.bind(this);
     this.removeTimeFilter = this.removeTimeFilter.bind(this);
     this.addDayForTimesFilter = this.addDayForTimesFilter.bind(this);
+    this.paginateAndFetch = this.paginateAndFetch.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -247,6 +249,17 @@ class ExplorationModal extends React.Component {
     this.fetchAdvancedSearchResults(Object.assign({}, this.state, stateUpdate));
   }
 
+  paginateAndFetch() {
+    this.props.paginate();
+    this.fetchAdvancedSearchResultsWrapper();
+  }
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.props.clearPagination();
+      this.fetchAdvancedSearchResultsWrapper();
+    }
+  }
+
   render() {
     const modalStyle = {
       width: '100%',
@@ -370,6 +383,8 @@ class ExplorationModal extends React.Component {
     });
     const explorationLoader = this.props.isFetching ?
       <i className="fa fa-spin fa-refresh" /> : null;
+    const seeMoreButton = this.props.hasMore && !this.props.isFetching ?
+      <h4 className="see-more-search" onClick={() => this.paginateAndFetch()}>See More </h4> : null;
     const content = (
       <div className={classNames('exploration-content', { loading: this.props.isFetching })}>
         <div
@@ -384,13 +399,20 @@ class ExplorationModal extends React.Component {
           <div className="col-5-16">
             <input
               ref={(c) => { this.input = c; }}
-              placeholder={`Searching ${this.props.semesterName}`}
-              onInput={() => {
+              placeholder={`Press Enter to Search ${this.props.semesterName}`}
+              onKeyPress={e => this.handleKeyDown(e)}
+            />
+          </div>
+          <div>
+            <button
+              className="enter-button"
+              onClick={() => {
                 this.props.clearPagination();
                 this.fetchAdvancedSearchResultsWrapper();
               }
-                            }
-            />
+              }
+            > <i className="fa fa-search" />
+            </button>
           </div>
           <div
             className="exploration-close"
@@ -415,6 +437,7 @@ class ExplorationModal extends React.Component {
               { numSearchResults }
               { searchResults }
               {explorationLoader}
+              { seeMoreButton }
             </div>
           </div>
           { filters }
@@ -486,6 +509,7 @@ ExplorationModal.propTypes = {
   paginate: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  hasMore: PropTypes.bool.isRequired,
   page: PropTypes.number.isRequired,
   hideExplorationModal: PropTypes.func.isRequired,
   schoolSpecificInfo: SemesterlyPropTypes.schoolSpecificInfo.isRequired,

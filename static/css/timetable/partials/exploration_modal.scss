@@ -88,6 +88,21 @@
 	visibility: hidden;
 }
 
+.see-more-search {
+  text-align: center;
+  color: dimgrey;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.enter-button {
+  background-color: #eee;
+  color: #2b406e;
+  margin-left: -1%;
+}
+
 // Exploration Header
 .exploration-header {
   background-color: $geee;

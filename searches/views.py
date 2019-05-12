@@ -52,7 +52,7 @@ class CourseSearchList(CsrfExemptMixin, ValidateSubdomainMixin, APIView):
     def post(self, request, query, sem_name, year):
         """ Return advanced search results. """
         school = request.subdomain
-        page = int(request.query_params.get('page', 1))
+        page = int(request.data.get('page', 1))
         sem, _ = Semester.objects.get_or_create(name=sem_name, year=year)
         # Filter first by the user's search query.
         # TODO : use vectorized search (change returned obj to be filterable)

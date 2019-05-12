@@ -21,6 +21,7 @@ const explorationModal = (state = {
   active: 0,
   schoolInfoLoaded: false,
   page: 1,
+  hasMore: false,
 }, action) => {
   switch (action.type) {
     case ActionTypes.SHOW_EXPLORATION_MODAL:
@@ -31,20 +32,28 @@ const explorationModal = (state = {
       return Object.assign({}, state, { isFetching: true });
     case ActionTypes.RECEIVE_ADVANCED_SEARCH_RESULTS: {
       let results = action.response.result;
+      if (results.length === 0) {
+        return Object.assign({}, state, {
+          isFetching: false,
+          hasMore: false,
+        });
+      }
       if (state.page > 1) {
-        if (results) {
-          results = [...state.advancedSearchResults].concat(results);
-          return Object.assign({}, state, {
-            advancedSearchResults: results,
-            isFetching: false,
-          });
-        }
-        return Object.assign({}, state, { isFetching: false });
+        results = [...state.advancedSearchResults].concat(results);
+      }
+      if (results.length % 20 !== 0) {
+        return Object.assign({}, state, {
+          advancedSearchResults: results,
+          isFetching: false,
+          active: 0,
+          hasMore: false,
+        });
       }
       return Object.assign({}, state, {
         advancedSearchResults: results,
         isFetching: false,
         active: 0,
+        hasMore: true,
       });
     }
     case ActionTypes.SET_ACTIVE_ADV_SEARCH_RESULT:
