@@ -272,7 +272,8 @@ class ExplorationModal extends React.Component {
     const numSearchResults = advancedSearchResults.length > 0 ?
       <p>returned { advancedSearchResults.length } Search Results</p> : null;
     const searchResults = advancedSearchResults.map((c, i) => (<ExplorationSearchResult
-      key={c.id} code={c.code} name={c.name} areas={c.areas} isWritingIntensive={c.writing_intensive}
+      key={c.id} code={c.code} name={c.name} areas={c.areas}
+      isWritingIntensive={c.writing_intensive}
       onClick={() => this.props.setAdvancedSearchResultIndex(i, c.id)}
     />));
     let courseModal = null;
@@ -379,7 +380,8 @@ class ExplorationModal extends React.Component {
     });
     const explorationLoader = this.props.isFetching ?
       <i className="fa fa-spin fa-refresh" /> : null;
-    const seeMoreButton = this.props.hasMore ? <button onClick={() => this.paginateAndFetch()}>See More </button> : null;
+    const seeMoreButton = this.props.hasMore ?
+      <button onClick={() => this.paginateAndFetch()}>See More </button> : null;
     const content = (
       <div className={classNames('exploration-content', { loading: this.props.isFetching })}>
         <div
@@ -476,6 +478,7 @@ ExplorationSearchResult.propTypes = {
   code: PropTypes.string.isRequired,
   isWritingIntensive: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  areas: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 ExplorationModal.defaultProps = {

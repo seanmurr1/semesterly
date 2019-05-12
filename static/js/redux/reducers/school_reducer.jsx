@@ -31,8 +31,10 @@ const school = (state = {
       }
       return state;
     case ActionTypes.RECEIVE_SCHOOL_INFO: {
-      const { areas, departments, levels, pos, writing_intensive, last_updated: dataLastUpdated } = action.schoolInfo;
-      return Object.assign({}, state, { areas, departments, levels, pos, writing_intensive, dataLastUpdated });
+      const { areas, departments, levels, pos, writing_intensive,
+        last_updated: dataLastUpdated } = action.schoolInfo;
+      return Object.assign({},
+        state, { areas, departments, levels, pos, writing_intensive, dataLastUpdated });
     }
     default:
       return state;
