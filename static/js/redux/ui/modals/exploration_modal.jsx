@@ -278,7 +278,7 @@ class ExplorationModal extends React.Component {
                 {selectedCourse.code}
                 { <AreaBubble areas={selectedCourse.areas} /> }
                 { <WritingIntensive isWritingIntensive={selectedCourse.writing_intensive} /> }
-            </div>
+              </div>
             </h2>
             <div className="modal-share" onClick={this.showShareLink}>
               <i className="fa fa-share-alt" />
