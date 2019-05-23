@@ -605,7 +605,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         ActionChains(self.driver).move_to_element(res[index]).click().perform()
         WebDriverWait(self.driver, self.TIMEOUT) \
             .until(EC.text_to_be_present_in_element(
-                (By.XPATH, "./div[contains(@class, 'modal-header')]/h2"),
+                (By.XPATH, "./div[contains(@class, 'modal-header')]/h2/div[contains(@class, 'subtitle')]/div").text(),
                 course.code
             ))
         modal = self.find((By.CLASS_NAME, 'exp-modal'))
