@@ -11,7 +11,7 @@
 # GNU General Public License for more details.
 
 from __future__ import unicode_literals
-from timetable.models import Course, Section, Question, Answer
+#from timetable.models import Course, Section, Question, Answer
 
 from django.db import models
 

@@ -43,7 +43,7 @@ class CourseSerializer(serializers.ModelSerializer):
     regexed_courses = serializers.SerializerMethodField()
     popularity_percent = serializers.SerializerMethodField()
     is_waitlist_only = serializers.SerializerMethodField()
-    questions = serializers.SerializerMethodField()
+    #questions = serializers.SerializerMethodField()
     sections = serializers.SerializerMethodField()
 
     def get_evals(self, course):
