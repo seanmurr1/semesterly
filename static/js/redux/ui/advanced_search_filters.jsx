@@ -125,4 +125,3 @@ SelectedFilterSection.PropTypes = {
   toggle: PropTypes.func.isRequired,
   remove: PropTypes.func.isRequired,
 };
-
