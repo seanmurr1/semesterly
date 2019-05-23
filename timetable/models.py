@@ -63,17 +63,6 @@ class Textbook(models.Model):
     def get_info(self):
         return model_to_dict(self)
 
-class Answer(models.Model):
-    text = models.TextField()
-    time_created = models.DateTimeField(auto_now_add=True)
-    responder = models.OneToOneField('student.Student')
-
-class Question(models.Model):
-    text = models.TextField()
-    time_created = models.DateTimeField(auto_now_add=True)
-    asker = models.OneToOneField('student.Student')
-    answers = models.ManyToManyField(Answer)
-
 class Course(models.Model):
     """
     Represents a course at a school, made unique by its course code.
@@ -132,8 +121,6 @@ class Course(models.Model):
     areas = ArrayField(models.TextField(default='', null=True), default=list)
     sub_school = models.TextField(default='', null=True)
     writing_intensive = models.TextField(default='', null=True)
-    questions = models.ManyToManyField(Question)
-
 
     def __str__(self):
         return self.code + ": " + self.name
@@ -320,3 +307,15 @@ class Timetable(models.Model):
 
     class Meta:
         abstract = True
+
+class Answer(models.Model):
+    text = models.TextField()
+    time_created = models.DateTimeField(auto_now_add=True)
+    responder = models.OneToOneField('student.Student')
+
+class Question(models.Model):
+    text = models.TextField()
+    time_created = models.DateTimeField(auto_now_add=True)
+    asker = models.OneToOneField('student.Student')
+    answers = models.ManyToManyField(Answer)
+    course = models.ForeignKey(Course)

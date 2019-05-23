@@ -29,6 +29,7 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.userInfo.data.isLoggedIn,
     hasSocial: state.userInfo.data.social_courses,
     userInfo: state.userInfo.data,
+    questions: denormCourseInfo.questions,
     isSectionLocked: (courseId, section) => {
       if (courseSections[courseId] === undefined) {
         return false;

@@ -43,8 +43,16 @@ class CourseSerializer(serializers.ModelSerializer):
     regexed_courses = serializers.SerializerMethodField()
     popularity_percent = serializers.SerializerMethodField()
     is_waitlist_only = serializers.SerializerMethodField()
-    #questions = serializers.SerializerMethodField()
+    questions = serializers.SerializerMethodField()
     sections = serializers.SerializerMethodField()
+
+
+    def get_questions(self, course):
+        questions = Question.objects.filter(course=course)
+        # for these questions, get answers
+        #      each question has array of answers (make sure these answers are dict)
+        #           aka do the model_to_dict thing
+        return map(model_to_dict, questions)
 
     def get_evals(self, course):
         """

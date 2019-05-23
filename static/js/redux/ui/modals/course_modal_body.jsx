@@ -368,6 +368,8 @@ class CourseModalBody extends React.Component {
         </div>
       </div>
         );
+    console.log(this.props.questions)
+    // const questions = <div> <h1>{this.props.questions[0]}</h1></div>
     return (
       <div className="modal-body">
         <div className="cf">
@@ -398,6 +400,7 @@ class CourseModalBody extends React.Component {
             { academicSupportDisplay }
             { friendDisplay }
             { hasTakenDisplay }
+            {/*{ questions }*/}
           </div>
 
           <div className="col-8-16">
