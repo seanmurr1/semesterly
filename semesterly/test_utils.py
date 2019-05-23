@@ -532,6 +532,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         ))
         search.clear()
         search.send_keys(query)
+        self.find((By.CLASS_NAME, 'enter-button'),
+                  clickable=True
+        ).click()
         if n_results:
             self.assert_n_elements_found((By.CLASS_NAME, 'exp-s-result'), n_results)
 
@@ -597,7 +600,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         """Selects the nth advanced search result with a click.
         Validates the course modal body displayed in the search reuslts"""
         res = self.find((By.CLASS_NAME, 'exp-s-result'), get_all=True)
-        code = self.find((By.TAG_NAME, 'h5'), root=res[index]).text
+        code = self.find((By.XPATH, ".//h5[contains(@class, 'subtitle')]/h5"), root=res[index]).text
         course = Course.objects.get(code=code)
         ActionChains(self.driver).move_to_element(res[index]).click().perform()
         WebDriverWait(self.driver, self.TIMEOUT) \
