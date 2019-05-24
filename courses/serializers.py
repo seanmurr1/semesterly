@@ -46,9 +46,14 @@ class CourseSerializer(serializers.ModelSerializer):
     questions = serializers.SerializerMethodField()
     sections = serializers.SerializerMethodField()
 
+    #def get_answer(self, questions):
+        #answers = Question.objects.filter(answers= )
 
     def get_questions(self, course):
         questions = Question.objects.filter(course=course)
+        #for question in questions:
+        #   question.answers = map(model_to_dict, question.answers)
+
         # for these questions, get answers
         #      each question has array of answers (make sure these answers are dict)
         #           aka do the model_to_dict thing
