@@ -152,6 +152,7 @@ class CourseModalBody extends React.Component {
 
     const integrationList = this.props.data.integrations;
     const evalInfo = this.props.data.evals;
+    const questions = this.props.data.questions;
     const relatedCourses = this.props.data.related_courses;
     const { prerequisites, textbooks } = this.props.data;
     const maxColourIndex = COLOUR_DATA.length - 1;
@@ -340,6 +341,17 @@ class CourseModalBody extends React.Component {
               </div>
             </div>);
 
+    const questionsArray = flatMap(Object.keys(questions), id => questions[id]);
+    const questionsDisplay = !questionsArray || questionsArray.length === 0 ? null :
+        (<div className="modal-module">
+          <h3 className="modal-module-header">Questions</h3>
+          <div className="modal-textbook-list">
+            {
+              questionsArray.map(t => <question text={t.text} />)
+            }
+          </div>
+        </div>);
+
     const creditsSuffix = numCredits === 1 ? ' credit' : ' credits';
     const avgRating = evalInfo.reduce((sum, e) => sum + parseFloat(e.score), 0) / evalInfo.length;
     const showCapacityAttention = this.props.popularityPercent > 60;
@@ -368,8 +380,9 @@ class CourseModalBody extends React.Component {
         </div>
       </div>
         );
-    console.log(this.props.questions)
-    // const questions = <div> <h1>{this.props.questions[0]}</h1></div>
+
+    //const questions = <div> <h1>{this.props.questions[0]}</h1> </div>;
+
     return (
       <div className="modal-body">
         <div className="cf">
@@ -400,7 +413,6 @@ class CourseModalBody extends React.Component {
             { academicSupportDisplay }
             { friendDisplay }
             { hasTakenDisplay }
-            {/*{ questions }*/}
           </div>
 
           <div className="col-8-16">
@@ -422,6 +434,8 @@ class CourseModalBody extends React.Component {
             <div className="modal-module">
               <h3 className="modal-module-header">Course Evaluations</h3>
               <EvaluationList evalInfo={evalInfo} />
+              <h3 className="modal-module-header">Course Questions</h3>
+              <p>{questionsDisplay}</p>
             </div>
             {textbooksDisplay}
 

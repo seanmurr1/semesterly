@@ -56,6 +56,14 @@ export const evaluation = PropTypes.shape({
   year: PropTypes.string.isRequired,
 });
 
+export const question = PropTypes.shape({
+  text: PropTypes.string.isRequired,
+  asker: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
+  answers: PropTypes.number.isRequired,
+  course: PropTypes.number.isRequired,
+});
+
 export const integration = PropTypes.string.isRequired;
 
 // should match timetable.models.Offering fields
@@ -93,6 +101,7 @@ const relatedCourseFields = {
   code: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  questions: PropTypes.arrayOf(question).isRequired,
   description: PropTypes.string.isRequired,
   department: PropTypes.string.isRequired,
   num_credits: PropTypes.number.isRequired,
