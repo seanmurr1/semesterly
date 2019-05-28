@@ -73,6 +73,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         super(SeleniumTestCase, cls).setUpClass()
         cls.TIMEOUT = 10
         cls.chrome_options = webdriver.ChromeOptions()
+        cls.chrome_options.add_argument("--no-sandbox") # Allow running chrome as root in Docker
+        cls.chrome_options.add_argument("--headless") # Do not require a display
         cls.chrome_options.add_experimental_option(
             "prefs",
             {"profile.default_content_setting_values.notifications" : 2}
