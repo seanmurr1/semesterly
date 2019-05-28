@@ -73,7 +73,9 @@
 .trans .exp-modal .modal-save i,
 .trans .modal-module,
 .trans h3.modal-module-header,
-.trans h3.modal-module-header:after {
+.trans h3.modal-module-header:after,
+.trans .exp-modal .col-5-16,
+.trans .exploration-header div > button {
 	color: transparent;
 	background-color: transparent;
 	border-color: transparent;
@@ -86,6 +88,21 @@
 .trans .modal-body .modal-module-header {
 	opacity: 0;
 	visibility: hidden;
+}
+
+.see-more-search {
+  text-align: center;
+  color: dimgrey;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.enter-button {
+  background-color: #eee;
+  color: #2b406e;
+  margin-left: -1%;
 }
 
 // Exploration Header
@@ -422,6 +439,7 @@
   }
 
   h2 {
+    margin-top: 2%;
     font-size: 14px;
     padding: 0 20% 0 0;
   }

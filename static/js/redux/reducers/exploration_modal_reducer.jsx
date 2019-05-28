@@ -41,6 +41,14 @@ const explorationModal = (state = {
       if (state.page > 1) {
         results = [...state.advancedSearchResults].concat(results);
       }
+      if (results.length % 20 !== 0) {
+        return Object.assign({}, state, {
+          advancedSearchResults: results,
+          isFetching: false,
+          active: 0,
+          hasMore: false,
+        });
+      }
       return Object.assign({}, state, {
         advancedSearchResults: results,
         isFetching: false,

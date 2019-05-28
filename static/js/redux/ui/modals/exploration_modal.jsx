@@ -63,6 +63,7 @@ class ExplorationModal extends React.Component {
     this.removeTimeFilter = this.removeTimeFilter.bind(this);
     this.addDayForTimesFilter = this.addDayForTimesFilter.bind(this);
     this.paginateAndFetch = this.paginateAndFetch.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -262,6 +263,12 @@ class ExplorationModal extends React.Component {
     this.props.paginate();
     this.fetchAdvancedSearchResultsWrapper();
   }
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.props.clearPagination();
+      this.fetchAdvancedSearchResultsWrapper();
+    }
+  }
 
   render() {
     const modalStyle = {
@@ -380,8 +387,8 @@ class ExplorationModal extends React.Component {
     });
     const explorationLoader = this.props.isFetching ?
       <i className="fa fa-spin fa-refresh" /> : null;
-    const seeMoreButton = this.props.hasMore ?
-      <button onClick={() => this.paginateAndFetch()}>See More </button> : null;
+    const seeMoreButton = this.props.hasMore && !this.props.isFetching ?
+      <h4 className="see-more-search" onClick={() => this.paginateAndFetch()}>See More </h4> : null;
     const content = (
       <div className={classNames('exploration-content', { loading: this.props.isFetching })}>
         <div
@@ -396,13 +403,20 @@ class ExplorationModal extends React.Component {
           <div className="col-5-16">
             <input
               ref={(c) => { this.input = c; }}
-              placeholder={`Searching ${this.props.semesterName}`}
-              onInput={() => {
+              placeholder={`Press Enter to Search ${this.props.semesterName}`}
+              onKeyPress={e => this.handleKeyDown(e)}
+            />
+          </div>
+          <div>
+            <button
+              className="enter-button"
+              onClick={() => {
                 this.props.clearPagination();
                 this.fetchAdvancedSearchResultsWrapper();
               }
-                            }
-            />
+              }
+            > <i className="fa fa-search" />
+            </button>
           </div>
           <div
             className="exploration-close"
@@ -422,12 +436,12 @@ class ExplorationModal extends React.Component {
 
             </SelectedFilterSection>
           </div>
-          { seeMoreButton }
           <div className="col-5-16 exp-search-results">
             <div id="exp-search-list">
               { numSearchResults }
               { searchResults }
               {explorationLoader}
+              { seeMoreButton }
             </div>
           </div>
           { filters }

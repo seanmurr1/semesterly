@@ -71,6 +71,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super(SeleniumTestCase, cls).setUpClass()
+
         cls.TIMEOUT = 10
         cls.chrome_options = webdriver.ChromeOptions()
         cls.chrome_options.add_argument("--no-sandbox") # Allow running chrome as root in Docker
@@ -364,11 +365,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             url (str): the url to follow and validate
             validate (func): the function which validates the new page
         """
-        # Some versions of chrome don't like if url does not start with http
         if not str(url).startswith("http"):
             url = '%s%s' % ('http://', url)
         self.driver.execute_script("window.open()")
         self.driver.switch_to_window(self.driver.window_handles[1])
+
+        print("Wanna go to: %s" % url)
         self.driver.get(url)
         validate()
         self.driver.close()
@@ -534,6 +536,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         ))
         search.clear()
         search.send_keys(query)
+        self.find((By.CLASS_NAME, 'enter-button'),
+                  clickable=True
+        ).click()
         if n_results:
             self.assert_n_elements_found((By.CLASS_NAME, 'exp-s-result'), n_results)
 
@@ -604,7 +609,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         ActionChains(self.driver).move_to_element(res[index]).click().perform()
         WebDriverWait(self.driver, self.TIMEOUT) \
             .until(EC.text_to_be_present_in_element(
-                (By.XPATH, "//div[contains(@class, 'modal-header')]/h2"),
+                (By.XPATH, "./div[contains(@class, 'modal-header')]/h2"),
                 course.code
             ))
         modal = self.find((By.CLASS_NAME, 'exp-modal'))
