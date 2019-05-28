@@ -227,7 +227,7 @@
   .label {
     float: left;
     line-height: 15px;
-    margin: 3px 5px 0 0;
+    margin: 2px 3px 0 0;
     padding: 0;
 
     &.hoverAdd {
@@ -416,8 +416,10 @@
   .search-course-add,
   .search-course-save,
   .search-bar__side,
-  .search-course .label {
+  .search-course .label,
+  .search-course .bubble {
     background-color: transparent;
+    color: transparent;
   }
 
   .see-more__inner {

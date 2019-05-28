@@ -39,9 +39,9 @@ class ExplorationModal extends React.Component {
       show_writing_intensive: false,
       writing_intensive: [],
       areas: [],
+      pos: [],
       departments: [],
       levels: [],
-      pos: [],
       times: [], // will contain 5 objects, containing keys "min" and "max" (times), for each day
       addedDays: [],
       shareLinkShown: false,
@@ -279,8 +279,8 @@ class ExplorationModal extends React.Component {
     const numSearchResults = advancedSearchResults.length > 0 ?
       <p>returned { advancedSearchResults.length } Search Results</p> : null;
     const searchResults = advancedSearchResults.map((c, i) => (<ExplorationSearchResult
-      key={c.id} code={c.code} name={c.name} areas={c.areas}
-      isWritingIntensive={c.writing_intensive}
+      key={c.id} code={c.code} name={c.name}
+      areas={c.areas} isWritingIntensive={c.writing_intensive}
       onClick={() => this.props.setAdvancedSearchResultIndex(i, c.id)}
     />));
     let courseModal = null;
@@ -296,7 +296,13 @@ class ExplorationModal extends React.Component {
         <div className="modal-content">
           <div className="modal-header">
             <h1>{ selectedCourse.name }</h1>
-            <h2>{ selectedCourse.code }</h2>
+            <h2>
+              <div className="subtitle">
+                {selectedCourse.code}
+                { <AreaBubble areas={selectedCourse.areas} /> }
+                { <WritingIntensive isWritingIntensive={selectedCourse.writing_intensive} /> }
+              </div>
+            </h2>
             <div className="modal-share" onClick={this.showShareLink}>
               <i className="fa fa-share-alt" />
             </div>
@@ -488,6 +494,7 @@ const ExplorationSearchResult = ({ name, code, areas, isWritingIntensive, onClic
 );
 
 ExplorationSearchResult.propTypes = {
+  areas: PropTypes.arrayOf(PropTypes.string).isRequired,
   name: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
   isWritingIntensive: PropTypes.string.isRequired,
