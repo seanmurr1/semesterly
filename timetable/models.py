@@ -18,6 +18,7 @@ from django.forms.models import model_to_dict
 from django.db import models
 from picklefield.fields import PickledObjectField
 from django.contrib.postgres.fields import ArrayField
+from student import models as student_models
 
 
 class Semester(models.Model):
@@ -246,6 +247,20 @@ class Offering(models.Model):
 
     def __unicode__(self):
         return "Day: %s, Time: %s - %s" % (self.day, self.time_start, self.time_end)
+
+
+class PILOTSection(models.Model):
+    sections = models.ManyToManyField(Section)
+
+class PILOTOffering(models.Model):
+    section = models.ManyToOne(PILOTSection)
+    max_size = models.IntegerField(default=-1)
+    enrollment = models.IntegerField(default=-1)
+    students = models.ManyToManyField(student_models.Student)
+    start_time = models.CharField(max_length=15)
+    end_time = models.CharField(max_length=15)
+    day = models.CharField(max_length=1)
+    location = models.CharField(max_length=200, default='TBA')
 
 
 class Evaluation(models.Model):
