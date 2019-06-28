@@ -90,6 +90,17 @@ class Student(models.Model):
                                  expires_at,
                                  "https://accounts.google.com/o/oauth2/token", 'my-user-agent/1.0')
 
+class PILOTOffering(models.Model):
+    section = models.ForeignKey(timetable_models.PILOTSection)
+    max_size = models.IntegerField(default=-1)
+    students = models.ManyToManyField(Student, blank=True)
+    start_time = models.CharField(max_length=15)
+    end_time = models.CharField(max_length=15)
+    day = models.CharField(max_length=1)
+    location = models.CharField(max_length=200, default='TBA')
+
+    def __unicode__(self):
+        return "Day: %s, Time: %s - %s" % (self.day, self.start_time, self.end_time)
 
 class Reaction(models.Model):
     """ Database object representing a reaction to a course.
