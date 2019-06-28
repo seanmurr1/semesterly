@@ -5,12 +5,6 @@ from timetable.models import Integration, CourseIntegration, Course, Semester, P
 from student.models import Student, PILOTOffering
 
 def pop_pilot(apps, schema_editor):
-	integration, created = PILOTSection.objects.get_or_create(id=1)
-	integration.delete()
-	integration, created = PILOTSection.objects.get_or_create(id=0)
-	integration.delete()
-	integration, created = PILOTSection.objects.get_or_create(id=2)
-	integration.delete()
 
 	integration, created = Integration.objects.get_or_create(name="PILOT")
 	integration.save()
@@ -20,10 +14,11 @@ def pop_pilot(apps, schema_editor):
 	for course in CourseIntegration.objects.filter(semester=f19, integration=integration):
 		course_id = course.course
 		professors = []
+		#creating list of professors for each course
 		for section in Section.objects.filter(course=course_id, semester=f19):
 			if section.instructors not in professors:
 				professors.append(section.instructors)
-
+		#Going through list and creating 1 PILOTSection per course/professor combo
 		for prof in professors:
 			sections = Section.objects.filter(semester=f19, course=course_id, instructors=prof)
 			for sect in sections:
