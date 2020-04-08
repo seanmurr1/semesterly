@@ -336,11 +336,6 @@ class Calendar extends React.Component {
         { hoverCustomSlot: this.state.hoverCustomSlot })}
       >
         <div className="fc-toolbar no-print">
-          <div className="fc-left" style={{ display: 'none' }}>
-            { !this.state.hoverCustomSlot ? <PaginationContainer /> : null }
-            { description }
-            { pilot }
-          </div>
           <div className="fc-right">
             { addSISButton }
             { addCustomEventButton }
