@@ -303,6 +303,9 @@ class UserSettingsModal extends React.Component {
                 name="form-field-name"
                 value={this.props.userInfo.class_year}
                 options={[
+                                    { value: 2020, label: 2017 },
+                                    { value: 2021, label: 2018 },
+                                    { value: 2022, label: 2019 },
                                     { value: 2020, label: 2020 },
                                     { value: 2021, label: 2021 },
                                     { value: 2022, label: 2022 },
