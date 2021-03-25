@@ -27,6 +27,8 @@ import AdvisingScheduleContainer from "./containers/advising_schedule_container"
 import UserSettingsModalContainer from "./containers/modals/user_settings_modal_container";
 import SignupModalContainer from "./containers/modals/signup_modal_container";
 import UserAcquisitionModalContainer from "./containers/modals/user_acquisition_modal_container";
+import DayCalendarContainer from "./containers/day_calendar_container";
+import CalendarContainer from "./containers/calendar_container";
 
 
 class Advising extends React.Component {
@@ -108,68 +110,69 @@ class Advising extends React.Component {
         });
     }
 
-
     render() {
-        //const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        //const cal = mobile && $(window).width() < 767 && this.state.orientation === 'portrait' ?
+        const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const cal = mobile && $(window).width() < 767 && this.state.orientation === 'portrait' ?
+          <AdvisingScheduleContainer /> :
+          <AdvisingScheduleContainer />;
         const footer = (
-            <footer className="footer navbar no-print">
-                <p className="data-last-updated no-print">Data last
-                    updated: { this.props.dataLastUpdated && this.props.dataLastUpdated.length && this.props.dataLastUpdated !== 'null' ? this.props.dataLastUpdated : null }</p>
-                <ul className="nav nav-pills no-print">
-                    <li className="footer-button" role="presentation">
-                        <a href="/termsofservice">Terms</a>
-                    </li>
-                    <li className="footer-button" role="presentation">
-                        <a href="/privacypolicy">Privacy</a>
-                    </li>
-                    <li className="footer-button" role="presentation">
-                        <a href="mailto:contact@semester.ly?Subject=Semesterly">
-                            Contact us
-                        </a>
-                    </li>
-                    <li className="footer-button" role="presentation">
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="http://goo.gl/forms/YSltU2YI54PC9sXw1"
-                        >
-                            Feedback
-                        </a>
-                    </li>
-                    <li className="footer-button" role="presentation">
-                        <a
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            href="https://www.facebook.com/semesterly/"
-                        >
-                            Facebook
-                        </a>
-                    </li>
-                    <li className="footer-button" role="presentation">
-                        <a
-                            className="footer-button--github"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://github.com/jhuopensource/semesterly"
-                        >
-                            <i className="fa fa-github" />
-                            Follow
-                        </a>
-                    </li>
-                    <li className="footer-button">
-                        <div
-                            className="fb-like"
-                            data-href="https://www.facebook.com/semesterly/"
-                            data-layout="button_count"
-                            data-action="like"
-                            data-show-faces="true"
-                            data-share="false"
-                        />
-                    </li>
-                </ul>
-            </footer>
-        )
+          <footer className="footer navbar no-print">
+              <p className="data-last-updated no-print">Data last
+                  updated: { this.props.dataLastUpdated && this.props.dataLastUpdated.length && this.props.dataLastUpdated !== 'null' ? this.props.dataLastUpdated : null }</p>
+              <ul className="nav nav-pills no-print">
+                  <li className="footer-button" role="presentation">
+                      <a href="/termsofservice">Terms</a>
+                  </li>
+                  <li className="footer-button" role="presentation">
+                      <a href="/privacypolicy">Privacy</a>
+                  </li>
+                  <li className="footer-button" role="presentation">
+                      <a href="mailto:contact@semester.ly?Subject=Semesterly">
+                          Contact us
+                      </a>
+                  </li>
+                  <li className="footer-button" role="presentation">
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="http://goo.gl/forms/YSltU2YI54PC9sXw1"
+                      >
+                          Feedback
+                      </a>
+                  </li>
+                  <li className="footer-button" role="presentation">
+                      <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href="https://www.facebook.com/semesterly/"
+                      >
+                          Facebook
+                      </a>
+                  </li>
+                  <li className="footer-button" role="presentation">
+                      <a
+                        className="footer-button--github"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://github.com/jhuopensource/semesterly"
+                      >
+                          <i className="fa fa-github" />
+                          Follow
+                      </a>
+                  </li>
+                  <li className="footer-button">
+                      <div
+                        className="fb-like"
+                        data-href="https://www.facebook.com/semesterly/"
+                        data-layout="button_count"
+                        data-action="like"
+                        data-show-faces="true"
+                        data-share="false"
+                      />
+                  </li>
+              </ul>
+          </footer>
+        );
 
         return (
             <div className="page-wrapper">
@@ -177,13 +180,14 @@ class Advising extends React.Component {
                 <UserSettingsModalContainer />
                 <UserAcquisitionModalContainer />
                 <SignupModalContainer />
-                <CommentForumContainer />
                 <AlertBox ref={(a) => { this.msg = a; }} {...this.alertOptions} />
+
                 <div className="all-cols">
                     <div className="advising-schedule">
-                        <AdvisingScheduleContainer />
+                        {cal}
                         {footer}
                     </div>
+                    <CommentForumContainer />
                 </div>
             </div>);
     }

@@ -161,7 +161,8 @@ class SideBar extends React.Component {
                 Advising Dashboard
             </button>
         </a>
-    </div>)
+    </div>);
+
     return (
       <div className="side-bar no-print">
         <div className="sb-name">

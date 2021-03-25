@@ -23,6 +23,7 @@ import TimetableNameInputContainer from './containers/timetable_name_input_conta
 import CreditTickerContainer from './containers/credit_ticker_container';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import { getNextAvailableColour } from '../util';
+import classnames from "classnames";
 
 class AdvisingSchedule extends React.Component {
     constructor(props) {
@@ -157,10 +158,11 @@ class AdvisingSchedule extends React.Component {
             </div>)
             : null;
         return (
-            <div className="advising-schedule">
+          <div className={classnames('calendar fc fc-ltr fc-unthemed week-calendar',
+            { hoverCustomSlot: this.state.hoverCustomSlot })}
+          >
+                <h3><b> Advising Container </b></h3>
                 <div className="as-name">
-                    <h3><b>Advising Dashboard</b></h3>
-                    <TimetableNameInputContainer />
                     <ClickOutHandler onClickOut={this.hideDropdown}>
                         {dropItDown}
                         <div

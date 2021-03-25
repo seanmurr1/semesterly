@@ -25,10 +25,11 @@ class CommentForum extends React.Component {
 
     render() {
         return (
-            <div className="comment-forum">
-                <h1>Comments Forum</h1>
-            </div>)
-
+          <div className="side-bar no-print">
+              <div className="sb-name">
+                <h1>Forum Container</h1>
+              </div>
+            </div>);
     }
 }
 
