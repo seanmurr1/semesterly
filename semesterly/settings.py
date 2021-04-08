@@ -87,9 +87,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_secret('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_secret('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 SOCIAL_AUTH_FACEBOOK_KEY = get_secret('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = get_secret('SOCIAL_AUTH_FACEBOOK_SECRET')
-SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_KEY = '529bad73-004a-4ebf-8e46-98fe8ff05d82'
-SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_SECRET = get_secret('SOCIAL_AUTH_AZURE_SECRET')
-SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_TENANT_ID = '9fa4f438-b1e6-473b-803f-86f8aedf0dec'
+SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_KEY = get_secret('SOCIAL_AUTH_AZURE_TENANT_KEY')
+SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_SECRET = get_secret('SOCIAL_AUTH_AZURE_TENANT_SECRET')
+SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_TENANT_ID = get_secret('SOCIAL_AUTH_AZURE_TENANT_ID')
 
 SOCIAL_AUTH_AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
@@ -162,7 +162,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
@@ -184,6 +184,7 @@ INSTALLED_APPS = (
     'agreement',
     'parsing',
     'pilot',
+    'forum',
 )
 
 REST_FRAMEWORK ={
@@ -202,6 +203,7 @@ MIDDLEWARE_CLASSES = (
     'semesterly.middleware.subdomain_middleware.SubdomainMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+    'semesterly.middleware.separate_accounts_middleware.SeparateAccountsSocialAuthExceptionMiddleware',
 )
 
 TEMPLATES = [
@@ -210,6 +212,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(PROJECT_DIRECTORY, 'templates/'),
             os.path.join(PROJECT_DIRECTORY, 'semesterly/templates/'),
+            os.path.join(PROJECT_DIRECTORY, 'advising/templates'),
         ],
         'OPTIONS': {
             'debug': DEBUG,
