@@ -147,6 +147,7 @@ class Advising extends React.Component {
 
 
   render() {
+    const { userInfo } = this.props;
     const footer = (
       <footer className="footer navbar no-print">
         <p className="data-last-updated no-print">Data last
@@ -226,11 +227,18 @@ class Advising extends React.Component {
             </div>
           </div>
           <div className="advising-schedule">
+            {userInfo.isAdvisor === true ?  
+            <AdvisorDashboardContainer
+              addRemoveAdvisor={this.addRemoveAdvisor}
+              selected_semester={this.state.selected_semester}
+              transcript={this.state.transcript}
+            />:
             <CommentForumContainer
               addRemoveAdvisor={this.addRemoveAdvisor}
               selected_semester={this.state.selected_semester}
               transcript={this.state.transcript}
             />
+            }
           </div>
         </div>
       </div>);
