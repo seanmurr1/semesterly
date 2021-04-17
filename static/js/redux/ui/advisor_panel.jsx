@@ -74,7 +74,7 @@ class AdvisorPanel extends React.Component {
     }
 
     const displayInput = (this.props.selected_semester === null) ? null : (
-    <AdvisorDashboardContainer
+      <AdvisorDashboardContainer
       semester_name={this.props.selected_semester.toString().split(' ')[0]}
       semester_year={this.props.selected_semester.toString().split(' ')[1]}
     />);
