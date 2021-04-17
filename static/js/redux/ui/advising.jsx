@@ -16,7 +16,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Cookie from 'js-cookie';
 import TopBarAdvisingContainer from './containers/top_bar_advising_container';
+import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import CommentForumContainer from './containers/comment_forum_container';
+import AdvisorDashboardContainer from './containers/advisor_dashboard_container';
 import AdvisingScheduleContainer from './containers/advising_schedule_container';
 import UserSettingsModalContainer from './containers/modals/user_settings_modal_container';
 import SignupModalContainer from './containers/modals/signup_modal_container';
@@ -227,17 +229,17 @@ class Advising extends React.Component {
             </div>
           </div>
           <div className="advising-schedule">
-            {userInfo.isAdvisor === true ?  
-            <AdvisorDashboardContainer
-              addRemoveAdvisor={this.addRemoveAdvisor}
-              selected_semester={this.state.selected_semester}
-              transcript={this.state.transcript}
-            />:
-            <CommentForumContainer
-              addRemoveAdvisor={this.addRemoveAdvisor}
-              selected_semester={this.state.selected_semester}
-              transcript={this.state.transcript}
-            />
+            {userInfo.isAdvisor === true ?
+              <AdvisorDashboardContainer
+                addRemoveAdvisor={this.addRemoveAdvisor}
+                selected_semester={this.state.selected_semester}
+                transcript={this.state.transcript}
+              /> :
+              <CommentForumContainer
+                addRemoveAdvisor={this.addRemoveAdvisor}
+                selected_semester={this.state.selected_semester}
+                transcript={this.state.transcript}
+              />
             }
           </div>
         </div>
@@ -251,6 +253,7 @@ Advising.propTypes = {
     name: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
   }).isRequired,
+  userInfo: SemesterlyPropTypes.userInfo.isRequired,
 };
 
 export default Advising;

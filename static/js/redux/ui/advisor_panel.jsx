@@ -73,7 +73,8 @@ class AdvisorPanel extends React.Component {
       transcript = <div className="empty-state"><h4> <p> No comments yet! </p> </h4></div>;
     }
 
-    const displayInput = (this.props.selected_semester === null) ? null : (<AdvisorDashboardContainer
+    const displayInput = (this.props.selected_semester === null) ? null : (
+    <AdvisorDashboardContainer
       semester_name={this.props.selected_semester.toString().split(' ')[0]}
       semester_year={this.props.selected_semester.toString().split(' ')[1]}
     />);

@@ -13,7 +13,7 @@ GNU General Public License for more details.
 */
 // TODO: Write in valid info for advisor dashboard.
 import { connect } from 'react-redux';
-import CommentForum from '../comment_forum'; 
+import CommentForum from '../comment_forum';
 
 const mapStateToProps = state => ({
   userInfo: state.userInfo.data,
