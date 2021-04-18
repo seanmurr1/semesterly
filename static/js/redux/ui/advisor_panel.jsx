@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import AdvisorMenu from './advisor_menu';
 import AdvisorDashboardContainer from './containers/advisor_dashboard_container';
+// TODO: Use student list row -> import StudentListRow from './student_list_row';
 
 // TODO: update for all props/states and styling needed for advisor panel.
 
