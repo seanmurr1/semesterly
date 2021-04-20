@@ -37,12 +37,14 @@ class Advising extends React.Component {
     this.state = {
       orientation: !mql.matches ? 'landscape' : 'portrait',
       selected_semester: null,
+      selected_advisee: null, 
       transcript: null,
       displayed_semesters: null,
     };
     this.updateOrientation = this.updateOrientation.bind(this);
     this.callbackFunction = this.callbackFunction.bind(this);
     this.addRemoveAdvisor = this.addRemoveAdvisor.bind(this);
+    this.displayAdvisee = this.displayAdvisee.bind(this);
   }
 
   componentWillMount() {
@@ -58,6 +60,15 @@ class Advising extends React.Component {
 
   componentDidMount() {
     this.fetchSemesters();
+    this.fetchAdvisees();
+  }
+
+  fetchAdvisees() {
+
+  }
+  
+  displayAdvisee() {
+
   }
 
   fetchSemesters() {
@@ -218,7 +229,8 @@ class Advising extends React.Component {
           <div className="advising-schedule">
             {userInfo.isAdvisor === true ?
               <AdvisorDashboardContainer
-                selected_semester={this.state.selected_semester}
+
+                selected_student={this.state.selected_student}
                 transcript={this.state.transcript}
               /> :
               <CommentForumContainer
