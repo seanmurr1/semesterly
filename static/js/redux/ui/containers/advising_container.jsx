@@ -44,7 +44,6 @@ const mapStateToProps = (state) => {
       && activeTTLength >= 1),
     explorationModalIsVisible: state.explorationModal.isVisible,
     dataLastUpdated: state.school.dataLastUpdated,
-    userInfo: state.userInfo.data,
   };
 };
 

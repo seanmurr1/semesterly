@@ -38,7 +38,7 @@ class Advising extends React.Component {
     this.state = {
       orientation: !mql.matches ? 'landscape' : 'portrait',
       selected_semester: null,
-      selected_advisee: null, 
+      selected_advisee: null,
       transcript: null,
       displayed_semesters: null,
       displayed_advisees: null,
@@ -69,9 +69,9 @@ class Advising extends React.Component {
     fetch(getAllTranscripts())
       .then(response => response.json())
       .then((data) => {
-        const invited_transcipts = data.invited_transcipts;
+        const invitedTranscipts = data.invited_transcipts;
         // TODO: need to ensure that all transcript owners are unique
-        this.setState({ displayed_advisees: advisees.concat(invited_transcipts.owner_name) });
+        this.setState({ displayed_advisees: advisees.concat(invitedTranscipts.owner_name) });
       });
   }
 
@@ -266,7 +266,6 @@ Advising.propTypes = {
     name: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
   }).isRequired,
-  userInfo: SemesterlyPropTypes.userInfo.isRequired,
 };
 
 export default Advising;

@@ -27,7 +27,6 @@ class AdvisingSchedule extends React.Component {
   }
 
   render() {
-    const { userInfo, selected_advisee } = this.props;
     const SISImportDataModalButton = (
       <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle' }}>
         <button
@@ -50,7 +49,7 @@ class AdvisingSchedule extends React.Component {
       </div>
     );
     let courseListRows;
-    if (userInfo.isAdvisor && selected_advisee == null) {
+    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
       courseListRows = <div className="empty-state"><h4><p> Click on a Student to see their schedule </p></h4></div>;
     } else {
       courseListRows = (this.props.displayed_semesters !== null) ?
@@ -72,17 +71,17 @@ class AdvisingSchedule extends React.Component {
       ) : <div className="empty-state"><h4><p> No semesters yet! </p></h4></div>;
     }
     let scheduleTitle;
-    if (userInfo.isAdvisor && selected_advisee == null) {
-      scheduleTitle = <div className="advising-schedule-header">
+    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
+      scheduleTitle = (<div className="advising-schedule-header">
         Advising Dashboard
         &nbsp;&nbsp;&nbsp;
-      </div>
+      </div>);
     } else {
-      scheduleTitle = <div className="advising-schedule-header">
+      scheduleTitle = (<div className="advising-schedule-header">
         Course Summary
         &nbsp;&nbsp;&nbsp;
         { SISImportDataModalButton }
-      </div>
+      </div>);
     }
 
     return (
