@@ -22,9 +22,9 @@ import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
 class StudentListRow extends React.Component {
 
-  sendSelectedSemester() {
-    if (this.props.displayed_semester !== this.props.selected_semester) {
-      this.props.parentParentCallback(this.props.displayed_semester);
+  sendSelectedAdvisee() {
+    if (this.props.displayed_advisee !== this.props.selected_advisee) {
+      this.props.parentParentCallback(this.props.displayed_advisee);
     } else {
       this.props.parentParentCallback(null);
     }

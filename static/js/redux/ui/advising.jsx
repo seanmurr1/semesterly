@@ -27,6 +27,7 @@ import UserAcquisitionModalContainer from './containers/modals/user_acquisition_
 import {
   getTranscriptCommentsBySemester,
   getRetrievedSemesters,
+  getAllTranscripts,
 } from '../constants/endpoints';
 import SISImportDataModalContainer from './containers/modals/SIS_import_data_modal_container';
 
@@ -40,11 +41,11 @@ class Advising extends React.Component {
       selected_advisee: null, 
       transcript: null,
       displayed_semesters: null,
+      displayed_advisees: null,
     };
     this.updateOrientation = this.updateOrientation.bind(this);
     this.callbackFunction = this.callbackFunction.bind(this);
     this.addRemoveAdvisor = this.addRemoveAdvisor.bind(this);
-    this.displayAdvisee = this.displayAdvisee.bind(this);
   }
 
   componentWillMount() {
@@ -64,28 +65,39 @@ class Advising extends React.Component {
   }
 
   fetchAdvisees() {
-
-  }
-  
-  displayAdvisee() {
-
+    const advisees = [];
+    fetch(getAllTranscripts())
+      .then(response => response.json())
+      .then((data) => {
+        const invited_transcipts = data.invited_transcipts;
+        // TODO: need to ensure that all transcript owners are unique
+        if (invited_transcipts.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
+          this.setState({ displayed_advisees: invited_transcipts });
+        } else {
+          this.setState({ displayed_advisees: advisees.concat(invited_transcipts) });
+        }
+      });
   }
 
   fetchSemesters() {
     const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
-    // TODO: Change to include selected stuent's JHED vs. userInfo's jhed
-    const jhed = (this.props.userInfo.isAdvisor) ? this.props.userInfo.jhed :
-      this.props.userInfo.jhed;
-    fetch(getRetrievedSemesters(jhed))
-      .then(response => response.json())
-      .then((data) => {
-        const retreivedSemesters = data.retrievedSemesters;
-        if (retreivedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
-          this.setState({ displayed_semesters: retreivedSemesters });
-        } else {
-          this.setState({ displayed_semesters: semesters.concat(retreivedSemesters) });
-        }
-      });
+    // TODO: Change to include selected student's JHED vs. userInfo's jhed
+    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
+
+    } else {
+      const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.jhed :
+        this.props.userInfo.jhed;
+      fetch(getRetrievedSemesters(jhed))
+        .then(response => response.json())
+        .then((data) => {
+          const retrievedSemesters = data.retrievedSemesters;
+          if (retrievedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
+            this.setState({ displayed_semesters: retrievedSemesters });
+          } else {
+            this.setState({ displayed_semesters: semesters.concat(retrievedSemesters) });
+          }
+        });
+    }
   }
 
   fetchTranscript(newSelectedSemester) {
@@ -145,6 +157,9 @@ class Advising extends React.Component {
     this.fetchTranscript(childSemesterData);
   }
 
+  displayAdvisee() {
+    this.fetchSemesters();
+  }
 
   render() {
     const { userInfo } = this.props;
@@ -229,7 +244,7 @@ class Advising extends React.Component {
           <div className="advising-schedule">
             {userInfo.isAdvisor === true ?
               <AdvisorDashboardContainer
-
+                displayAdvisee={this.displayAdvisee()}
                 selected_student={this.state.selected_student}
                 transcript={this.state.transcript}
               /> :
