@@ -243,6 +243,7 @@ class Advising extends React.Component {
               <AdvisorDashboardContainer
                 displayed_advisees={this.state.displayed_advisees}
                 selected_advisee={this.state.selected_advisee}
+                displayAdvisee={this.displayAdvisee()}
                 // transcript={this.state.transcript}
               /> :
               <CommentForumContainer

@@ -33,7 +33,8 @@ class AdvisorPanel extends React.Component {
     if (this.props.displayedAdvisees != null) {
       // TODO: add mapping to show each advisor in list
       <StudentListRow
-
+        selected_advisee={this.props.selected_advisee}
+        displayAdvisee={this.props.displayAdvisee}
       />
     } else {
       displayed_advisees = <div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>;
@@ -69,7 +70,7 @@ AdvisorPanel.defaultProps = {
 AdvisorPanel.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
   selected_advisee: PropTypes.string,
-  selected_advisee: PropTypes.arrayOf(PropTypes.string),
+  displayed_advisees: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default AdvisorPanel;
