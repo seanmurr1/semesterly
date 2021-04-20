@@ -13,7 +13,7 @@ GNU General Public License for more details.
 */
 // TODO: Write in valid info for advisor dashboard.
 import { connect } from 'react-redux';
-import CommentForum from '../comment_forum';
+import AdvisorPanel from '../advisor_panel';
 
 const mapStateToProps = state => ({
   userInfo: state.userInfo.data,
@@ -23,6 +23,6 @@ const AdvisorDashboardContainer = connect(
   mapStateToProps,
   {
   },
-)(CommentForum);
+)(AdvisorPanel);
 
 export default AdvisorDashboardContainer;

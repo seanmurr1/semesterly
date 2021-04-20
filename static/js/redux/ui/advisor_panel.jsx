@@ -91,15 +91,13 @@ class AdvisorPanel extends React.Component {
     return (
       <div className="comment-forum no-print">
         <div className="cf-name">
-          <h3 className="title"> Comments Forum</h3>
+          <h3 className="title"> Students </h3>
         </div>
         {this.props.selected_semester &&
           <AdvisorMenu
             semester={this.props.selected_semester}
             advisors={userInfo.advisors}
             transcript={this.props.transcript}
-            addAdvisor={this.state.addAdvisor}
-            addRemoveAdvisor={this.props.addRemoveAdvisor}
           />
         }
         <div className="cf-header">{this.props.selected_semester && displayAdvisorNames()}</div>
@@ -114,14 +112,13 @@ class AdvisorPanel extends React.Component {
 }
 
 AdvisorPanel.defaultProps = {
-  selected_semester: null,
+  selected_student: null,
   transcript: null,
 };
 
 AdvisorPanel.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
-  addRemoveAdvisor: PropTypes.func.isRequired,
-  selected_semester: PropTypes.string,
+  selected_student: PropTypes.string,
   transcript: SemesterlyPropTypes.transcript,
 };
 

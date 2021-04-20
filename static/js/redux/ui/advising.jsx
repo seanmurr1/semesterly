@@ -29,8 +29,6 @@ import {
   getRetrievedSemesters,
 } from '../constants/endpoints';
 import SISImportDataModalContainer from './containers/modals/SIS_import_data_modal_container';
-import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
-
 
 class Advising extends React.Component {
   constructor(props) {
@@ -220,7 +218,6 @@ class Advising extends React.Component {
           <div className="advising-schedule">
             {userInfo.isAdvisor === true ?
               <AdvisorDashboardContainer
-                addRemoveAdvisor={this.addRemoveAdvisor}
                 selected_semester={this.state.selected_semester}
                 transcript={this.state.transcript}
               /> :
