@@ -16,8 +16,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import StudentListRow from './student_list_row';
-import AdvisorDashboardContainer from './containers/advisor_dashboard_container';
-// TODO: Use student list row -> import StudentListRow from './student_list_row';
 
 // TODO: update for all props/states and styling needed for advisor panel.
 
@@ -31,45 +29,33 @@ class AdvisorPanel extends React.Component {
 
   render() {
     const { userInfo } = this.props;
-    let transcript;
+    let displayed_advisees;
     if (this.props.displayedAdvisees != null) {
-      
+      // TODO: add mapping to show each advisor in list
+      <StudentListRow
+
+      />
     } else {
-      transcript = <div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>;
+      displayed_advisees = <div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>;
     } 
 
-    const displayInput = (this.props.selected_advisee === null) ? null : (
-      <StudentListRow
-        semester_name={this.props.selected_semester.toString().split(' ')[0]}
-        semester_year={this.props.selected_semester.toString().split(' ')[1]}
-      />
-    );
-
-    const displayStudentNames = () => {
-      const names = [];
-      const studentList = (this.props.transcript) ? this.props.transcript.owner : [];
-      studentList.forEach(student => names.push(student.userFirstName + " " + student.userLastName));
-      return names.join(', ');
-    };
+    // const displayStudentNames = () => {
+    //   const names = [];
+    //   const studentList = (this.props.displayed_advisees) ? this.props.displayed_advisees.owner : [];
+    //   studentList.forEach(student => names.push(student.userFirstName + " " + student.userLastName));
+    //   return names.join(', ');
+    // };
 
     return (
       <div className="comment-forum no-print">
         <div className="cf-name">
           <h3 className="title"> Students </h3>
         </div>
-        {this.props.selected_advisee &&
-          <AdvisorMenu
-            student={this.props.selected_advisee}
-            advisors={userInfo.advisors}
-            transcript={this.props.transcript}
-          />
-        }
-        <div className="cf-header">{this.props.selected_semester && displayStudentNames()}</div>
+        <div className="cf-header">{/* TODO: add search bar */}</div>
         <div className="comment-forum-container">
-          {transcript}
+          {displayed_advisees}
         </div>
         <div className="as-header" />
-        { displayInput}
       </div>
     );
   }
@@ -77,13 +63,13 @@ class AdvisorPanel extends React.Component {
 
 AdvisorPanel.defaultProps = {
   selected_advisee: null,
-  transcript: null,
+  displayed_advisees: null,
 };
 
 AdvisorPanel.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
   selected_advisee: PropTypes.string,
-  transcript: SemesterlyPropTypes.transcript,
+  selected_advisee: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default AdvisorPanel;

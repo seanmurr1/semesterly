@@ -241,9 +241,9 @@ class Advising extends React.Component {
           <div className="advising-schedule">
             {userInfo.isAdvisor === true && this.props.selected_advisee == null ?
               <AdvisorDashboardContainer
-                displayAdvisee={this.displayAdvisee()}
+                displayed_advisees={this.state.displayed_advisees}
                 selected_advisee={this.state.selected_advisee}
-                transcript={this.state.transcript}
+                // transcript={this.state.transcript}
               /> :
               <CommentForumContainer
                 addRemoveAdvisor={this.addRemoveAdvisor}
