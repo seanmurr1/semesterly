@@ -32,47 +32,11 @@ class AdvisorPanel extends React.Component {
   render() {
     const { userInfo } = this.props;
     let transcript;
-    if (this.props.transcript != null && this.props.transcript.comments != null) {
-      transcript = this.props.transcript.comments.map((comment) => {
-        const timestamp = new Date(comment.timestamp);
-        const ownerView = (this.state.advisorName === comment.author_name) ?
-          (<span className="comment-row">
-            <div className="comment-bubble owner">
-              <div className="author">
-                {comment.author_name}
-              </div>
-              <div>
-                {comment.content}
-              </div>
-            </div>
-            <div className="comment-timestamp">
-              {timestamp.toDateString()},
-              {timestamp.toLocaleTimeString()}
-            </div>
-          </span>) :
-          (<span className="comment-row">
-            <div className="comment-bubble guest">
-              <div className="author">
-                {comment.author_name}
-              </div>
-              <div>
-                {comment.content}
-              </div>
-            </div>
-            <div className="comment-timestamp" style={{ float: 'left' }}>
-              {timestamp.toDateString()},
-            {timestamp.toLocaleTimeString()}
-            </div>
-          </span>);
-        return (<span key={timestamp}>
-          {ownerView}
-        </span>);
-      });
-    } else if (this.props.transcript === null) {
+    if (this.props.displayedAdvisees != null) {
+      
+    } else {
       transcript = <div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>;
-    } else if (this.props.transcript.comments === null) {
-      transcript = <div className="empty-state"><h4> <p> No comments yet! </p> </h4></div>;
-    }
+    } 
 
     const displayInput = (this.props.selected_advisee === null) ? null : (
       <StudentListRow

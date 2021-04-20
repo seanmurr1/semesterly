@@ -71,18 +71,14 @@ class Advising extends React.Component {
       .then((data) => {
         const invited_transcipts = data.invited_transcipts;
         // TODO: need to ensure that all transcript owners are unique
-        if (invited_transcipts.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
-          this.setState({ displayed_advisees: invited_transcipts });
-        } else {
-          this.setState({ displayed_advisees: advisees.concat(invited_transcipts) });
-        }
+        this.setState({ displayed_advisees: advisees.concat(invited_transcipts.owner_name) });
       });
   }
 
   fetchSemesters() {
     const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
     // TODO: Change to include selected student's JHED vs. userInfo's jhed
-    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
+    if (this.props.userInfo.isAdvisor && this.state.selected_advisee == null) {
 
     } else {
       const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.jhed :
@@ -235,6 +231,7 @@ class Advising extends React.Component {
             <div className="advising-schedule">
               <AdvisingScheduleContainer
                 parentCallback={this.callbackFunction}
+                selected_advisee={this.state.selected_advisee}
                 selected_semester={this.state.selected_semester}
                 displayed_semesters={this.state.displayed_semesters}
               />
@@ -242,14 +239,15 @@ class Advising extends React.Component {
             </div>
           </div>
           <div className="advising-schedule">
-            {userInfo.isAdvisor === true ?
+            {userInfo.isAdvisor === true && this.props.selected_advisee == null ?
               <AdvisorDashboardContainer
                 displayAdvisee={this.displayAdvisee()}
-                selected_student={this.state.selected_student}
+                selected_advisee={this.state.selected_advisee}
                 transcript={this.state.transcript}
               /> :
               <CommentForumContainer
                 addRemoveAdvisor={this.addRemoveAdvisor}
+                selected_advisee={this.state.selected_advisee}
                 selected_semester={this.state.selected_semester}
                 transcript={this.state.transcript}
               />

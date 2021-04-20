@@ -27,6 +27,7 @@ class AdvisingSchedule extends React.Component {
   }
 
   render() {
+    const { userInfo, selected_advisee } = this.props;
     const SISImportDataModalButton = (
       <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle' }}>
         <button
@@ -48,7 +49,11 @@ class AdvisingSchedule extends React.Component {
         </ReactTooltip>
       </div>
     );
-    const courseListRows = (this.props.displayed_semesters !== null) ?
+    let courseListRows;
+    if (userInfo.isAdvisor && selected_advisee == null) {
+      courseListRows = <div className="empty-state"><h4><p> Click on a Student to see their schedule </p></h4></div>;
+    } else {
+      courseListRows = (this.props.displayed_semesters !== null) ?
       this.props.displayed_semesters.map(semester =>
         (<CourseListRow
           key={semester}
@@ -65,14 +70,24 @@ class AdvisingSchedule extends React.Component {
           userInfo={this.props.userInfo}
         />),
       ) : <div className="empty-state"><h4><p> No semesters yet! </p></h4></div>;
+    }
+    let scheduleTitle;
+    if (userInfo.isAdvisor && selected_advisee == null) {
+      scheduleTitle = <div className="advising-schedule-header">
+        Advising Dashboard
+        &nbsp;&nbsp;&nbsp;
+      </div>
+    } else {
+      scheduleTitle = <div className="advising-schedule-header">
+        Course Summary
+        &nbsp;&nbsp;&nbsp;
+        { SISImportDataModalButton }
+      </div>
+    }
 
     return (
       <div className="advising-schedule-inner">
-        <div className="advising-schedule-header">
-          Course Summary
-          &nbsp;&nbsp;&nbsp;
-          { SISImportDataModalButton }
-        </div>
+        { scheduleTitle }
         { courseListRows }
       </div>
     );
