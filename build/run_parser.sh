@@ -9,10 +9,7 @@ cd /code
 # /usr/bin/python manage.py ingest jhu --term Spring --years 2021;
 # /usr/bin/python manage.py digest jhu;
 
-/usr/bin/python manage.py ingest jhu --term Fall --years 2020 2019 2018;
-/usr/bin/python manage.py digest jhu;
-
-/usr/bin/python manage.py ingest jhu --term Spring --years 2020 2019 2018;
+/usr/bin/python manage.py ingest jhu --term Spring Fall --years 2020 2019 2018;
 /usr/bin/python manage.py digest jhu;
 
 # Run all
