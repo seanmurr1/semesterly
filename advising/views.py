@@ -168,13 +168,13 @@ class AddAdvisorView(ValidateSubdomainMixin, APIView):
             JhedId: Advisor's jhed, without @jh.edu
         """
         student = Student.objects.get(user=request.user)
-        data = request.data
-        last_name, first_name = data['FullName'].split(',')
-        student.advisors.add(Advisor.objects.get_or_create(
-            first_name=first_name.strip(),
-            last_name=last_name.strip(),
-            jhed='{}@jh.edu'.format(data['JhedId'])
-        ))
+        last_name, first_name = request.data['FullName'].split(',')
+        student.advisors.add(
+            Advisor.objects.get_or_create(
+                first_name=first_name.strip(),
+                last_name=last_name.strip(),
+                jhed='{}@jh.edu'.format(request.data['JhedId']))[0]
+        )
         return Response(status=status.HTTP_201_CREATED)
 
 

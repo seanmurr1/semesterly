@@ -503,7 +503,7 @@ class RegisteredCoursesViewTest(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
-class AddAdvisorViewTest:
+class AddAdvisorViewTest(APITestCase):
     def setUp(self):
         setUpStudent(self)
         self.factory = APIRequestFactory()
@@ -513,13 +513,12 @@ class AddAdvisorViewTest:
             'FullName': 'Wang, James',
             'JhedId': 'jwang380'
         }
-
         url = '/advising/testadd/'
-        request = self.factory.post(url, data=data, content_type='json')
+        request = self.factory.post(url, data=data, format='json')
         response = get_response(request, self.student.user, url)
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
         self.assertEquals(len(self.student.advisors.all()), 1)
         advisor = self.student.advisors.all()[0]
         self.assertEquals(advisor.first_name, 'James')
         self.assertEquals(advisor.last_name, 'Wang')
-        self.assertEquals(advisor.jhed, 'jwang380')
+        self.assertEquals(advisor.jhed, 'jwang380@jh.edu')
