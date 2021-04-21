@@ -15,6 +15,7 @@ GNU General Public License for more details.
 import React from 'react';
 import SocialProfileContainer from './containers/social_profile_container';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
+import ReactTooltip from "react-tooltip";
 
 export const expandComments = () => {
   $('.main-advising, .comment-forum').removeClass('full-bar').addClass('less-bar');
@@ -90,6 +91,27 @@ class TopBarAdvising extends React.Component {
         </a>
       </div>
     );
+    const AddAdvisorButton = (
+      <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle', float: 'left' }}>
+        <button
+          //onClick={() => this.props.triggerSISImportDataModal()}
+          data-tip
+          className="save-timetable add-button"
+          data-for="import-data-btn-tooltip"
+        >
+          <i className="fa fa-plus" />
+        </button>
+        <ReactTooltip
+          id="import-data-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="right"
+          effect="solid"
+        >
+          <span>Add a new advisor</span>
+        </ReactTooltip>
+      </div>
+    );
     return (
       <div className="top-bar">
         <img
@@ -114,6 +136,7 @@ class TopBarAdvising extends React.Component {
         </div>
         <SocialProfileContainer />
         <span>
+          { AddAdvisorButton }
           { ReturnToScheduleButton }
         </span>
         <div className="navicon" onClick={this.toggleComments}>
