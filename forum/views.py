@@ -155,15 +155,3 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-class AdvisorView:
-    """Temporary view handling adding an Advisor to a Student's advisors field
-    via a POST request
-    Required data should match sis_post:
-        FullName: First and last in the format `last, first`
-        JhedId: Advisor's jhed, without @jh.edu
-    """
-
-    def post(self, request):
-        pass
-        
