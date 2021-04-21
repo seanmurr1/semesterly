@@ -158,6 +158,32 @@ class StudentSISView(ValidateSubdomainMixin, APIView):
         return nonexistent_courses
 
 
+class AddAdvisorView(ValidateSubdomainMixin, APIView):
+    """Handles adding an Advisor to a Student's advisors field (temporary)"""
+
+    def post(self, request):
+        """
+        Required data should match sis_post:
+            FullName: First and last in the format `last, first`
+            JhedId: Advisor's jhed, without @jh.edu
+        """
+        student = Student.objects.get(user=request.user)
+        last_name, first_name = request.data['FullName'].split(',')
+        jhed = request.data['JhedId']
+        try:
+            advisor = Advisor.objects.get(jhed='{}@jh.edu'.format(jhed))
+            advisor.first_name = first_name
+            advisor.last_name = last_name
+        except Advisor.DoesNotExist:
+            advisor = Advisor.objects.create(first_name=first_name.strip(),
+                                             last_name=last_name.strip(),
+                                             jhed='{}@jh.edu'.format(jhed))
+        advisor.save()
+        if advisor not in student.advisors.all():
+            student.advisors.add(advisor)
+        return Response(status=status.HTTP_201_CREATED)
+
+
 class RegisteredCoursesView(ValidateSubdomainMixin, APIView):
     """Handles retrieving timetable and SIS courses from a specific semester"""
 
