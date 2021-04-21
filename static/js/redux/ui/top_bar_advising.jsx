@@ -16,6 +16,7 @@ import React from 'react';
 import SocialProfileContainer from './containers/social_profile_container';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import ReactTooltip from "react-tooltip";
+import PropTypes from "prop-types";
 
 export const expandComments = () => {
   $('.main-advising, .comment-forum').removeClass('full-bar').addClass('less-bar');
@@ -94,7 +95,7 @@ class TopBarAdvising extends React.Component {
     const AddAdvisorButton = (
       <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle', float: 'left' }}>
         <button
-          //onClick={() => this.props.triggerSISImportDataModal()}
+          onClick={() => this.props.triggerAddAdvisorModal()}
           data-tip
           className="save-timetable add-button"
           data-for="import-data-btn-tooltip"
@@ -150,6 +151,7 @@ class TopBarAdvising extends React.Component {
 
 TopBarAdvising.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
+  triggerAddAdvisorModal: PropTypes.func.isRequired,
   currentSemester: SemesterlyPropTypes.semester.isRequired,
 };
 
