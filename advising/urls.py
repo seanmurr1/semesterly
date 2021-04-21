@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^advising/jhu_signup/*$',
         FeatureFlowView.as_view(feature_name='JHU_SIGNUP', is_advising=True)),
     url(r'^advising/sis_post/$', advising.views.StudentSISView.as_view()),
-    # TEMPORARY: Adds an advisor given name, jhed, and email
+    # TEMPORARY: Adds an advisor given name, jhed, and email    # TODO: Remove
     url(r'^advising/testadd/$', advising.views.AddAdvisorView.as_view()),
 
     # Get the semesters that the student with this JHED has imported from SIS
