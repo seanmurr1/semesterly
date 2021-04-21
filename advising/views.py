@@ -169,12 +169,18 @@ class AddAdvisorView(ValidateSubdomainMixin, APIView):
         """
         student = Student.objects.get(user=request.user)
         last_name, first_name = request.data['FullName'].split(',')
-        student.advisors.add(
-            Advisor.objects.get_or_create(
-                first_name=first_name.strip(),
-                last_name=last_name.strip(),
-                jhed='{}@jh.edu'.format(request.data['JhedId']))[0]
-        )
+        jhed = request.data['JhedId']
+        try:
+            advisor = Advisor.objects.get(jhed='{}@jh.edu'.format(jhed))
+            advisor.first_name = first_name
+            advisor.last_name = last_name
+        except Advisor.DoesNotExist:
+            advisor = Advisor.objects.create(first_name=first_name.strip(),
+                                             last_name=last_name.strip(),
+                                             jhed='{}@jh.edu'.format(jhed))
+        advisor.save()
+        if advisor not in student.advisors.all():
+            student.advisors.add(advisor)
         return Response(status=status.HTTP_201_CREATED)
 
 
