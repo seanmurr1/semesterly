@@ -15,8 +15,8 @@ GNU General Public License for more details.
 import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from 'boron/WaveModal';
-import {getTranscriptCommentsBySemester} from "../../constants/endpoints";
-import Cookie from "js-cookie";
+import Cookie from 'js-cookie';
+import { getAdvisorTestAdd } from '../../constants/endpoints';
 
 class AddAdvisorModal extends React.Component {
   constructor(props) {
@@ -24,8 +24,9 @@ class AddAdvisorModal extends React.Component {
 
     this.state = {
       jhed: '',
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
+      submitted: false,
     };
   }
 
@@ -39,23 +40,27 @@ class AddAdvisorModal extends React.Component {
     if (this.props.isVisible) {
       this.modal.show();
     }
+    if (this.state.submitted === true) {
+      window.location.reload();
+      this.setState({ submitted: !this.state.submitted });
+    }
   }
 
   sendJHED(event) {
-    this.setState({jhed: event.target.value});
+    this.setState({ jhed: event.target.value });
   }
 
   sendFirstName(event) {
-    this.setState({first_name: event.target.value});
+    this.setState({ firstName: event.target.value });
   }
 
   sendLastName(event) {
-    this.setState({last_name: event.target.value});
+    this.setState({ lastName: event.target.value });
   }
 
-  submitContent(semesterName, semesterYear) {
+  submitContent() {
     if (this.state.comment !== '') {
-      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear), {
+      fetch(getAdvisorTestAdd(), {
         method: 'POST',
         headers: {
           'X-CSRFToken': Cookie.get('csrftoken'),
@@ -63,17 +68,19 @@ class AddAdvisorModal extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          jhed: this.props.userInfo.jhed,
-          timestamp: new Date(Date.now()),
-          content: this.state.comment,
+          JhedId: this.state.jhed,
+          FullName: `${this.state.lastName},${this.state.firstName}`,
         })
       })
-        .then(() => this.setState({comment: this.state.comment = '', submitted: !this.state.submitted}));
+        .then(() => this.setState({ jhed: this.state.jhed = '',
+          firsfirstNamet_name: this.state.firstName = '',
+          lastName: this.state.lastName = '',
+          submitted: !this.state.submitted }));
     }
   }
 
   render() {
-    const { jhed, first_name, last_name } = this.state;
+    const { jhed, firstName, lastName } = this.state;
 
     const modalHeader =
       (<div className="modal-content">
@@ -99,7 +106,7 @@ class AddAdvisorModal extends React.Component {
         }}
       >
         {modalHeader}
-        <p><br/></p>
+        <p><br /></p>
         <form action="#1">
           <textarea
             className="cf-input"
@@ -110,20 +117,21 @@ class AddAdvisorModal extends React.Component {
           <textarea
             className="cf-input"
             rows="1" placeholder="Enter Advisor First Name"
-            value={first_name}
+            value={firstName}
             onChange={event => this.sendFirstName(event)}
           />
           <textarea
             className="cf-input"
             rows="1" placeholder="Enter Advisor Last Name"
-            value={last_name}
+            value={lastName}
             onChange={event => this.sendLastName(event)}
           />
-          <p><br/></p>
+          <p><br /></p>
           <input
             className="send-btn"
             type="submit"
             value="Send Info"
+            onClick={() => this.submitContent()}
           />
         </form>
       </Modal>

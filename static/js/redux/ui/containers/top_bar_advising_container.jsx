@@ -27,7 +27,7 @@ const TopBarAdvisingContainer = connect(
   mapStateToProps,
   {
     triggerAddAdvisorModal,
-  }
+  },
 )(TopBarAdvising);
 
 export default TopBarAdvisingContainer;
