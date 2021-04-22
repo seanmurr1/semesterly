@@ -69,8 +69,7 @@ class Advising extends React.Component {
     fetch(getAllTranscripts())
       .then(response => response.json())
       .then((data) => {
-        const invitedTranscipts = data.invited_transcipts;
-        // TODO: need to ensure that all transcript owners are unique
+        const invitedTranscipts = data["invited_transcripts"][0];
         this.setState({ displayed_advisees: advisees.concat(invitedTranscipts.owner_name) });
       });
   }
