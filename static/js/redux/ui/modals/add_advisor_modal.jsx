@@ -42,7 +42,7 @@ class AddAdvisorModal extends React.Component {
     }
     if (this.state.submitted === true) {
       window.location.reload();
-      this.setState({ submitted: !this.state.submitted });
+      this.state.submitted = !this.state.submitted;
     }
   }
 
@@ -70,9 +70,9 @@ class AddAdvisorModal extends React.Component {
         body: JSON.stringify({
           JhedId: this.state.jhed,
           FullName: `${this.state.lastName},${this.state.firstName}`,
-        })
+        }),
       })
-        .then(() => this.setState({ jhed: this.state.jhed = '',
+        .then(this.setState({ jhed: this.state.jhed = '',
           firstName: this.state.firstName = '',
           lastName: this.state.lastName = '',
           submitted: !this.state.submitted }));
@@ -108,8 +108,12 @@ class AddAdvisorModal extends React.Component {
         {modalHeader}
         <form action="#1">
           <textarea
-            style={{ display: 'block', width: '90%', marginLeft: 'auto',
-              marginRight: 'auto', marginTop: '20px', marginBottom: '10px' }}
+            style={{ display: 'block',
+              width: '90%',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              marginTop: '20px',
+              marginBottom: '10px' }}
             className="cf-input"
             rows="1" placeholder="Enter Advisor JHED"
             value={jhed}
@@ -130,8 +134,12 @@ class AddAdvisorModal extends React.Component {
             onChange={event => this.sendLastName(event)}
           />
           <input
-            style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto',
-              color: 'white', backgroundColor: '#1abc9c', border: 0 }}
+            style={{ display: 'block',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              color: 'white',
+              backgroundColor: '#1abc9c',
+              border: 0 }}
             className="send-btn"
             type="submit"
             value="Add Advisor"

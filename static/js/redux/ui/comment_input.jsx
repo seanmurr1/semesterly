@@ -31,7 +31,7 @@ class CommentInput extends React.Component {
   componentDidUpdate() {
     if (this.state.submitted === true) {
       window.location.reload();
-      this.setState({ submitted: !this.state.submitted });
+      this.state.submitted = !this.state.submitted;
     }
   }
 
@@ -52,9 +52,9 @@ class CommentInput extends React.Component {
           jhed: this.props.userInfo.jhed,
           timestamp: new Date(Date.now()),
           content: this.state.comment,
-        })
+        }),
       })
-          .then(() => this.setState({ comment: this.state.comment = '', submitted: !this.state.submitted }));
+          .then(this.setState({ comment: this.state.comment = '', submitted: !this.state.submitted }));
     }
   }
 
