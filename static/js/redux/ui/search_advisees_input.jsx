@@ -12,9 +12,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 */
 
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import React from 'react';
-import Cookie from 'js-cookie';
+// import Cookie from 'js-cookie';
 // import { getTranscriptsearchBarAdviseessBySemester } from '../constants/endpoints';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
@@ -35,7 +35,7 @@ class SearchAdviseesInput extends React.Component {
   }
 
   sendContent(event) {
-    this.setState({searchBarAdvisees: event.target.value});
+    this.setState({ searchBarAdvisees: event.target.value });
   }
 
   // submitContent(semesterName, semesterYear) {
@@ -53,7 +53,9 @@ class SearchAdviseesInput extends React.Component {
   //         content: this.state.searchBarAdvisees,
   //       })
   //     })
-  //         .then(() => this.setState({searchBarAdvisees: this.state.searchBarAdvisees = '', submitted: !this.state.submitted}));
+  //         .then(() =>
+  // this.setState({searchBarAdvisees: this.state.searchBarAdvisees
+  // = '', submitted: !this.state.submitted}));
   //   }
   // }
 

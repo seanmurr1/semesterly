@@ -14,7 +14,7 @@ GNU General Public License for more details.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
+// import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import SearchAdviseesInputContainer from '../ui/containers/search_advisees_input_container';
 // import StudentListRow from './student_list_row';
 
@@ -35,17 +35,24 @@ class AdvisorPanel extends React.Component {
 
   render() {
     // const { userInfo } = this.props;
-    const searchAdviseesInput = (this.props.displayed_advisees === null) ? null : (<SearchAdviseesInputContainer
+    const searchAdviseesInput = (this.props.displayed_advisees === null) ?
+    null : (<SearchAdviseesInputContainer
       displayed_advisees={this.props.displayed_advisees}
       selected_advisee={this.props.selected_advisee}
       displayAdvisee={this.props.displayAdvisee}
     />);
     const adviseeList = (this.props.displayed_advisees != null) ?
-    this.props.displayed_advisees.map((advisee, key) => {
-      return (<button className="empty-state" onClick={() => { this.sendSelectedAdvisee(advisee); }} key={key}>
-      <h3>{ advisee.owner_name }</h3>
-    </button>);
-    }) : (<div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>);
+    this.props.displayed_advisees.map(advisee =>
+      (<button
+        className="empty-state"
+        onClick={
+          () => { this.sendSelectedAdvisee(advisee); }
+        }
+        key={advisee.owner_jhed}
+      >
+        <h3>{ advisee.owner_name }</h3>
+      </button>),
+    ) : (<div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>);
 
     return (
       <div className="comment-forum no-print">
@@ -53,7 +60,7 @@ class AdvisorPanel extends React.Component {
           <h3 className="title"> Students </h3>
         </div>
         { searchAdviseesInput }
-        <div className="cf-header"></div>
+        <div className="cf-header" />
         <div className="comment-forum-container">
           { adviseeList }
         </div>
@@ -69,9 +76,10 @@ AdvisorPanel.defaultProps = {
 };
 
 AdvisorPanel.propTypes = {
-  userInfo: SemesterlyPropTypes.userInfo.isRequired,
-  selected_advisee: PropTypes.object,
+  // userInfo: SemesterlyPropTypes.userInfo.isRequired,
+  selected_advisee: PropTypes.objectOf(PropTypes.string),
   displayed_advisees: PropTypes.arrayOf(PropTypes.object),
+  displayAdvisee: PropTypes.func.isRequired,
 };
 
 export default AdvisorPanel;
