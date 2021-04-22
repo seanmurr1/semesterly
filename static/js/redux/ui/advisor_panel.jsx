@@ -78,6 +78,14 @@ AdvisorPanel.defaultProps = {
 AdvisorPanel.propTypes = {
   // userInfo: SemesterlyPropTypes.userInfo.isRequired,
   selected_advisee: PropTypes.objectOf(PropTypes.string),
+  // PropTypes.objectOf(PropTypes.shape({
+  //   comment: PropTypes.arrayOf(PropTypes.string),
+  //   semester_name: PropTypes.string,
+  //   semester_year: PropTypes.string,
+  //   owner_name: PropTypes.string,
+  //   owner_jhed: PropTypes.string,
+  //   advisors: PropTypes.arrayOf(PropTypes.string),
+  // })),
   displayed_advisees: PropTypes.arrayOf(PropTypes.object),
   displayAdvisee: PropTypes.func.isRequired,
 };
