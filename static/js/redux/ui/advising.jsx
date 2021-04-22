@@ -153,7 +153,7 @@ class Advising extends React.Component {
   }
 
   displayAdvisee() {
-    this.fetchSemesters();
+    this.fetchSemesters;
   }
 
   render() {

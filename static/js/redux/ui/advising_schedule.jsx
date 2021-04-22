@@ -73,7 +73,7 @@ class AdvisingSchedule extends React.Component {
     let scheduleTitle;
     if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
       scheduleTitle = (<div className="advising-schedule-header">
-        Advising Dashboard
+        Advising Dashboard - {`${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`}
         &nbsp;&nbsp;&nbsp;
       </div>);
     } else {

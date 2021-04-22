@@ -27,13 +27,10 @@ class StudentListRow extends React.Component {
 
   render() {
     // TODO: replace with proper mapping of displayed_advisees
-    const plannedCourseList = (this.props.selected_advisee == null) ?
-    this.props.coursesInTimetable.map((course) => {
+    const adviseeList = (this.props.selected_advisee == null) ?
+    this.props.display_advisees.map((advisee) => {
       return (<div className="empty-state">
-      <img src="/static/img/emptystates/masterslots.png" alt="No courses added." />
-      <h3>Looks like you don&#39;t have any courses yet!</h3>
-      <h4>Your selections will appear here along with credits, professors and friends
-      in the class</h4>
+      <h3>{ advisee }</h3>
     </div>);
     }) : (<div className="empty-state">
     <img src="/static/img/emptystates/masterslots.png" alt="No courses added." />
@@ -47,7 +44,7 @@ class StudentListRow extends React.Component {
         handleTriggerClick={() => { this.sendSelectedAdvisee(); }}
       >
         <div>
-          { courseList }
+          { adviseeList }
         </div>
       </div>
     );

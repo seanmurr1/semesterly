@@ -28,31 +28,27 @@ class AdvisorPanel extends React.Component {
     };
   }
 
+  sendSelectedAdvisee() {
+    if (this.props.selected_advisee !== null) {
+      this.props.displayAdvisee();
+    }
+  }
+
   render() {
     const { userInfo } = this.props;
-    // TODO: CREATE Search bar for advisees, change to const
-    const searchAdviseesInput = (this.props.selected_semester === null) ? null : (<SearchAdviseesInputContainer
-      // semester_name={this.props.selected_semester.toString().split(' ')[0]}
-      // semester_year={this.props.selected_semester.toString().split(' ')[1]}
+    const searchAdviseesInput = (this.props.displayed_advisees === null) ? null : (<SearchAdviseesInputContainer
+      displayed_advisees={this.props.displayed_advisees}
+      selected_advisee={this.props.selected_advisee}
+      displayAdvisee={this.props.displayAdvisee()}
     />);
-
-    let displayed_advisees;
-    if (this.props.displayedAdvisees != null) {
-      // TODO: add mapping to show each advisor in list
-      <StudentListRow
-        selected_advisee={this.props.selected_advisee}
-        displayAdvisee={this.props.displayAdvisee}
-      />
-    } else {
-      displayed_advisees = <div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>;
-    } 
-
-    // const displayStudentNames = () => {
-    //   const names = [];
-    //   const studentList = (this.props.displayed_advisees) ? this.props.displayed_advisees.owner : [];
-    //   studentList.forEach(student => names.push(student.userFirstName + " " + student.userLastName));
-    //   return names.join(', ');
-    // };
+    console.log(this.props.displayed_advisees);
+    // TODO: add mapping to show each advisor in list
+    const adviseeList = (this.props.displayed_advisees != null) ?
+    this.props.displayed_advisees.map((advisee) => {
+      return (<button className="empty-state" onClick={() => { this.sendSelectedAdvisee(); }}>
+      <h3>{ advisee }</h3>
+    </button>);
+    }) : (<div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>);
 
     return (
       <div className="comment-forum no-print">
@@ -62,7 +58,7 @@ class AdvisorPanel extends React.Component {
         { searchAdviseesInput }
         <div className="cf-header"></div>
         <div className="comment-forum-container">
-          {displayed_advisees}
+          { adviseeList }
         </div>
         <div className="as-header" />
       </div>
