@@ -78,13 +78,12 @@ class Advising extends React.Component {
   fetchSemesters(newSelectedAdvisee) {
     const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
     if (newSelectedAdvisee != null) {
-      this.setState({ selected_advisee: newSelectedAdvisee });
-      const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.owner_jhed :
+      const jhed = (this.props.userInfo.isAdvisor) ? newSelectedAdvisee.owner_jhed :
         this.props.userInfo.jhed;
-      // console.log(this.state.selected_advisee.owner_jhed);
       fetch(getRetrievedSemesters(jhed))
         .then(response => response.json())
         .then((data) => {
+          this.setState({ selected_advisee: newSelectedAdvisee });
           const retrievedSemesters = data.retrievedSemesters;
           if (retrievedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
             this.setState({ displayed_semesters: retrievedSemesters });
