@@ -29,6 +29,7 @@ class AdvisorPanel extends React.Component {
 
   render() {
     const { userInfo } = this.props;
+    const searchAdvisees; // TODO: CREATE Search bar for advisees
     let displayed_advisees;
     if (this.props.displayedAdvisees != null) {
       // TODO: add mapping to show each advisor in list
