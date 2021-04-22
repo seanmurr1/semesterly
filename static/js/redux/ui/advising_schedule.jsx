@@ -125,8 +125,17 @@ AdvisingSchedule.propTypes = {
     year: PropTypes.string.isRequired,
   }).isRequired,
   timetableName: PropTypes.string.isRequired,
-  // TODO: fix proptype validation of selected_advisee
-  selected_advisee: PropTypes.PropTypes.objectOf(PropTypes.string),
+  selected_advisee: PropTypes.shape({
+    owner_name: PropTypes.string,
+    owner_jhed: PropTypes.string,
+    comments: PropTypes.arrayOf(PropTypes.shape({
+      author_name: PropTypes.string,
+      content: PropTypes.string,
+      timestamp: PropTypes.date,
+    })),
+    semester_name: PropTypes.string,
+    semester_year: PropTypes.string,
+  }),
 };
 
 export default AdvisingSchedule;

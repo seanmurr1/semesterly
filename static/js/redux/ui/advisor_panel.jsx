@@ -72,17 +72,18 @@ AdvisorPanel.defaultProps = {
 };
 
 AdvisorPanel.propTypes = {
-  // userInfo: SemesterlyPropTypes.userInfo.isRequired,
-  // TODO: fix proptype validation of selected_advisee
-  selected_advisee: PropTypes.objectOf(PropTypes.string),
-  // PropTypes.objectOf(PropTypes.shape({
-  //   comment: PropTypes.arrayOf(PropTypes.string),
-  //   semester_name: PropTypes.string,
-  //   semester_year: PropTypes.string,
-  //   owner_name: PropTypes.string,
-  //   owner_jhed: PropTypes.string,
-  //   advisors: PropTypes.arrayOf(PropTypes.string),
-  // })),
+  selected_advisee: PropTypes.shape({
+    owner_name: PropTypes.string,
+    owner_jhed: PropTypes.string,
+    comments: PropTypes.arrayOf(PropTypes.shape({
+      author_name: PropTypes.string,
+      content: PropTypes.string,
+      timestamp: PropTypes.date,
+    })),
+    semester_name: PropTypes.string,
+    semester_year: PropTypes.string,
+
+  }),
   displayed_advisees: PropTypes.arrayOf(PropTypes.object),
   displayAdvisee: PropTypes.func.isRequired,
 };
