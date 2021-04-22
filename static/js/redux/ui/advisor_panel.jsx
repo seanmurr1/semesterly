@@ -43,7 +43,7 @@ class AdvisorPanel extends React.Component {
     const adviseeList = (this.props.displayed_advisees != null) ?
     this.props.displayed_advisees.map((advisee, key) => {
       return (<button className="empty-state" onClick={() => { this.sendSelectedAdvisee(advisee); }} key={key}>
-      <h3>{ advisee }</h3>
+      <h3>{ advisee.owner_name }</h3>
     </button>);
     }) : (<div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>);
 
@@ -70,8 +70,8 @@ AdvisorPanel.defaultProps = {
 
 AdvisorPanel.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
-  selected_advisee: PropTypes.string,
-  displayed_advisees: PropTypes.arrayOf(PropTypes.string),
+  selected_advisee: PropTypes.object,
+  displayed_advisees: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default AdvisorPanel;

@@ -71,17 +71,17 @@ class Advising extends React.Component {
       .then(response => response.json())
       .then((data) => {
         const invitedTranscipts = data["invited_transcripts"][0];
-        this.setState({ displayed_advisees: advisees.concat(invitedTranscipts.owner_name) });
+        this.setState({ displayed_advisees: advisees.concat(invitedTranscipts) });
       });
   }
 
   fetchSemesters(newSelectedAdvisee) {
-    console.log(newSelectedAdvisee);
     const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
     if (newSelectedAdvisee != null) {
       this.setState({ selected_advisee: newSelectedAdvisee });
-      const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.jhed :
+      const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.owner_jhed :
         this.props.userInfo.jhed;
+      // console.log(this.state.selected_advisee.owner_jhed);
       fetch(getRetrievedSemesters(jhed))
         .then(response => response.json())
         .then((data) => {
