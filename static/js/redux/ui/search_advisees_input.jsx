@@ -15,34 +15,33 @@ GNU General Public License for more details.
 import PropTypes from 'prop-types';
 import React from 'react';
 import Cookie from 'js-cookie';
-// import { getTranscriptCommentsBySemester } from '../constants/endpoints';
+// import { getTranscriptsearchBarAdviseessBySemester } from '../constants/endpoints';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
 class SearchAdviseesInput extends React.Component {
   // TODO: make it search through displayed_advisees, not semesters,
-  // remove 
   constructor(props) {
     super(props);
     this.state = {
-      comment: '',
+      searchBarAdvisees: '',
       submitted: false
     };
   }
 
   componentDidUpdate() {
-    if (this.state.submitted === true ) {
-      window.location.reload();
-      this.setState({submitted: !this.state.submitted});
-    }
+    // if (this.state.submitted === true ) {
+    //   window.location.reload();
+    //   this.state.submitted = !this.state.submitted;
+    // }
   }
 
   sendContent(event) {
-    this.setState({comment: event.target.value});
+    this.setState({searchBarAdvisees: event.target.value});
   }
 
   // submitContent(semesterName, semesterYear) {
-  //   if (this.state.comment !== '') {
-  //     fetch(getTranscriptCommentsBySemester(semesterName, semesterYear), {
+  //   if (this.state.searchBarAdvisees !== '') {
+  //     fetch(getTranscriptsearchBarAdviseessBySemester(semesterName, semesterYear), {
   //       method: 'POST',
   //       headers: {
   //         'X-CSRFToken': Cookie.get('csrftoken'),
@@ -52,24 +51,24 @@ class SearchAdviseesInput extends React.Component {
   //       body: JSON.stringify({
   //         jhed: this.props.userInfo.jhed,
   //         timestamp: new Date(Date.now()),
-  //         content: this.state.comment,
+  //         content: this.state.searchBarAdvisees,
   //       })
   //     })
-  //         .then(() => this.setState({comment: this.state.comment = '', submitted: !this.state.submitted}));
+  //         .then(() => this.setState({searchBarAdvisees: this.state.searchBarAdvisees = '', submitted: !this.state.submitted}));
   //   }
   // }
 
   render() {
-    const { comment } = this.state;
-    const { semester_name, semester_year } = this.props;
+    const { searchBarAdvisees } = this.state;
+    // const { semester_name, semester_year } = this.props;
 
     return (<div className="cf-text-input">
       <form action="#0">
         <textarea
           className="cf-input"
           rows="1" placeholder="Search for Student"
-          value={comment}
-          // onChange={event => this.sendContent(event)}
+          value={searchBarAdvisees}
+          onChange={event => this.sendContent(event)}
           // onKeyPress="if(event.keyCode === 13){this.submitContent(semester_name, semester_year);return false;}"
         />
       </form>

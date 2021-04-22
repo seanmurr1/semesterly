@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
 class StudentListRow extends React.Component {
-
+  // TODO: WILL LIKELY REMOVE THIS!
   sendSelectedAdvisee() {
     if (this.props.selected_advisee !== null) {
       this.props.displayAdvisee();
@@ -26,7 +26,6 @@ class StudentListRow extends React.Component {
   }
 
   render() {
-    // TODO: replace with proper mapping of displayed_advisees
     const adviseeList = (this.props.selected_advisee == null) ?
     this.props.display_advisees.map((advisee) => {
       return (<div className="empty-state">
