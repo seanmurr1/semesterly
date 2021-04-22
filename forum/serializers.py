@@ -35,6 +35,7 @@ class TranscriptSerializer(serializers.ModelSerializer):
     semester_name = serializers.CharField(source='semester.name')
     semester_year = serializers.CharField(source='semester.year')
     owner_name = serializers.CharField(source='owner.get_full_name')
+    owner_jhed = serializers.CharField(source='owner.jhed')
     advisors = serializers.SerializerMethodField()
 
     def get_advisors(self, transcript):
@@ -54,5 +55,6 @@ class TranscriptSerializer(serializers.ModelSerializer):
             'semester_name',
             'semester_year',
             'owner_name',
+            'owner_jhed',
             'advisors',
         )
