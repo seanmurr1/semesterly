@@ -156,6 +156,7 @@ class Serializers(TestCase):
         self.assertEquals(self.semester.year, serialized['semester_year'])
         self.assertEquals(self.student.get_full_name(),
                           serialized['owner_name'])
+        self.assertEquals(self.student.jhed, serialized['owner_jhed'])
         self.assertEquals(self.advisor.jhed, serialized['advisors'][0]['jhed'])
 
 
