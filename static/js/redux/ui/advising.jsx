@@ -70,7 +70,7 @@ class Advising extends React.Component {
     fetch(getAllTranscripts())
       .then(response => response.json())
       .then((data) => {
-        const invitedTranscipts = data["invited_transcripts"][0];
+        const invitedTranscipts = data.invited_transcripts[0];
         this.setState({ displayed_advisees: advisees.concat(invitedTranscipts) });
       });
   }
@@ -238,7 +238,7 @@ class Advising extends React.Component {
             </div>
           </div>
           <div className="advising-schedule">
-            {userInfo.isAdvisor === true && this.props.selected_advisee == null ?
+            {userInfo.isAdvisor === true && this.state.selected_advisee == null ?
               <AdvisorDashboardContainer
                 displayed_advisees={this.state.displayed_advisees}
                 selected_advisee={this.state.selected_advisee}

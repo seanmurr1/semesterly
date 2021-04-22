@@ -50,7 +50,9 @@ class AdvisingSchedule extends React.Component {
     );
     let courseListRows;
     if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
-      courseListRows = <div className="empty-state"><h4><p> Click on a Student to see their schedule </p></h4></div>;
+      courseListRows = (<div className="empty-state"><h4>
+        <p> Click on a Student to see their schedule </p></h4>
+      </div>);
     } else {
       courseListRows = (this.props.displayed_semesters !== null) ?
       this.props.displayed_semesters.map(semester =>
@@ -95,6 +97,7 @@ class AdvisingSchedule extends React.Component {
 
 AdvisingSchedule.defaultProps = {
   selected_semester: null,
+  selected_advisee: null,
   displayed_semesters: null,
 };
 
@@ -116,6 +119,7 @@ AdvisingSchedule.propTypes = {
     year: PropTypes.string.isRequired,
   }).isRequired,
   timetableName: PropTypes.string.isRequired,
+  selected_advisee: PropTypes.objectOf(PropTypes.string),
 };
 
 export default AdvisingSchedule;
