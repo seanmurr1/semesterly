@@ -21,7 +21,7 @@ class StudentListRow extends React.Component {
   // TODO: WILL LIKELY REMOVE THIS!
   sendSelectedAdvisee() {
     if (this.props.selected_advisee !== null) {
-      this.props.displayAdvisee();
+      this.props.displayAdvisee(null);
     }
   }
 

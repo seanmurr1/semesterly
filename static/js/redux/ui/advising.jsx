@@ -46,6 +46,7 @@ class Advising extends React.Component {
     this.updateOrientation = this.updateOrientation.bind(this);
     this.callbackFunction = this.callbackFunction.bind(this);
     this.addRemoveAdvisor = this.addRemoveAdvisor.bind(this);
+    this.displayAdvisee = this.displayAdvisee.bind(this);
   }
 
   componentWillMount() {
@@ -60,7 +61,7 @@ class Advising extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchSemesters();
+    this.fetchSemesters(null);
     this.fetchAdvisees();
   }
 
@@ -74,12 +75,11 @@ class Advising extends React.Component {
       });
   }
 
-  fetchSemesters() {
+  fetchSemesters(newSelectedAdvisee) {
+    console.log(newSelectedAdvisee);
     const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
-    // TODO: Change to include selected student's JHED vs. userInfo's jhed
-    if (this.props.userInfo.isAdvisor && this.state.selected_advisee == null) {
-
-    } else {
+    if (newSelectedAdvisee != null) {
+      this.setState({ selected_advisee: newSelectedAdvisee });
       const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.jhed :
         this.props.userInfo.jhed;
       fetch(getRetrievedSemesters(jhed))
@@ -152,8 +152,8 @@ class Advising extends React.Component {
     this.fetchTranscript(childSemesterData);
   }
 
-  displayAdvisee() {
-    this.fetchSemesters;
+  displayAdvisee(newSelectedAdvisee) {
+    this.fetchSemesters(newSelectedAdvisee);
   }
 
   render() {

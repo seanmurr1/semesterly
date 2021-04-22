@@ -25,27 +25,24 @@ class AdvisorPanel extends React.Component {
     super(props);
     this.state = {
       advisorName: 'Sebastian Cabrejos',
+      newSelectedAdvisee: null,
     };
   }
 
-  sendSelectedAdvisee() {
-    if (this.props.selected_advisee !== null) {
-      this.props.displayAdvisee();
-    }
+  sendSelectedAdvisee(newSelectedAdvisee) {
+    this.props.displayAdvisee(newSelectedAdvisee);
   }
 
   render() {
-    const { userInfo } = this.props;
+    // const { userInfo } = this.props;
     const searchAdviseesInput = (this.props.displayed_advisees === null) ? null : (<SearchAdviseesInputContainer
       displayed_advisees={this.props.displayed_advisees}
       selected_advisee={this.props.selected_advisee}
-      displayAdvisee={this.props.displayAdvisee()}
+      displayAdvisee={this.props.displayAdvisee}
     />);
-    console.log(this.props.displayed_advisees);
-    // TODO: add mapping to show each advisor in list
     const adviseeList = (this.props.displayed_advisees != null) ?
     this.props.displayed_advisees.map((advisee, key) => {
-      return (<button className="empty-state" onClick={() => { this.sendSelectedAdvisee(); }} key={key}>
+      return (<button className="empty-state" onClick={() => { this.sendSelectedAdvisee(advisee); }} key={key}>
       <h3>{ advisee }</h3>
     </button>);
     }) : (<div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>);
