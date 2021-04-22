@@ -24,7 +24,7 @@ class AdvisorPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      advisorName: 'Sebastian Cabrejos',
+      advisorName: 'Mia Boloix',
       newSelectedAdvisee: null,
     };
   }

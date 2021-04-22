@@ -76,6 +76,12 @@ class AdvisingSchedule extends React.Component {
         Advising Dashboard - {`${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`}
         &nbsp;&nbsp;&nbsp;
       </div>);
+    } else if (this.props.userInfo.isAdvisor && this.props.selected_advisee != null) {
+      scheduleTitle = (<div className="advising-schedule-header">
+        Course Summary for {this.props.selected_advisee.owner_name}
+        &nbsp;&nbsp;&nbsp;
+        { SISImportDataModalButton }
+      </div>);
     } else {
       scheduleTitle = (<div className="advising-schedule-header">
         Course Summary
@@ -96,6 +102,7 @@ class AdvisingSchedule extends React.Component {
 AdvisingSchedule.defaultProps = {
   selected_semester: null,
   displayed_semesters: null,
+  selected_advisee: null,
 };
 
 AdvisingSchedule.propTypes = {
@@ -116,6 +123,7 @@ AdvisingSchedule.propTypes = {
     year: PropTypes.string.isRequired,
   }).isRequired,
   timetableName: PropTypes.string.isRequired,
+  selected_advisee: PropTypes.object,
 };
 
 export default AdvisingSchedule;
