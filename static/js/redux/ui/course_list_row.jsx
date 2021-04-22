@@ -37,8 +37,7 @@ class CourseListRow extends React.Component {
     if (this.props.displayed_semester != null) {
       const semesterName = this.props.displayed_semester.toString().split(' ')[0];
       const semesterYear = this.props.displayed_semester.toString().split(' ')[1];
-      // TODO: Change to include selected stuent's JHED vs. userInfo's jhed
-      const jhed = (this.props.userInfo.isAdvisor) ? this.props.userInfo.jhed :
+      const jhed = (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed :
         this.props.userInfo.jhed;
       if (this.props.current_semester === this.props.displayed_semester) {
         fetch(getSISVerifiedCourses(semesterName, semesterYear, jhed, this.props.timetableName))
@@ -154,6 +153,7 @@ class CourseListRow extends React.Component {
 
 CourseListRow.defaultProps = {
   selected_semester: null,
+  selected_advisee: null,
 };
 
 CourseListRow.propTypes = {
@@ -165,6 +165,8 @@ CourseListRow.propTypes = {
   courseToClassmates: PropTypes.shape({ '*': SemesterlyPropTypes.classmates }).isRequired,
   fetchCourseInfo: PropTypes.func.isRequired,
   timetableName: PropTypes.string.isRequired,
+  // TODO: fix proptype validation of selected_advisee
+  selected_advisee: PropTypes.PropTypes.objectOf(PropTypes.string),
 };
 
 export default CourseListRow;

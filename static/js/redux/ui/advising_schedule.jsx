@@ -61,6 +61,7 @@ class AdvisingSchedule extends React.Component {
           parentParentCallback={this.props.parentCallback}
           displayed_semester={semester}
           current_semester={`${this.props.semester.name} ${this.props.semester.year}`}
+          selected_advisee={this.props.selected_advisee}
           selected_semester={this.props.selected_semester}
           coursesInTimetable={this.props.coursesInTimetable}
           courseToClassmates={this.props.courseToClassmates}
@@ -82,7 +83,6 @@ class AdvisingSchedule extends React.Component {
       scheduleTitle = (<div className="advising-schedule-header">
         Course Summary for {this.props.selected_advisee.owner_name}
         &nbsp;&nbsp;&nbsp;
-        { SISImportDataModalButton }
       </div>);
     } else {
       scheduleTitle = (<div className="advising-schedule-header">
@@ -125,18 +125,8 @@ AdvisingSchedule.propTypes = {
     year: PropTypes.string.isRequired,
   }).isRequired,
   timetableName: PropTypes.string.isRequired,
-  selected_advisee: PropTypes.shape({
-    owner_name: PropTypes.string,
-    owner_jhed: PropTypes.string,
-    comments: PropTypes.arrayOf(PropTypes.shape({
-      author_name: PropTypes.string,
-      content: PropTypes.string,
-      timestamp: PropTypes.date,
-    })),
-    semester_name: PropTypes.string,
-    semester_year: PropTypes.string,
-
-  }),
+  // TODO: fix proptype validation of selected_advisee
+  selected_advisee: PropTypes.PropTypes.objectOf(PropTypes.string),
 };
 
 export default AdvisingSchedule;

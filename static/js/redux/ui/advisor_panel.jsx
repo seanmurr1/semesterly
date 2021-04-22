@@ -16,15 +16,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import SearchAdviseesInputContainer from '../ui/containers/search_advisees_input_container';
-// import StudentListRow from './student_list_row';
-
-// TODO: update for all props/states and styling needed for advisor panel.
 
 class AdvisorPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      advisorName: 'Mia Boloix',
       newSelectedAdvisee: null,
     };
   }
@@ -77,6 +73,7 @@ AdvisorPanel.defaultProps = {
 
 AdvisorPanel.propTypes = {
   // userInfo: SemesterlyPropTypes.userInfo.isRequired,
+  // TODO: fix proptype validation of selected_advisee
   selected_advisee: PropTypes.objectOf(PropTypes.string),
   // PropTypes.objectOf(PropTypes.shape({
   //   comment: PropTypes.arrayOf(PropTypes.string),

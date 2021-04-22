@@ -16,7 +16,7 @@ GNU General Public License for more details.
 import React from 'react';
 // import Cookie from 'js-cookie';
 // import { getTranscriptsearchBarAdviseessBySemester } from '../constants/endpoints';
-import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
+// import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
 class SearchAdviseesInput extends React.Component {
   constructor(props) {
@@ -61,7 +61,6 @@ class SearchAdviseesInput extends React.Component {
 
   render() {
     const { searchBarAdvisees } = this.state;
-    // const { semester_year } = this.props;
 
     return (<div className="cf-text-input">
       <form action="#0">
@@ -78,7 +77,7 @@ class SearchAdviseesInput extends React.Component {
 }
 
 SearchAdviseesInput.propTypes = {
-  userInfo: SemesterlyPropTypes.userInfo.isRequired,
+  // userInfo: SemesterlyPropTypes.userInfo.isRequired,
 };
 
 export default SearchAdviseesInput;
