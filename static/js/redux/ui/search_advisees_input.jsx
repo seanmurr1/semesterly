@@ -19,12 +19,11 @@ import Cookie from 'js-cookie';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
 class SearchAdviseesInput extends React.Component {
-  // TODO: make it search through displayed_advisees, not semesters,
   constructor(props) {
     super(props);
     this.state = {
       searchBarAdvisees: '',
-      submitted: false
+      // submitted: false
     };
   }
 
@@ -60,7 +59,7 @@ class SearchAdviseesInput extends React.Component {
 
   render() {
     const { searchBarAdvisees } = this.state;
-    // const { semester_name, semester_year } = this.props;
+    // const { semester_year } = this.props;
 
     return (<div className="cf-text-input">
       <form action="#0">
@@ -69,7 +68,6 @@ class SearchAdviseesInput extends React.Component {
           rows="1" placeholder="Search for Student"
           value={searchBarAdvisees}
           onChange={event => this.sendContent(event)}
-          // onKeyPress="if(event.keyCode === 13){this.submitContent(semester_name, semester_year);return false;}"
         />
       </form>
     </div>
@@ -78,8 +76,6 @@ class SearchAdviseesInput extends React.Component {
 }
 
 SearchAdviseesInput.propTypes = {
-  // semester_name: PropTypes.string.isRequired,
-  // semester_year: PropTypes.string.isRequired,
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
 };
 
