@@ -98,12 +98,12 @@ class TopBarAdvising extends React.Component {
           onClick={() => this.props.triggerAddAdvisorModal()}
           data-tip
           className="save-timetable add-button"
-          data-for="import-data-btn-tooltip"
+          data-for="add-advisor-btn-tooltip"
         >
           <i className="fa fa-plus" />
         </button>
         <ReactTooltip
-          id="import-data-btn-tooltip"
+          id="add-advisor-btn-tooltip"
           class="tooltip"
           type="dark"
           place="right"

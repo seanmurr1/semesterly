@@ -73,7 +73,7 @@ class AddAdvisorModal extends React.Component {
         })
       })
         .then(() => this.setState({ jhed: this.state.jhed = '',
-          firsfirstNamet_name: this.state.firstName = '',
+          firstName: this.state.firstName = '',
           lastName: this.state.lastName = '',
           submitted: !this.state.submitted }));
     }
@@ -106,33 +106,40 @@ class AddAdvisorModal extends React.Component {
         }}
       >
         {modalHeader}
-        <p><br /></p>
         <form action="#1">
           <textarea
+            style={{ display: 'block', width: '90%', marginLeft: 'auto',
+              marginRight: 'auto', marginTop: '20px', marginBottom: '10px' }}
             className="cf-input"
             rows="1" placeholder="Enter Advisor JHED"
             value={jhed}
             onChange={event => this.sendJHED(event)}
           />
           <textarea
+            style={{ display: 'block', width: '90%', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px' }}
             className="cf-input"
             rows="1" placeholder="Enter Advisor First Name"
             value={firstName}
             onChange={event => this.sendFirstName(event)}
           />
           <textarea
+            style={{ display: 'block', width: '90%', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px' }}
             className="cf-input"
             rows="1" placeholder="Enter Advisor Last Name"
             value={lastName}
             onChange={event => this.sendLastName(event)}
           />
-          <p><br /></p>
           <input
+            style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto',
+              color: 'white', backgroundColor: '#1abc9c', border: 0 }}
             className="send-btn"
             type="submit"
-            value="Send Info"
+            value="Add Advisor"
             onClick={() => this.submitContent()}
           />
+          <p>
+            <br />
+          </p>
         </form>
       </Modal>
     );
