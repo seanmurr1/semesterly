@@ -15,6 +15,7 @@ GNU General Public License for more details.
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
+import SearchAdviseesInputContainer from '../ui/containers/search_advisees_input_container';
 import StudentListRow from './student_list_row';
 
 // TODO: update for all props/states and styling needed for advisor panel.
@@ -29,7 +30,12 @@ class AdvisorPanel extends React.Component {
 
   render() {
     const { userInfo } = this.props;
-    let searchAdvisees; // TODO: CREATE Search bar for advisees, change to const
+    // TODO: CREATE Search bar for advisees, change to const
+    const searchAdviseesInput = (this.props.selected_semester === null) ? null : (<SearchAdviseesInputContainer
+      // semester_name={this.props.selected_semester.toString().split(' ')[0]}
+      // semester_year={this.props.selected_semester.toString().split(' ')[1]}
+    />);
+
     let displayed_advisees;
     if (this.props.displayedAdvisees != null) {
       // TODO: add mapping to show each advisor in list
@@ -53,7 +59,8 @@ class AdvisorPanel extends React.Component {
         <div className="cf-name">
           <h3 className="title"> Students </h3>
         </div>
-        <div className="cf-header">{/* TODO: add search bar */}</div>
+        { searchAdviseesInput }
+        <div className="cf-header"></div>
         <div className="comment-forum-container">
           {displayed_advisees}
         </div>
