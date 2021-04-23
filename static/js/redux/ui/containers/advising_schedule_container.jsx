@@ -24,6 +24,7 @@ import {
   showFinalExamsModal,
   togglePeerModal,
   triggerSISImportDataModal,
+  triggerAddAdvisorModal,
 } from '../../actions/modal_actions';
 import {
   addOrRemoveCourse,
@@ -70,6 +71,7 @@ const AdvisingScheduleContainer = connect(
     launchFinalExamsModal: showFinalExamsModal,
     loadTimetable,
     triggerSISImportDataModal,
+    triggerAddAdvisorModal,
   },
 )(AdvisingSchedule);
 

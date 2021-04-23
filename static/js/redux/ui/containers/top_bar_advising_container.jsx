@@ -15,7 +15,6 @@ GNU General Public License for more details.
 import { connect } from 'react-redux';
 import TopBarAdvising from '../top_bar_advising';
 import { getCurrentSemester } from '../../reducers/root_reducer';
-import { triggerAddAdvisorModal } from '../../actions/modal_actions';
 
 
 const mapStateToProps = state => ({
@@ -25,9 +24,6 @@ const mapStateToProps = state => ({
 
 const TopBarAdvisingContainer = connect(
   mapStateToProps,
-  {
-    triggerAddAdvisorModal,
-  },
 )(TopBarAdvising);
 
 export default TopBarAdvisingContainer;

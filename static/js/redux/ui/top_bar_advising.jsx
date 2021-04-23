@@ -13,8 +13,6 @@ GNU General Public License for more details.
 */
 
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
-import PropTypes from 'prop-types';
 import SocialProfileContainer from './containers/social_profile_container';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
@@ -92,27 +90,6 @@ class TopBarAdvising extends React.Component {
         </a>
       </div>
     );
-    const AddAdvisorButton = (
-      <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle', float: 'left' }}>
-        <button
-          onClick={() => this.props.triggerAddAdvisorModal()}
-          data-tip
-          className="save-timetable add-button"
-          data-for="add-advisor-btn-tooltip"
-        >
-          <i className="fa fa-plus" />
-        </button>
-        <ReactTooltip
-          id="add-advisor-btn-tooltip"
-          class="tooltip"
-          type="dark"
-          place="right"
-          effect="solid"
-        >
-          <span>Add a new advisor</span>
-        </ReactTooltip>
-      </div>
-    );
     return (
       <div className="top-bar">
         <img
@@ -137,7 +114,6 @@ class TopBarAdvising extends React.Component {
         </div>
         <SocialProfileContainer />
         <span>
-          { AddAdvisorButton }
           { ReturnToScheduleButton }
         </span>
         <div className="navicon" onClick={this.toggleComments}>
@@ -151,7 +127,6 @@ class TopBarAdvising extends React.Component {
 
 TopBarAdvising.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
-  triggerAddAdvisorModal: PropTypes.func.isRequired,
   currentSemester: SemesterlyPropTypes.semester.isRequired,
 };
 
