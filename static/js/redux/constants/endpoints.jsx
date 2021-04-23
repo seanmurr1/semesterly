@@ -47,6 +47,8 @@ export const getRetrievedSemesters = jhed => `/advising/sis_semesters/${jhed}/`;
 export const getSISVerifiedCourses = (semesterName, semesterYear, jhed, ttName) => `/advising/sis_courses/${semesterName}/${semesterYear}/${jhed}/${ttName}/`;
 export const getSISVerifiedCoursesNoTT = (semesterName, semesterYear, jhed) => `/advising/sis_courses/${semesterName}/${semesterYear}/${jhed}/`;
 
+export const getAdvisorTestAdd = () => '/advising/testadd/';
+
 export function getCourseShareLinkFromModal(code, semester) {
   return `/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
 }
