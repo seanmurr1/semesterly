@@ -41,13 +41,36 @@ class AdvisingSchedule extends React.Component {
           id="import-data-btn-tooltip"
           class="tooltip"
           type="dark"
-          place="right"
+          place="bottom"
           effect="solid"
         >
           <span>Import SIS Data</span>
         </ReactTooltip>
       </div>
     );
+    
+    const AddAdvisorButton = (
+      <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle' }}>
+        <button
+          onClick={() => this.props.triggerAddAdvisorModal()}
+          data-tip
+          className="save-timetable add-button"
+          data-for="add-advisor-btn-tooltip"
+        >
+          <i className="fa fa-plus" />
+        </button>
+        <ReactTooltip
+          id="add-advisor-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="bottom"
+          effect="solid"
+        >
+          <span>Add a new advisor</span>
+        </ReactTooltip>
+      </div>
+    );
+
     let courseListRows;
     if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
       courseListRows = (<div className="empty-state"><h4>
@@ -78,17 +101,20 @@ class AdvisingSchedule extends React.Component {
       scheduleTitle = (<div className="advising-schedule-header">
         Advising Dashboard - {`${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`}
         &nbsp;&nbsp;&nbsp;
+        { AddAdvisorButton }
       </div>);
     } else if (this.props.userInfo.isAdvisor && this.props.selected_advisee != null) {
       scheduleTitle = (<div className="advising-schedule-header">
         Course Summary for {this.props.selected_advisee.owner_name}
         &nbsp;&nbsp;&nbsp;
+        { AddAdvisorButton }
       </div>);
     } else {
       scheduleTitle = (<div className="advising-schedule-header">
         Course Summary
         &nbsp;&nbsp;&nbsp;
         { SISImportDataModalButton }
+        { AddAdvisorButton }
       </div>);
     }
 
@@ -110,6 +136,7 @@ AdvisingSchedule.defaultProps = {
 AdvisingSchedule.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
   triggerSISImportDataModal: PropTypes.func.isRequired,
+  triggerAddAdvisorModal: PropTypes.func.isRequired,
   selected_semester: PropTypes.string,
   displayed_semesters: PropTypes.arrayOf(PropTypes.string),
   coursesInTimetable: PropTypes.arrayOf(SemesterlyPropTypes.denormalizedCourse).isRequired,
