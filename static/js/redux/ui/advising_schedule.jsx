@@ -77,6 +77,7 @@ class AdvisingSchedule extends React.Component {
         <p> Click on a Student to see their schedule </p></h4>
       </div>);
     } else {
+      // TODO: get timetable name from invited transcripts if user is advisor
       courseListRows = (this.props.displayed_semesters !== null) ?
       this.props.displayed_semesters.map(semester =>
         (<CourseListRow

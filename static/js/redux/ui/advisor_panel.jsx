@@ -30,13 +30,15 @@ class AdvisorPanel extends React.Component {
   }
 
   render() {
-    // const { userInfo } = this.props;
+    // TODO: fix search bar so it works, test with multiple students
     const searchAdviseesInput = (this.props.displayed_advisees === null) ?
     null : (<SearchAdviseesInputContainer
       displayed_advisees={this.props.displayed_advisees}
       selected_advisee={this.props.selected_advisee}
       displayAdvisee={this.props.displayAdvisee}
     />);
+
+    // TODO: add unread comment note under student name (insert in div below)
     const adviseeList = (this.props.displayed_advisees != null) ?
     this.props.displayed_advisees.map(advisee =>
       (<button
