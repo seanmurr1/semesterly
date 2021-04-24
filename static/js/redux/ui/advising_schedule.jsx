@@ -48,7 +48,7 @@ class AdvisingSchedule extends React.Component {
         </ReactTooltip>
       </div>
     );
-    
+
     const AddAdvisorButton = (
       <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle' }}>
         <button
