@@ -33,5 +33,11 @@ class Advisor(models.Model):
     email_address = models.CharField(
         max_length=255, null=True, default='')
 
+    def __str__(self):
+        return self.get_full_name()
+    
+    def __unicode__(self):
+        return self.get_full_name()
+
     def get_full_name(self):
         return "{} {}".format(self.first_name, self.last_name)

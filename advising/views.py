@@ -117,16 +117,17 @@ class StudentSISView(ValidateSubdomainMixin, APIView):
                         status=status.HTTP_201_CREATED)
 
     def add_advisors(self, data, student):
-        student.advisors.clear()
         for advisor_data in data['Advisors']:
             last_name, first_name = advisor_data['FullName'].split(',')
             advisor, created = Advisor.objects.get_or_create(
                 jhed='{payload}{email}'.format(
-                    payload=advisor_data['JhedId'], email='@jh.edu'),
-                email_address=advisor_data['EmailAddress'],
-                last_name=last_name.strip(), first_name=first_name.strip())
+                    payload=advisor_data['JhedId'], email='@jh.edu'))
+            if advisor not in student.advisors.all():
+                student.advisors.add(advisor)
+            advisor.email_address = advisor_data['EmailAddress']
+            advisor.first_name = first_name.strip()
+            advisor.last_name = last_name.strip()
             advisor.save()
-            student.advisors.add(advisor)
 
     def add_majors(self, data, student):
         student.primary_major = data['PersonalInfo']['PrimaryMajor']
