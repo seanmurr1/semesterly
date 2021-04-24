@@ -156,11 +156,20 @@ export const toggleSeparateAccountsModal = () => ({
   type: ActionTypes.TOGGLE_SEPARATE_ACCOUNTS_MODAL,
 });
 
-// MOCK MODAL
+// SIS MODAL
 export const triggerSISImportDataModal = () => ({
   type: ActionTypes.TRIGGER_SIS_IMPORT_DATA_MODAL,
 });
 
 export const toggleSISImportDataModal = () => ({
   type: ActionTypes.TOGGLE_SIS_IMPORT_DATA_MODAL,
+});
+
+// ADD ADVISOR MODAL
+export const triggerAddAdvisorModal = () => ({
+  type: ActionTypes.TRIGGER_ADD_ADVISOR_MODAL,
+});
+
+export const toggleAddAdvisorModal = () => ({
+  type: ActionTypes.TOGGLE_ADD_ADVISOR_MODAL,
 });

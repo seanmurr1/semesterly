@@ -31,7 +31,7 @@ class CommentInput extends React.Component {
   componentDidUpdate() {
     if (this.state.submitted === true) {
       window.location.reload();
-      // this.setState({ submitted: !this.state.submitted });
+      this.state.submitted = !this.state.submitted;
     }
   }
 
@@ -54,10 +54,7 @@ class CommentInput extends React.Component {
           content: this.state.comment,
         }),
       })
-          .then(this.setState({
-            comment: this.state.comment = '',
-            submitted: !this.state.submitted,
-          }));
+          .then(this.setState({ comment: this.state.comment = '', submitted: !this.state.submitted }));
     }
   }
 
@@ -72,8 +69,8 @@ class CommentInput extends React.Component {
           rows="1" placeholder="Type your comment here..."
           value={comment}
           onChange={event => this.sendContent(event)}
-          onKeyPress="if(event.keyCode === 13){this.submitContent(semester_name, semester_year); \
-          return false;}"
+          onKeyPress="if(event.keyCode === 13)
+          {this.submitContent(semester_name, semester_year);return false;}"
         />
         <input
           className="send-btn"

@@ -30,6 +30,8 @@ import {
   getAllTranscripts,
 } from '../constants/endpoints';
 import SISImportDataModalContainer from './containers/modals/SIS_import_data_modal_container';
+import AddAdvisorModalContainer from './containers/modals/add_advisor_modal_container';
+
 
 class Advising extends React.Component {
   constructor(props) {
@@ -223,6 +225,7 @@ class Advising extends React.Component {
         <SignupModalContainer />
         <JHUSignupModalContainer />
         <SISImportDataModalContainer />
+        <AddAdvisorModalContainer />
         <div className="all-cols">
           <div className="main-advising">
             <div className="advising-schedule">
