@@ -328,6 +328,7 @@ class StudentSISViewTest(APITestCase):
         # https://jsfiddle.net/JJamesWWang/nzr4j3L1/5/
         # Removed Moulton, Linda H, added Zhang, Jason
         token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ICAgIHsKICAgICAgICAiUGVyc29uYWxJbmZvIjoKICAgICAgICB7CiAgICAgICAgICAgICJGdWxsTmFtZSI6ICJXIGFuZywgSmFtZXMiLAogICAgICAgICAgICAiRW1haWxBZGRyZXNzIjogImp3YW5nMzgwQGpodS5lZHUiLAogICAgICAgICAgICAiSmhlZElkIjogImp3YW5nMzgwIiwKICAgICAgICAgICAgIlByaW1hcnlNYWpvciI6ICJDb21wdXRlciBTY2llbmNlIgogICAgICAgIH0sCiAgICAgICAgIk5vblByaW1hcnlNYWpvcnMiOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJNYWpvciI6ICJNYXRoZW1hdGljcyIKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIk1ham9yIjogIldyaXRpbmcgU2VtaW5hcnMiCiAgICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJNaW5vcnMiOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJNaW5vck5hbWUiOiAiTWFuYWdlbWVudCAmIEVudHJlcHJlbmV1cnNoaXAiCiAgICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJBZHZpc29ycyI6IFsKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIkZ1bGxOYW1lIjogIkdob3JiYW5pIEtoYWxlZGksIFNvdWRlaCIsCiAgICAgICAgICAgICAgICAiSmhlZElkIjogInNnaG9yYmExIiwKICAgICAgICAgICAgICAgICJFbWFpbEFkZHJlc3MiOiAic291ZGVoQGpodS5lZHUiCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJGdWxsTmFtZSI6ICJaaGFuZywgSmFzb24iLAogICAgICAgICAgICAgICAgIkpoZWRJZCI6ICJ4emhhbjIwNiIsCiAgICAgICAgICAgICAgICAiRW1haWxBZGRyZXNzIjogInh6aGFuMjA2QGpodS5lZHUiCiAgICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJDb3Vyc2VzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAiVGVybSI6ICJGYWxsIDIwMTkiLAogICAgICAgICAgICAgICAgIk9mZmVyaW5nTmFtZSI6ICJBUy4xMTAuMjEyIiwKICAgICAgICAgICAgICAgICJTZWN0aW9uIjogIjAxIgogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAiVGVybSI6ICJGYWxsIDIwMTkiLAogICAgICAgICAgICAgICAgIk9mZmVyaW5nTmFtZSI6ICJFTi42MDEuMjI2IiwKICAgICAgICAgICAgICAgICJTZWN0aW9uIjogIjAyIgogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAiVGVybSI6ICJJbnRlcnNlc3Npb24gMjAyMCIsCiAgICAgICAgICAgICAgICAiT2ZmZXJpbmdOYW1lIjogIkFTLjM3Ni4xNjgiLAogICAgICAgICAgICAgICAgIlNlY3Rpb24iOiAiMjIiCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJUZXJtIjogIlNwcmluZyAyMDIwIiwKICAgICAgICAgICAgICAgICJPZmZlcmluZ05hbWUiOiAiQVMuMjIwLjEwNSIsCiAgICAgICAgICAgICAgICAiU2VjdGlvbiI6ICIxNSIKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIlRlcm0iOiAiRmFsbCAyMDIwIiwKICAgICAgICAgICAgICAgICJPZmZlcmluZ05hbWUiOiAiTUkuODQxLjIwMCIsCiAgICAgICAgICAgICAgICAiU2VjdGlvbiI6ICIwMSIKICAgICAgICAgICAgfQogICAgICAgIF0KICAgIH0KIAogICAgICA.UpYXfYm5btQvLILecjDk-ubYfnT9qS5GApxta_6o_sk'
+        url = '/advising/sis_post/'
         request = self.factory.post(
             url, data=token, content_type='application/jwt')
         response = get_response(request, self.student.user, url)
@@ -340,6 +341,11 @@ class StudentSISViewTest(APITestCase):
         self.assertTrue(self.student.advisors.filter(
             first_name='Jason', last_name='Zhang',
             jhed='xzhan206@jh.edu', email_address='xzhan206@jhu.edu').exists())
+
+    def test_reimport_keeps_transcript_advisor(self):
+        setUpTranscript(self)
+        self.test_new_advisor_appends()
+        self.assertTrue(self.advisor_user in self.transcript.advisors.all())
 
     def test_new_post_updates(self):
         response = sis_post(self)
@@ -364,7 +370,7 @@ class StudentSISViewTest(APITestCase):
         self.assertEquals(
             self.student.minors[0], '4')
 
-        self.assertEquals(len(self.student.advisors.all()), 2)
+        self.assertEquals(len(self.student.advisors.all()), 3)
         self.assertTrue(self.student.advisors.filter(
             first_name='5', last_name='5',
             jhed='6@jh.edu', email_address='7').exists())
