@@ -122,6 +122,7 @@ class StudentSISView(ValidateSubdomainMixin, APIView):
             advisor, created = Advisor.objects.get_or_create(
                 jhed='{payload}{email}'.format(
                     payload=advisor_data['JhedId'], email='@jh.edu'))
+            # TODO: Add limit to number of advisors?
             if advisor not in student.advisors.all():
                 student.advisors.add(advisor)
             advisor.email_address = advisor_data['EmailAddress']
