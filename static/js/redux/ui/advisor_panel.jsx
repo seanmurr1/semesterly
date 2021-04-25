@@ -13,9 +13,10 @@ GNU General Public License for more details.
 */
 
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
-// import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import SearchAdviseesInputContainer from '../ui/containers/search_advisees_input_container';
+// import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
 class AdvisorPanel extends React.Component {
   constructor(props) {
@@ -54,7 +55,27 @@ class AdvisorPanel extends React.Component {
 
     return (
       <div className="comment-forum no-print">
-        <div className="cf-name">
+        <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle', float: 'left', marginTop: 11 }}>
+          <a href="/advising">
+            <button
+              data-tip
+              className="save-timetable add-button"
+              data-for="back-btn-tooltip"
+            >
+              <i className="fa fa-chevron-circle-left" />
+            </button>
+          </a>
+          <ReactTooltip
+            id="back-btn-tooltip"
+            class="tooltip"
+            type="dark"
+            place="right"
+            effect="solid"
+          >
+            <span>Back</span>
+          </ReactTooltip>
+        </div>
+        <div className="cf-name" style={{ display: 'inline-block' }}>
           <h3 className="title"> Students </h3>
         </div>
         { searchAdviseesInput }
