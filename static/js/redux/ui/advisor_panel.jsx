@@ -23,11 +23,13 @@ class AdvisorPanel extends React.Component {
     super(props);
     this.state = {
       newSelectedAdvisee: null,
+      showingAdvisee: false,
     };
   }
 
   sendSelectedAdvisee(newSelectedAdvisee) {
     this.props.displayAdvisee(newSelectedAdvisee);
+    this.setState({ showingAdvisee: !this.state.showingAdvisee });
   }
 
   render() {
@@ -38,6 +40,28 @@ class AdvisorPanel extends React.Component {
       selected_advisee={this.props.selected_advisee}
       displayAdvisee={this.props.displayAdvisee}
     />);
+    const backButton = (
+      <div className="cal-btn-wrapper" style={{ display: this.state.showingAdvisee ? 'inline-block' : 'none', verticalAlign: 'middle', float: 'left', marginTop: 11 }}>
+        <a href="/advising">
+          <button
+            data-tip
+            className="save-timetable add-button"
+            data-for="back-btn-tooltip"
+          >
+            <i className="fa fa-chevron-circle-left" />
+          </button>
+        </a>
+        <ReactTooltip
+          id="back-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="right"
+          effect="solid"
+        >
+          <span>Back</span>
+        </ReactTooltip>
+      </div>
+    );
 
     // TODO: add unread comment note under student name (insert in div below)
     const adviseeList = (this.props.displayed_advisees != null) ?
@@ -55,29 +79,10 @@ class AdvisorPanel extends React.Component {
 
     return (
       <div className="comment-forum no-print">
-        <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle', float: 'left', marginTop: 11 }}>
-          <a href="/advising">
-            <button
-              data-tip
-              className="save-timetable add-button"
-              data-for="back-btn-tooltip"
-            >
-              <i className="fa fa-chevron-circle-left" />
-            </button>
-          </a>
-          <ReactTooltip
-            id="back-btn-tooltip"
-            class="tooltip"
-            type="dark"
-            place="right"
-            effect="solid"
-          >
-            <span>Back</span>
-          </ReactTooltip>
-        </div>
-        <div className="cf-name" style={{ display: 'inline-block' }}>
+        <div className="cf-name" style={{ display: 'inline-block', float: 'left' }}>
           <h3 className="title"> Students </h3>
         </div>
+        { backButton }
         { searchAdviseesInput }
         <div className="cf-header" />
         <div className="comment-forum-container">
