@@ -78,7 +78,7 @@ class CommentForum extends React.Component {
     />);
 
 
-    const backButton = (
+    const backButton = (userInfo.isAdvisor === true) ? (
       <div className="cal-btn-wrapper" style={{ display: this.props.userInfo.isAdvisor ? 'inline-block' : 'none', verticalAlign: 'middle', float: 'left', marginTop: 11 }}>
         <a href="/advising">
           <button
@@ -99,7 +99,7 @@ class CommentForum extends React.Component {
           <span>Back</span>
         </ReactTooltip>
       </div>
-    );
+    ) : null;
 
     const displayAdvisorNames = () => {
       const names = [];
@@ -110,10 +110,10 @@ class CommentForum extends React.Component {
 
     return (
       <div className="comment-forum no-print">
-        <div className="cf-name" style={{ display: 'inline-block', float: 'left' }}>
-          <h3 className="title"> Comments Forum</h3>
+        <div className="cf-name">
+          {/* TODO: fix the CSS styling, change title css */}
+          <h3 className="comment-title"> { backButton } Comments Forum</h3>
         </div>
-        { backButton }
         {this.props.selected_semester &&
           <AdvisorMenu
             semester={this.props.selected_semester}

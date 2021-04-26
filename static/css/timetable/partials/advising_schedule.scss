@@ -225,6 +225,15 @@
     float: left;
   }
 
+  .comment-title {
+    font-size: 1.25em;
+    font-weight: bold;
+    font-family: "Roboto", Arial, sans-serif;
+    margin-top: 15px;
+    width: 95%;
+    float: left;
+  }
+
   .advisor-dropdown {
     background-color: $gfff;
     border: 1px solid $ge6e6e6;
