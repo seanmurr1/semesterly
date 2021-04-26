@@ -156,6 +156,7 @@ class Serializers(TestCase):
         self.assertEquals(self.semester.year, serialized['semester_year'])
         self.assertEquals(self.student.get_full_name(),
                           serialized['owner_name'])
+        self.assertEquals(self.student.jhed, serialized['owner_jhed'])
         self.assertEquals(self.advisor.jhed, serialized['advisors'][0]['jhed'])
 
 
@@ -367,7 +368,7 @@ class ForumTranscriptViewTest(APITestCase):
         }
         request = self.factory.patch(
             '/advising/forum/Fall/2019/', data=data, format='json')
-        response = get_response_for_semester(self, request, self.student.user)
+        response = get_response_for_semester(request, self.student.user)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(self.transcript.pending_advisors.count(), 1)
 
@@ -380,7 +381,7 @@ class ForumTranscriptViewTest(APITestCase):
         }
         request = self.factory.patch(
             '/advising/forum/Fall/2019/', data=data, format='json')
-        response = get_response_for_semester(self, request, self.student.user)
+        response = get_response_for_semester(request, self.student.user)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(self.transcript.advisors.count(), 0)
 
