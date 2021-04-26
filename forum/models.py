@@ -19,6 +19,8 @@ class Transcript(models.Model):
         pending_advisors (:obj:`ManyToManyField` of :obj:`Advisor`): The list
             unauthenticated advisors the student has invited
         semester (:obj:`Semester`): The semester this transcript is for
+        timetable (:obj:`PersonalTimetable`): A students' timetable that they
+            want to show to advisors
     """
     owner = models.ForeignKey(student_models.Student,
                               related_name='owned_transcripts')
@@ -27,6 +29,8 @@ class Transcript(models.Model):
     pending_advisors = models.ManyToManyField(
         Advisor, related_name='invited_transcripts')
     semester = models.ForeignKey(timetable_models.Semester)
+    timetable = models.OneToOneField(
+        student_models.PersonalTimetable, null=True, blank=True)
 
     class Meta:
         unique_together = ['owner', 'semester']
