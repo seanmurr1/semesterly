@@ -14,6 +14,7 @@ GNU General Public License for more details.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import AdvisorMenu from './advisor_menu';
 import CommentInputContainer from './containers/comment_input_container';
@@ -76,6 +77,30 @@ class CommentForum extends React.Component {
       semester_year={this.props.selected_semester.toString().split(' ')[1]}
     />);
 
+
+    const backButton = (
+      <div className="cal-btn-wrapper" style={{ display: this.props.userInfo.isAdvisor ? 'inline-block' : 'none', verticalAlign: 'middle', float: 'left', marginTop: 11 }}>
+        <a href="/advising">
+          <button
+            data-tip
+            className="save-timetable add-button"
+            data-for="back-btn-tooltip"
+          >
+            <i className="fa fa-chevron-circle-left" />
+          </button>
+        </a>
+        <ReactTooltip
+          id="back-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="right"
+          effect="solid"
+        >
+          <span>Back</span>
+        </ReactTooltip>
+      </div>
+    );
+
     const displayAdvisorNames = () => {
       const names = [];
       const advisorList = (this.props.transcript) ? this.props.transcript.advisors : [];
@@ -85,9 +110,10 @@ class CommentForum extends React.Component {
 
     return (
       <div className="comment-forum no-print">
-        <div className="cf-name">
+        <div className="cf-name" style={{ display: 'inline-block', float: 'left' }}>
           <h3 className="title"> Comments Forum</h3>
         </div>
+        { backButton }
         {this.props.selected_semester &&
           <AdvisorMenu
             semester={this.props.selected_semester}
@@ -99,10 +125,10 @@ class CommentForum extends React.Component {
         }
         <div className="cf-header">{this.props.selected_semester && displayAdvisorNames()}</div>
         <div className="comment-forum-container">
-          {transcript}
+          { transcript }
         </div>
         <div className="as-header" />
-        { displayInput}
+        { displayInput }
       </div>
     );
   }
