@@ -18,7 +18,7 @@ import ReactTooltip from 'react-tooltip';
 import Cookie from 'js-cookie';
 import AdvisorMenu from './advisor_menu';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
-import { getTranscriptCommentsBySemester } from '../constants/endpoints';
+import { postTranscriptCommentsBySemester } from '../constants/endpoints';
 
 class CommentForum extends React.Component {
   constructor(props) {
@@ -47,7 +47,6 @@ class CommentForum extends React.Component {
 
   submitContent(semesterName, semesterYear) {
     if (this.state.comment !== '') {
-      const jhed = (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed : this.props.userInfo.jhed;
       fetch(postTranscriptCommentsBySemester(semesterName, semesterYear), {
         method: 'POST',
         headers: {
@@ -56,7 +55,8 @@ class CommentForum extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          jhed: jhed,
+          jhed: (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed :
+            this.props.userInfo.jhed,
           timestamp: new Date(Date.now()),
           content: this.state.comment,
         }),
@@ -174,7 +174,7 @@ class CommentForum extends React.Component {
             { backButton } Comments Forum
           </h3>
         </div>
-        {this.props.selected_semester &&
+        {!this.props.userInfo.isAdvisor && this.props.selected_semester &&
           <AdvisorMenu
             semester={this.props.selected_semester}
             advisors={userInfo.advisors}
@@ -196,6 +196,7 @@ class CommentForum extends React.Component {
 
 CommentForum.defaultProps = {
   selected_semester: null,
+  selected_advisee: null,
   transcript: null,
 };
 
@@ -203,6 +204,17 @@ CommentForum.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
   addRemoveAdvisor: PropTypes.func.isRequired,
   selected_semester: PropTypes.string,
+  selected_advisee: PropTypes.shape({
+    owner_name: PropTypes.string,
+    owner_jhed: PropTypes.string,
+    comments: PropTypes.arrayOf(PropTypes.shape({
+      author_name: PropTypes.string,
+      content: PropTypes.string,
+      timestamp: PropTypes.date,
+    })),
+    semester_name: PropTypes.string,
+    semester_year: PropTypes.string,
+  }),
   transcript: SemesterlyPropTypes.transcript,
   reloadComponent: PropTypes.func.isRequired,
 };
