@@ -47,7 +47,8 @@ class CommentForum extends React.Component {
 
   submitContent(semesterName, semesterYear) {
     if (this.state.comment !== '') {
-      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear), {
+      const jhed = (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed : this.props.userInfo.jhed;
+      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear, jhed), {
         method: 'POST',
         headers: {
           'X-CSRFToken': Cookie.get('csrftoken'),

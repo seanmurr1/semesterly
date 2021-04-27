@@ -41,7 +41,7 @@ export const acceptTOSEndpoint = () => '/tos/accept/';
 
 // Advising Dashboard Endpoints
 export const getAllTranscripts = () => '/advising/forum/all/';
-export const getTranscriptCommentsBySemester = (semesterName, semesterYear, jhed) => `/advising/forum/${semesterName}/${semesterYear}/${jhed}`;
+export const getTranscriptCommentsBySemester = (semesterName, semesterYear, jhed) => `/advising/forum/${semesterName}/${semesterYear}/${jhed}/`;
 // TODO: Pass in JHED for this endpoint
 export const getRetrievedSemesters = jhed => `/advising/sis_semesters/${jhed}/`;
 export const getSISVerifiedCourses = (semesterName, semesterYear, jhed, ttName) => `/advising/sis_courses/${semesterName}/${semesterYear}/${jhed}/${ttName}/`;
