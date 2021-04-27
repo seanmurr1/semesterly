@@ -14,6 +14,7 @@ GNU General Public License for more details.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
 import Cookie from 'js-cookie';
 import AdvisorMenu from './advisor_menu';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
@@ -133,6 +134,30 @@ class CommentForum extends React.Component {
       </form>
     </div>) : null;
 
+
+    const backButton = (userInfo.isAdvisor === true) ? (
+      <div className="cal-btn-wrapper" style={{ display: 'inline-block', verticalAlign: 'middle', marginBottom: 4 }}>
+        <a href="/advising">
+          <button
+            data-tip
+            className="save-timetable add-button"
+            data-for="back-btn-tooltip"
+          >
+            <i className="fa fa-chevron-circle-left" />
+          </button>
+        </a>
+        <ReactTooltip
+          id="back-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="right"
+          effect="solid"
+        >
+          <span>Back</span>
+        </ReactTooltip>
+      </div>
+    ) : null;
+
     const displayAdvisorNames = () => {
       const names = [];
       const advisorList = (this.props.transcript) ? this.props.transcript.advisors : [];
@@ -143,7 +168,10 @@ class CommentForum extends React.Component {
     return (
       <div className="comment-forum no-print">
         <div className="cf-name">
-          <h3 className="title"> Comments Forum</h3>
+          {/* TODO: fix the CSS styling, change title css */}
+          <h3 className="comment-title">
+            { backButton } Comments Forum
+          </h3>
         </div>
         {this.props.selected_semester &&
           <AdvisorMenu
@@ -156,10 +184,10 @@ class CommentForum extends React.Component {
         }
         <div className="cf-header">{this.props.selected_semester && displayAdvisorNames()}</div>
         <div className="comment-forum-container">
-          {transcript}
+          { transcript }
         </div>
         <div className="as-header" />
-        {displayInput}
+        { displayInput }
       </div>
     );
   }
