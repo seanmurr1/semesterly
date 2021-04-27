@@ -170,7 +170,7 @@ class CommentForum extends React.Component {
         <div className="cf-name">
           {/* TODO: fix the CSS styling, change title css */}
           <h3 className="comment-title">
-            Comments Forum { backButton }
+            { backButton } Comments Forum
           </h3>
         </div>
         {this.props.selected_semester &&
