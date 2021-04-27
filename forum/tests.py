@@ -19,8 +19,8 @@ from rest_framework.test import APITestCase, APIRequestFactory, force_authentica
 from helpers.test.test_cases import UrlTestCase
 
 from forum.models import Comment, Transcript
-from student.models import Student
-from timetable.models import Semester
+from student.models import Student, PersonalTimetable
+from timetable.models import Semester, Course, Section
 from advising.models import Advisor
 from serializers import TranscriptSerializer, CommentSerializer
 import datetime
@@ -91,6 +91,18 @@ def setUpTranscriptUnauthenticatedAdvisor(self):
         first_name='Rishi', last_name='Biswas',
         email_address='rbiswas4@jhu.edu', jhed='rbiswas@jh.edu')
     self.advisor.save()
+
+
+def setUpPersonalTimetable(self):
+    self.fall2019, _ = Semester.objects.get_or_create(name='Fall', year='2019')
+    self.discrete, _ = Section.objects.get_or_create(
+        course=Course.objects.get_or_create(
+            code='EN.557.171')[0], meeting_section='(03)', semester=self.fall2019)
+    self.discrete.save()
+
+    self.tt, _ = PersonalTimetable.objects.get_or_create(
+        student=self.student, semester=self.fall2019, school='uoft', name='gg')
+    self.tt.save()
 
 
 def add_comment(self, author, content):
@@ -359,6 +371,29 @@ class ForumTranscriptViewTest(APITestCase):
         response = get_response_for_semester(request, self.student.user)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(self.transcript.advisors.count(), 0)
+
+    def test_add_advisor_and_timetable(self):
+        setUpTranscriptNoAdvisor(self)
+        setUpPersonalTimetable(self)
+        self.assertEquals(self.transcript.advisors.count(), 0)
+        advisor = Student.objects.create(user=User.objects.create(
+            username='rbiz', password='k'), jhed='rbiswas4')
+        Advisor.objects.create(
+            first_name='Rishi', last_name='Biswas',
+            jhed='rbiswas4', email_address='rbiswas4@jhu.edu')
+
+        data = {
+            'action': 'add',
+            'jhed': advisor.jhed,
+            'tt_name': self.tt.name,
+        }
+        request = self.factory.patch(
+            '/advising/forum/Fall/2019/', data=data, format='json')
+        response = get_response_for_semester(request, self.student.user)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.transcript.refresh_from_db()
+        self.assertEquals(self.transcript.advisors.count(), 1)
+        self.assertEquals(self.transcript.timetable, self.tt)
 
     def test_add_pending_advisor(self):
         setUpTranscriptUnauthenticatedAdvisor(self)

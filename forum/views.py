@@ -14,7 +14,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import get_object_or_404
 from helpers.mixins import ValidateSubdomainMixin, RedirectToJHUSignupMixin
-from student.models import Student
+from student.models import Student, PersonalTimetable
 from timetable.models import Semester
 from forum.models import Transcript, Comment
 from advising.models import Advisor
@@ -97,6 +97,8 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
         Required data:
             action: Either 'add' or 'remove'.
             jhed: The jhed of the advisor being added or removed.
+        Optional data:
+            tt_name: The name of the timetable the student wants to show.
         Returns:
             transcript: The modified transcript.
         """
@@ -110,6 +112,13 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
             status_code = self.add_advisor(transcript, request.data['jhed'])
         elif request.data['action'] == 'remove':
             status_code = self.remove_advisor(transcript, request.data['jhed'])
+
+        if 'tt_name' in request.data:
+            timetable = get_object_or_404(
+                PersonalTimetable, student=student, semester=semester,
+                school=request.subdomain, name=request.data['tt_name'])
+            transcript.timetable = timetable
+        transcript.save()
         return Response({'transcript': TranscriptSerializer(transcript).data},
                         status=status_code)
 
@@ -134,12 +143,10 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
         advisor = get_object_or_404(Advisor, jhed=jhed)
         if advisor in transcript.pending_advisors.all():
             transcript.pending_advisors.remove(advisor)
-            transcript.save()
             return status.HTTP_200_OK
         advisor = get_object_or_404(Student, jhed=jhed)
         if advisor in transcript.advisors.all():
             transcript.advisors.remove(advisor)
-        transcript.save()
         return status.HTTP_200_OK
 
     def delete(self, request, sem_name, year):
@@ -154,4 +161,3 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
             transcript.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-
