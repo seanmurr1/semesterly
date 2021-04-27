@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^advising/forum/all/$', forum.views.ForumView.as_view()),
     url(r'^advising/forum/(?P<sem_name>.+?)/(?P<year>[0-9]{4})/(?P<jhed>.+)/$',
         forum.views.ForumTranscriptView.as_view()),
+    url(r'^advising/forum/(?P<sem_name>.+?)/(?P<year>[0-9]{4})/$',
+        forum.views.ForumTranscriptView.as_view()),
 ]
