@@ -45,14 +45,14 @@ class ForumView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIView):
 class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIView):
     """ Handles the accessing of individual user forum transcripts. """
 
-    def get(self, request, sem_name, year):
+    def get(self, request, sem_name, year, jhed):
         """
         Returns the forum transcript associated with a particular semester or
         creates a new one if it doesn't exist for the user making the request:
             transcript: The retrieved transcript
         """
 
-        student = Student.objects.get(user=request.user)
+        student = get_object_or_404(Student, jhed=jhed)
         semester = Semester.objects.get(name=sem_name, year=year)
         transcript, created = Transcript.objects.get_or_create(
             owner=student, semester=semester)
@@ -61,9 +61,19 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
                 {'transcript': TranscriptSerializer(transcript).data},
                 status=status.HTTP_201_CREATED)
         else:
+            if not self.is_advisor_for_student(request, student, transcript):
+                return Response(status=status.HTTP_403_FORBIDDEN)
             return Response(
                 {'transcript': TranscriptSerializer(transcript).data},
                 status=status.HTTP_200_OK)
+
+    def is_advisor_for_student(self, request, student, transcript):
+        advisor = Student.objects.get(user=request.user)
+        if student == advisor:  # Student could be requesting their own data
+            return True
+        return student.jhed == transcript.owner.jhed \
+            and advisor.is_advisor() \
+            and advisor in transcript.advisors.all()
 
     def post(self, request, sem_name, year):
         """Creates a new comment.
