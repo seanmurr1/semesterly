@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
   // const active = state.timetables.active;
   const activeTTLength = getActiveTimetableCourses(state).length;
   return {
+    userInfo: state.userInfo.data,
     semester: getCurrentSemester(state),
     alertConflict: state.alerts.alertConflict,
     alertEnableNotifications: state.alerts.alertEnableNotifications,
@@ -43,7 +44,6 @@ const mapStateToProps = (state) => {
       && activeTTLength >= 1),
     explorationModalIsVisible: state.explorationModal.isVisible,
     dataLastUpdated: state.school.dataLastUpdated,
-    userInfo: state.userInfo.data,
   };
 };
 
