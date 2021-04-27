@@ -75,7 +75,7 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
             and advisor.is_advisor() \
             and advisor in transcript.advisors.all()
 
-    def post(self, request, sem_name, year, jhed):
+    def post(self, request, sem_name, year):
         """Creates a new comment.
         Required data:
             content: The comment's message.
@@ -83,16 +83,14 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
             jhed: The jhed of the owner of the transcript.
         """
 
-        student = Student.objects.get(user=request.user)
-        author = Student.objects.get(jhed=request.data['jhed'])
+        author = Student.objects.get(user=request.user)
         semester = Semester.objects.get(name=sem_name, year=year)
         transcript = get_object_or_404(
             Transcript,
-            owner=Student.objects.get(jhed=jhed),
+            owner=Student.objects.get(jhed=request.data['jhed']),
             semester=semester)
 
-        if student not in transcript.advisors.all() and \
-                student.jhed != transcript.owner.jhed:
+        if not self.is_advisor_for_student(request, author, transcript):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         comment = Comment.objects.create(author=author,
