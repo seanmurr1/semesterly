@@ -16,7 +16,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import Cookie from 'js-cookie';
-import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import AdvisorMenu from './advisor_menu';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import { getTranscriptCommentsBySemester } from '../constants/endpoints';
