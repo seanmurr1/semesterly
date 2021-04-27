@@ -16,7 +16,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Cookie from 'js-cookie';
 import TopBarAdvisingContainer from './containers/top_bar_advising_container';
+import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import CommentForumContainer from './containers/comment_forum_container';
+import AdvisorDashboardContainer from './containers/advisor_dashboard_container';
 import AdvisingScheduleContainer from './containers/advising_schedule_container';
 import UserSettingsModalContainer from './containers/modals/user_settings_modal_container';
 import SignupModalContainer from './containers/modals/signup_modal_container';
@@ -25,10 +27,10 @@ import UserAcquisitionModalContainer from './containers/modals/user_acquisition_
 import {
   getTranscriptCommentsBySemester,
   getRetrievedSemesters,
+  getAllTranscripts,
 } from '../constants/endpoints';
 import SISImportDataModalContainer from './containers/modals/SIS_import_data_modal_container';
 import AddAdvisorModalContainer from './containers/modals/add_advisor_modal_container';
-import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
 
 class Advising extends React.Component {
@@ -38,12 +40,16 @@ class Advising extends React.Component {
     this.state = {
       orientation: !mql.matches ? 'landscape' : 'portrait',
       selected_semester: null,
+      selected_advisee: null,
       transcript: null,
       displayed_semesters: null,
+      displayed_advisees: null,
+      loading_semesters: true,
     };
     this.updateOrientation = this.updateOrientation.bind(this);
     this.callbackFunction = this.callbackFunction.bind(this);
     this.addRemoveAdvisor = this.addRemoveAdvisor.bind(this);
+    this.displayAdvisee = this.displayAdvisee.bind(this);
   }
 
   componentWillMount() {
@@ -58,24 +64,44 @@ class Advising extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchSemesters();
+    this.fetchSemesters(null);
+    this.fetchAdvisees();
   }
 
-  fetchSemesters() {
-    const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
-    // TODO: Change to include selected stuent's JHED vs. userInfo's jhed
-    const jhed = (this.props.userInfo.isAdvisor) ? this.props.userInfo.jhed :
-      this.props.userInfo.jhed;
-    fetch(getRetrievedSemesters(jhed))
+  fetchAdvisees() {
+    fetch(getAllTranscripts())
       .then(response => response.json())
       .then((data) => {
-        const retreivedSemesters = data.retrievedSemesters;
-        if (retreivedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
-          this.setState({ displayed_semesters: retreivedSemesters });
-        } else {
-          this.setState({ displayed_semesters: semesters.concat(retreivedSemesters) });
-        }
+        this.setState({ displayed_advisees: data.invited_transcripts });
       });
+  }
+
+  fetchSemesters(newSelectedAdvisee) {
+    this.setState({ loading_semesters: true }, () => {
+      const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
+      // if (newSelectedAdvisee != null) {
+      const jhed = (this.props.userInfo.isAdvisor) ? newSelectedAdvisee.owner_jhed :
+        this.props.userInfo.jhed;
+      this.setState({ selected_advisee: newSelectedAdvisee });
+      fetch(getRetrievedSemesters(jhed))
+        .then(response => response.json())
+        .then((data) => {
+          this.setState({ selected_advisee: newSelectedAdvisee });
+          const retrievedSemesters = data.retrievedSemesters;
+          if (retrievedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
+            this.setState({
+              displayed_semesters: retrievedSemesters,
+              loading_semesters: false,
+            });
+          } else {
+            this.setState({
+              displayed_semesters: semesters.concat(retrievedSemesters),
+              loading_semesters: false,
+            });
+          }
+        });
+    // }
+    });
   }
 
   fetchTranscript(newSelectedSemester) {
@@ -135,8 +161,12 @@ class Advising extends React.Component {
     this.fetchTranscript(childSemesterData);
   }
 
+  displayAdvisee(newSelectedAdvisee) {
+    this.fetchSemesters(newSelectedAdvisee);
+  }
 
   render() {
+    const { userInfo } = this.props;
     const footer = (
       <footer className="footer navbar no-print">
         <p className="data-last-updated no-print">Data last
@@ -210,18 +240,29 @@ class Advising extends React.Component {
             <div className="advising-schedule">
               <AdvisingScheduleContainer
                 parentCallback={this.callbackFunction}
+                selected_advisee={this.state.selected_advisee}
                 selected_semester={this.state.selected_semester}
                 displayed_semesters={this.state.displayed_semesters}
+                loading_semesters={this.state.loading_semesters}
               />
               {footer}
             </div>
           </div>
           <div className="advising-schedule">
-            <CommentForumContainer
-              addRemoveAdvisor={this.addRemoveAdvisor}
-              selected_semester={this.state.selected_semester}
-              transcript={this.state.transcript}
-            />
+            {userInfo.isAdvisor === true && this.state.selected_advisee == null ?
+              <AdvisorDashboardContainer
+                displayed_advisees={this.state.displayed_advisees}
+                selected_advisee={this.state.selected_advisee}
+                displayAdvisee={this.displayAdvisee}
+              /> :
+              <CommentForumContainer
+                addRemoveAdvisor={this.addRemoveAdvisor}
+                selected_advisee={this.state.selected_advisee}
+                selected_semester={this.state.selected_semester}
+                transcript={this.state.transcript}
+                reloadComponent={this.callbackFunction}
+              />
+            }
           </div>
         </div>
       </div>);

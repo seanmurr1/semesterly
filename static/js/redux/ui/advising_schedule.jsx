@@ -48,6 +48,11 @@ class AdvisingSchedule extends React.Component {
         </ReactTooltip>
       </div>
     );
+
+    const emptyState = (this.props.loading_semesters) ? (<div className="empty-state">
+      <h4><p>Loading your semesters...</p></h4>
+    </div>) : (<div className="empty-state"><h4><p> No semesters yet! </p></h4></div>);
+
     const AddAdvisorButton = (
       <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle' }}>
         <button
@@ -69,13 +74,22 @@ class AdvisingSchedule extends React.Component {
         </ReactTooltip>
       </div>
     );
-    const courseListRows = (this.props.displayed_semesters !== null) ?
+
+    let courseListRows;
+    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
+      courseListRows = (<div className="empty-state"><h4>
+        <p> Click on a Student to see their schedule </p></h4>
+      </div>);
+    } else {
+      // TODO: get timetable name from invited transcripts if user is advisor
+      courseListRows = (this.props.displayed_semesters !== null) ?
       this.props.displayed_semesters.map(semester =>
         (<CourseListRow
           key={semester}
           parentParentCallback={this.props.parentCallback}
           displayed_semester={semester}
           current_semester={`${this.props.semester.name} ${this.props.semester.year}`}
+          selected_advisee={this.props.selected_advisee}
           selected_semester={this.props.selected_semester}
           coursesInTimetable={this.props.coursesInTimetable}
           courseToClassmates={this.props.courseToClassmates}
@@ -85,16 +99,33 @@ class AdvisingSchedule extends React.Component {
           timetableName={this.props.timetableName}
           userInfo={this.props.userInfo}
         />),
-      ) : <div className="empty-state"><h4><p> No semesters yet! </p></h4></div>;
+      ) : emptyState;
+    }
+    let scheduleTitle;
+    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
+      scheduleTitle = (<div className="advising-schedule-header">
+        Advising Dashboard - {`${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`}
+        &nbsp;&nbsp;&nbsp;
+        { AddAdvisorButton }
+      </div>);
+    } else if (this.props.userInfo.isAdvisor && this.props.selected_advisee != null) {
+      scheduleTitle = (<div className="advising-schedule-header">
+        Course Summary for {this.props.selected_advisee.owner_name}
+        &nbsp;&nbsp;&nbsp;
+        { AddAdvisorButton }
+      </div>);
+    } else {
+      scheduleTitle = (<div className="advising-schedule-header">
+        Course Summary
+        &nbsp;&nbsp;&nbsp;
+        { SISImportDataModalButton }
+        { AddAdvisorButton }
+      </div>);
+    }
 
     return (
       <div className="advising-schedule-inner">
-        <div className="advising-schedule-header">
-          Course Summary
-          &nbsp;&nbsp;&nbsp;
-          { SISImportDataModalButton }
-          { AddAdvisorButton }
-        </div>
+        { scheduleTitle }
         { courseListRows }
       </div>
     );
@@ -103,6 +134,7 @@ class AdvisingSchedule extends React.Component {
 
 AdvisingSchedule.defaultProps = {
   selected_semester: null,
+  selected_advisee: null,
   displayed_semesters: null,
 };
 
@@ -125,6 +157,18 @@ AdvisingSchedule.propTypes = {
     year: PropTypes.string.isRequired,
   }).isRequired,
   timetableName: PropTypes.string.isRequired,
+  selected_advisee: PropTypes.shape({
+    owner_name: PropTypes.string,
+    owner_jhed: PropTypes.string,
+    comments: PropTypes.arrayOf(PropTypes.shape({
+      author_name: PropTypes.string,
+      content: PropTypes.string,
+      timestamp: PropTypes.date,
+    })),
+    semester_name: PropTypes.string,
+    semester_year: PropTypes.string,
+  }),
+  loading_semesters: PropTypes.bool.isRequired,
 };
 
 export default AdvisingSchedule;

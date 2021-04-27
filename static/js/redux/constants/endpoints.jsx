@@ -40,7 +40,7 @@ export const getRequestShareExamLinkEndpoint = () => '/exams/links/';
 export const acceptTOSEndpoint = () => '/tos/accept/';
 
 // Advising Dashboard Endpoints
-// TODO: Replace with real endpoint
+export const getAllTranscripts = () => '/advising/forum/all/';
 export const getTranscriptCommentsBySemester = (semesterName, semesterYear) => `/advising/forum/${semesterName}/${semesterYear}/`;
 // TODO: Pass in JHED for this endpoint
 export const getRetrievedSemesters = jhed => `/advising/sis_semesters/${jhed}/`;

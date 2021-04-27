@@ -11,18 +11,18 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 */
-
+// TODO: Write in valid info for advisor dashboard.
 import { connect } from 'react-redux';
-import CommentInput from '../comment_input';
+import AdvisorPanel from '../advisor_panel';
 
 const mapStateToProps = state => ({
   userInfo: state.userInfo.data,
 });
 
-const CommentInputContainer = connect(
+const AdvisorDashboardContainer = connect(
   mapStateToProps,
   {
   },
-)(CommentInput);
+)(AdvisorPanel);
 
-export default CommentInputContainer;
+export default AdvisorDashboardContainer;

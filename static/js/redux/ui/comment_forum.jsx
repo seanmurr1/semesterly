@@ -14,19 +14,61 @@ GNU General Public License for more details.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
+import ReactTooltip from 'react-tooltip';
+import Cookie from 'js-cookie';
 import AdvisorMenu from './advisor_menu';
-import CommentInputContainer from './containers/comment_input_container';
+import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
+import { getTranscriptCommentsBySemester } from '../constants/endpoints';
 
 class CommentForum extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       studentName: 'Mia Boloix',
+      loading: false,
+      comment: '',
     };
   }
 
+  componentDidUpdate() {
+    if (this.state.loading === true) {
+      this.toggleLoading();
+      this.props.reloadComponent(null);
+    }
+  }
+
+  toggleLoading() {
+    this.setState({ loading: !this.state.loading });
+  }
+
+  sendContent(event) {
+    this.setState({ comment: event.target.value });
+  }
+
+  submitContent(semesterName, semesterYear) {
+    if (this.state.comment !== '') {
+      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear), {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': Cookie.get('csrftoken'),
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jhed: this.props.userInfo.jhed,
+          timestamp: new Date(Date.now()),
+          content: this.state.comment,
+        }),
+      }).then(this.setState({ comment: this.state.comment = '' }));
+    }
+    this.setState({ loading: true });
+  }
+
   render() {
+    const semesterName = (this.props.selected_semester) ?
+      this.props.selected_semester.toString().split(' ')[0] : null;
+    const semesterYear = (this.props.selected_semester) ?
+      this.props.selected_semester.toString().split(' ')[1] : null;
     const { userInfo } = this.props;
     let transcript;
     if (this.props.transcript != null && this.props.transcript.comments != null) {
@@ -71,10 +113,50 @@ class CommentForum extends React.Component {
       transcript = <div className="empty-state"><h4> <p> No comments yet! </p> </h4></div>;
     }
 
-    const displayInput = (this.props.selected_semester === null) ? null : (<CommentInputContainer
-      semester_name={this.props.selected_semester.toString().split(' ')[0]}
-      semester_year={this.props.selected_semester.toString().split(' ')[1]}
-    />);
+    const displayInput = (this.props.selected_semester) ? (<div className="cf-text-input">
+      <form action="#0">
+        <textarea
+          className="cf-input"
+          rows="1" placeholder="Type your comment here..."
+          value={this.state.comment}
+          onChange={event => this.sendContent(event)}
+          onKeyPress={(event) => {
+            if (event.keyCode === 13) { this.submitContent(semesterName, semesterYear); }
+          }
+          }
+        />
+        <input
+          className="send-btn"
+          type="submit"
+          value="+"
+          onClick={() => this.submitContent(semesterName, semesterYear)}
+        />
+      </form>
+    </div>) : null;
+
+
+    const backButton = (userInfo.isAdvisor === true) ? (
+      <div className="cal-btn-wrapper" style={{ display: 'inline-block', verticalAlign: 'middle', marginBottom: 4 }}>
+        <a href="/advising">
+          <button
+            data-tip
+            className="save-timetable add-button"
+            data-for="back-btn-tooltip"
+          >
+            <i className="fa fa-chevron-circle-left" />
+          </button>
+        </a>
+        <ReactTooltip
+          id="back-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="right"
+          effect="solid"
+        >
+          <span>Back</span>
+        </ReactTooltip>
+      </div>
+    ) : null;
 
     const displayAdvisorNames = () => {
       const names = [];
@@ -86,7 +168,10 @@ class CommentForum extends React.Component {
     return (
       <div className="comment-forum no-print">
         <div className="cf-name">
-          <h3 className="title"> Comments Forum</h3>
+          {/* TODO: fix the CSS styling, change title css */}
+          <h3 className="comment-title">
+            { backButton } Comments Forum
+          </h3>
         </div>
         {this.props.selected_semester &&
           <AdvisorMenu
@@ -99,10 +184,10 @@ class CommentForum extends React.Component {
         }
         <div className="cf-header">{this.props.selected_semester && displayAdvisorNames()}</div>
         <div className="comment-forum-container">
-          {transcript}
+          { transcript }
         </div>
         <div className="as-header" />
-        { displayInput}
+        { displayInput }
       </div>
     );
   }
@@ -118,6 +203,7 @@ CommentForum.propTypes = {
   addRemoveAdvisor: PropTypes.func.isRequired,
   selected_semester: PropTypes.string,
   transcript: SemesterlyPropTypes.transcript,
+  reloadComponent: PropTypes.func.isRequired,
 };
 
 export default CommentForum;
