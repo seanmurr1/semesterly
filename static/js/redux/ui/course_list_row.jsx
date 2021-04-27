@@ -53,7 +53,7 @@ class CourseListRow extends React.Component {
             this.setState({ course_list: data.registeredCourses });
           });
       }
-    });
+    };
   }
 
   sendSelectedSemester() {
