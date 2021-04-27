@@ -26,6 +26,7 @@ import JHUSignupModalContainer from './containers/modals/jhu_signup_modal_contai
 import UserAcquisitionModalContainer from './containers/modals/user_acquisition_modal_container';
 import {
   getTranscriptCommentsBySemester,
+  postTranscriptCommentsBySemester,
   getRetrievedSemesters,
   getAllTranscripts,
 } from '../constants/endpoints';
@@ -128,7 +129,7 @@ class Advising extends React.Component {
       const semesterName = this.state.selected_semester.toString().split(' ')[0];
       const semesterYear = this.state.selected_semester.toString().split(' ')[1];
 
-      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear, advisor), {
+      fetch(postTranscriptCommentsBySemester(semesterName, semesterYear), {
         method: 'PATCH',
         headers: {
           'X-CSRFToken': Cookie.get('csrftoken'),

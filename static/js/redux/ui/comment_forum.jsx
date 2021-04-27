@@ -48,7 +48,7 @@ class CommentForum extends React.Component {
   submitContent(semesterName, semesterYear) {
     if (this.state.comment !== '') {
       const jhed = (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed : this.props.userInfo.jhed;
-      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear, jhed), {
+      fetch(postTranscriptCommentsBySemester(semesterName, semesterYear), {
         method: 'POST',
         headers: {
           'X-CSRFToken': Cookie.get('csrftoken'),
@@ -56,7 +56,7 @@ class CommentForum extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          jhed: this.props.userInfo.jhed,
+          jhed: jhed,
           timestamp: new Date(Date.now()),
           content: this.state.comment,
         }),
