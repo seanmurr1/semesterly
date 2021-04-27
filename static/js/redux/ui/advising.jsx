@@ -79,7 +79,7 @@ class Advising extends React.Component {
   fetchSemesters(newSelectedAdvisee) {
     this.setState({ loading_semesters: true }, () => {
       const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
-      // if (newSelectedAdvisee != null) {
+      if (newSelectedAdvisee != null) {
       const jhed = (this.props.userInfo.isAdvisor) ? newSelectedAdvisee.owner_jhed :
         this.props.userInfo.jhed;
       this.setState({ selected_advisee: newSelectedAdvisee });
@@ -100,16 +100,18 @@ class Advising extends React.Component {
             });
           }
         });
-    // }
+     }
     });
   }
 
   fetchTranscript(newSelectedSemester) {
-    if (newSelectedSemester !== null) {
+    console.log("inside fetchTranscript");
+    if (newSelectedSemester !== null && this.state.selected_advisee !== null) {
       const semesterName = newSelectedSemester.toString().split(' ')[0];
       const semesterYear = newSelectedSemester.toString().split(' ')[1];
-
-      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear))
+      const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.owner_jhed :
+          this.props.userInfo.jhed;
+      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear, jhed))
         .then(response => response.json())
         .then((data) => {
           this.setState({ transcript: data.transcript });
