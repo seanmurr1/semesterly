@@ -136,7 +136,7 @@ class CommentForum extends React.Component {
 
 
     const backButton = (userInfo.isAdvisor === true) ? (
-      <div className="cal-btn-wrapper" style={{ display: 'inline-block', verticalAlign: 'middle', marginBottom: 4}}>
+      <div className="cal-btn-wrapper" style={{ display: 'inline-block', verticalAlign: 'middle', marginBottom: 4 }}>
         <a href="/advising">
           <button
             data-tip
