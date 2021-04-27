@@ -40,6 +40,7 @@ class Advising extends React.Component {
       selected_semester: null,
       transcript: null,
       displayed_semesters: null,
+      loading_semesters: true,
     };
     this.updateOrientation = this.updateOrientation.bind(this);
     this.callbackFunction = this.callbackFunction.bind(this);
@@ -62,20 +63,28 @@ class Advising extends React.Component {
   }
 
   fetchSemesters() {
-    const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
-    // TODO: Change to include selected stuent's JHED vs. userInfo's jhed
-    const jhed = (this.props.userInfo.isAdvisor) ? this.props.userInfo.jhed :
-      this.props.userInfo.jhed;
-    fetch(getRetrievedSemesters(jhed))
-      .then(response => response.json())
-      .then((data) => {
-        const retreivedSemesters = data.retrievedSemesters;
-        if (retreivedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
-          this.setState({ displayed_semesters: retreivedSemesters });
-        } else {
-          this.setState({ displayed_semesters: semesters.concat(retreivedSemesters) });
-        }
-      });
+    this.setState({ loading_semesters: true }, () => {
+      const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
+      // TODO: Change to include selected stuent's JHED vs. userInfo's jhed
+      const jhed = (this.props.userInfo.isAdvisor) ? this.props.userInfo.jhed :
+        this.props.userInfo.jhed;
+      fetch(getRetrievedSemesters(jhed))
+        .then(response => response.json())
+        .then((data) => {
+          const retreivedSemesters = data.retrievedSemesters;
+          if (retreivedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
+            this.setState({
+              displayed_semesters: retreivedSemesters,
+              loading_semesters: false,
+            });
+          } else {
+            this.setState({
+              displayed_semesters: semesters.concat(retreivedSemesters),
+              loading_semesters: false,
+            });
+          }
+        });
+    });
   }
 
   fetchTranscript(newSelectedSemester) {
@@ -212,6 +221,7 @@ class Advising extends React.Component {
                 parentCallback={this.callbackFunction}
                 selected_semester={this.state.selected_semester}
                 displayed_semesters={this.state.displayed_semesters}
+                loading_semesters={this.state.loading_semesters}
               />
               {footer}
             </div>
@@ -221,6 +231,7 @@ class Advising extends React.Component {
               addRemoveAdvisor={this.addRemoveAdvisor}
               selected_semester={this.state.selected_semester}
               transcript={this.state.transcript}
+              reloadComponent={this.callbackFunction}
             />
           </div>
         </div>
