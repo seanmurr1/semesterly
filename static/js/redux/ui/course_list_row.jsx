@@ -30,6 +30,7 @@ class CourseListRow extends React.Component {
     super(props);
     this.state = {
       course_list: null,
+      loading: true,
     };
   }
 
@@ -52,7 +53,7 @@ class CourseListRow extends React.Component {
             this.setState({ course_list: data.registeredCourses });
           });
       }
-    }
+    });
   }
 
   sendSelectedSemester() {
@@ -65,6 +66,15 @@ class CourseListRow extends React.Component {
   }
 
   render() {
+    const emptyState = (this.state.loading) ? (<div className="empty-state">
+      <h4>Loading your courses...</h4>
+    </div>) : (<div className="empty-state">
+      <img src="/static/img/emptystates/masterslots.png" alt="No courses added." />
+      <h3>Looks like you don&#39;t have any courses yet!</h3>
+      <h4>Your selections will appear here along with credits, professors and friends
+        in the class</h4>
+    </div>);
+
     const plannedCourseList = (this.state.course_list &&
       this.props.displayed_semester === this.props.selected_semester) ?
       this.state.course_list.map((course, i) => {
@@ -82,12 +92,7 @@ class CourseListRow extends React.Component {
           hoverable={false}
           onTimetable
         />);
-      }) : (<div className="empty-state">
-        <img src="/static/img/emptystates/masterslots.png" alt="No courses added." />
-        <h3>Looks like you don&#39;t have any courses yet!</h3>
-        <h4>Your selections will appear here along with credits, professors and friends
-        in the class</h4>
-      </div>);
+      }) : emptyState;
 
     const creditTicker = (this.props.displayed_semester === this.props.current_semester) ?
       <CreditTickerContainer /> : null;

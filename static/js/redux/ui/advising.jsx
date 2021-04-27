@@ -44,6 +44,7 @@ class Advising extends React.Component {
       transcript: null,
       displayed_semesters: null,
       displayed_advisees: null,
+      loading_semesters: true,
     };
     this.updateOrientation = this.updateOrientation.bind(this);
     this.callbackFunction = this.callbackFunction.bind(this);
@@ -234,6 +235,7 @@ class Advising extends React.Component {
                 selected_advisee={this.state.selected_advisee}
                 selected_semester={this.state.selected_semester}
                 displayed_semesters={this.state.displayed_semesters}
+                loading_semesters={this.state.loading_semesters}
               />
               {footer}
             </div>

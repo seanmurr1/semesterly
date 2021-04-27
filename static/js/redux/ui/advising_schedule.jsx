@@ -49,6 +49,10 @@ class AdvisingSchedule extends React.Component {
       </div>
     );
 
+    const emptyState = (this.props.loading_semesters) ? (<div className="empty-state">
+      <h4><p>Loading your semesters...</p></h4>
+    </div>) : (<div className="empty-state"><h4><p> No semesters yet! </p></h4></div>);
+
     const AddAdvisorButton = (
       <div className="cal-btn-wrapper" style={{ display: 'inline', verticalAlign: 'middle' }}>
         <button
@@ -164,6 +168,7 @@ AdvisingSchedule.propTypes = {
     semester_name: PropTypes.string,
     semester_year: PropTypes.string,
   }),
+  loading_semesters: PropTypes.bool.isRequired,
 };
 
 export default AdvisingSchedule;
