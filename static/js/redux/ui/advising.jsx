@@ -44,6 +44,7 @@ class Advising extends React.Component {
       transcript: null,
       displayed_semesters: null,
       displayed_advisees: null,
+      loading_semesters: true,
     };
     this.updateOrientation = this.updateOrientation.bind(this);
     this.callbackFunction = this.callbackFunction.bind(this);
@@ -76,8 +77,9 @@ class Advising extends React.Component {
   }
 
   fetchSemesters(newSelectedAdvisee) {
-    const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
-    if (newSelectedAdvisee != null) {
+    this.setState({ loading_semesters: true }, () => {
+      const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
+      // if (newSelectedAdvisee != null) {
       const jhed = (this.props.userInfo.isAdvisor) ? newSelectedAdvisee.owner_jhed :
         this.props.userInfo.jhed;
       this.setState({ selected_advisee: newSelectedAdvisee });
@@ -87,12 +89,19 @@ class Advising extends React.Component {
           this.setState({ selected_advisee: newSelectedAdvisee });
           const retrievedSemesters = data.retrievedSemesters;
           if (retrievedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
-            this.setState({ displayed_semesters: retrievedSemesters });
+            this.setState({
+              displayed_semesters: retrievedSemesters,
+              loading_semesters: false,
+            });
           } else {
-            this.setState({ displayed_semesters: semesters.concat(retrievedSemesters) });
+            this.setState({
+              displayed_semesters: semesters.concat(retrievedSemesters),
+              loading_semesters: false,
+            });
           }
         });
-    }
+    // }
+    });
   }
 
   fetchTranscript(newSelectedSemester) {
@@ -234,6 +243,7 @@ class Advising extends React.Component {
                 selected_advisee={this.state.selected_advisee}
                 selected_semester={this.state.selected_semester}
                 displayed_semesters={this.state.displayed_semesters}
+                loading_semesters={this.state.loading_semesters}
               />
               {footer}
             </div>
@@ -250,6 +260,7 @@ class Advising extends React.Component {
                 selected_advisee={this.state.selected_advisee}
                 selected_semester={this.state.selected_semester}
                 transcript={this.state.transcript}
+                reloadComponent={this.callbackFunction}
               />
             }
           </div>
