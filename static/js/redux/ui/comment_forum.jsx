@@ -24,7 +24,7 @@ class CommentForum extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      studentName: 'Mia Boloix',
+      userName: `${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`,
       loading: false,
       comment: '',
     };
@@ -74,7 +74,7 @@ class CommentForum extends React.Component {
     if (this.props.transcript != null && this.props.transcript.comments != null) {
       transcript = this.props.transcript.comments.map((comment) => {
         const timestamp = new Date(comment.timestamp);
-        const ownerView = (this.state.studentName === comment.author_name) ?
+        const ownerView = (this.state.userName === comment.author_name) ?
           (<span className="comment-row">
             <div className="comment-bubble owner">
               <div className="author">
