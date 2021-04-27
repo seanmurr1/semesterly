@@ -99,7 +99,7 @@ class AdvisingSchedule extends React.Component {
           timetableName={this.props.timetableName}
           userInfo={this.props.userInfo}
         />),
-      ) : <div className="empty-state"><h4><p> No semesters yet! </p></h4></div>;
+      ) : emptyState;
     }
     let scheduleTitle;
     if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
