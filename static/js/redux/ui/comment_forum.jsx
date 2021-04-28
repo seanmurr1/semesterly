@@ -135,7 +135,7 @@ class CommentForum extends React.Component {
     </div>) : null;
 
 
-    const backButton = (true) ? (
+    const backButton = (userInfo.isAdvisor === true) ? (
       <div className="cal-btn-wrapper" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
         <a href="/advising">
           <button
@@ -150,7 +150,7 @@ class CommentForum extends React.Component {
           id="back-btn-tooltip"
           class="tooltip"
           type="dark"
-          place="right"
+          place="top-right"
           effect="solid"
         >
           <span>Back</span>
