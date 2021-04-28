@@ -43,7 +43,7 @@ class AdvisorPanel extends React.Component {
         className="advisee-container"
         onClick={
           () => { this.sendSelectedAdvisee(advisee); }
-        }e
+        }
         key={advisee.owner_jhed}
       >
         { advisee.owner_name }
