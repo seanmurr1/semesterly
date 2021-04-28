@@ -18,13 +18,13 @@ import ReactTooltip from 'react-tooltip';
 import Cookie from 'js-cookie';
 import AdvisorMenu from './advisor_menu';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
-import { getTranscriptCommentsBySemester } from '../constants/endpoints';
+import { postTranscriptCommentsBySemester } from '../constants/endpoints';
 
 class CommentForum extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      studentName: 'Mia Boloix',
+      userName: `${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`,
       loading: false,
       comment: '',
     };
@@ -47,7 +47,7 @@ class CommentForum extends React.Component {
 
   submitContent(semesterName, semesterYear) {
     if (this.state.comment !== '') {
-      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear), {
+      fetch(postTranscriptCommentsBySemester(semesterName, semesterYear), {
         method: 'POST',
         headers: {
           'X-CSRFToken': Cookie.get('csrftoken'),
@@ -55,7 +55,8 @@ class CommentForum extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          jhed: this.props.userInfo.jhed,
+          jhed: (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed :
+            this.props.userInfo.jhed,
           timestamp: new Date(Date.now()),
           content: this.state.comment,
         }),
@@ -74,7 +75,7 @@ class CommentForum extends React.Component {
     if (this.props.transcript != null && this.props.transcript.comments != null) {
       transcript = this.props.transcript.comments.map((comment) => {
         const timestamp = new Date(comment.timestamp);
-        const ownerView = (this.state.studentName === comment.author_name) ?
+        const ownerView = (this.state.userName === comment.author_name) ?
           (<span className="comment-row">
             <div className="comment-bubble owner">
               <div className="author">
@@ -136,14 +137,14 @@ class CommentForum extends React.Component {
 
 
     const backButton = (userInfo.isAdvisor === true) ? (
-      <div className="cal-btn-wrapper" style={{ display: 'inline-block', verticalAlign: 'middle', marginBottom: 4 }}>
+      <div className="cal-btn-wrapper" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
         <a href="/advising">
           <button
             data-tip
             className="save-timetable add-button"
             data-for="back-btn-tooltip"
           >
-            <i className="fa fa-chevron-circle-left" />
+            <span className="tip-left" />
           </button>
         </a>
         <ReactTooltip
@@ -173,7 +174,7 @@ class CommentForum extends React.Component {
             { backButton } Comments Forum
           </h3>
         </div>
-        {this.props.selected_semester &&
+        {!this.props.userInfo.isAdvisor && this.props.selected_semester &&
           <AdvisorMenu
             semester={this.props.selected_semester}
             advisors={userInfo.advisors}
@@ -195,6 +196,7 @@ class CommentForum extends React.Component {
 
 CommentForum.defaultProps = {
   selected_semester: null,
+  selected_advisee: null,
   transcript: null,
 };
 
@@ -202,6 +204,17 @@ CommentForum.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
   addRemoveAdvisor: PropTypes.func.isRequired,
   selected_semester: PropTypes.string,
+  selected_advisee: PropTypes.shape({
+    owner_name: PropTypes.string,
+    owner_jhed: PropTypes.string,
+    comments: PropTypes.arrayOf(PropTypes.shape({
+      author_name: PropTypes.string,
+      content: PropTypes.string,
+      timestamp: PropTypes.date,
+    })),
+    semester_name: PropTypes.string,
+    semester_year: PropTypes.string,
+  }),
   transcript: SemesterlyPropTypes.transcript,
   reloadComponent: PropTypes.func.isRequired,
 };
