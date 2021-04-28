@@ -80,28 +80,26 @@ class Advising extends React.Component {
   fetchSemesters(newSelectedAdvisee) {
     this.setState({ loading_semesters: true }, () => {
       const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
-      if (newSelectedAdvisee != null) {
-        const jhed = (this.props.userInfo.isAdvisor) ? newSelectedAdvisee.owner_jhed :
-        this.props.userInfo.jhed;
-        this.setState({ selected_advisee: newSelectedAdvisee });
-        fetch(getRetrievedSemesters(jhed))
-          .then(response => response.json())
-          .then((data) => {
-            this.setState({ selected_advisee: newSelectedAdvisee });
-            const retrievedSemesters = data.retrievedSemesters;
-            if (retrievedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
-              this.setState({
-                displayed_semesters: retrievedSemesters,
-                loading_semesters: false,
-              });
-            } else {
-              this.setState({
-                displayed_semesters: semesters.concat(retrievedSemesters),
-                loading_semesters: false,
-              });
-            }
-          });
-      }
+      const jhed = (this.props.userInfo.isAdvisor && newSelectedAdvisee) ?
+        newSelectedAdvisee.owner_jhed : this.props.userInfo.jhed;
+      this.setState({ selected_advisee: newSelectedAdvisee });
+      fetch(getRetrievedSemesters(jhed))
+        .then(response => response.json())
+        .then((data) => {
+          this.setState({ selected_advisee: newSelectedAdvisee });
+          const retrievedSemesters = data.retrievedSemesters;
+          if (retrievedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
+            this.setState({
+              displayed_semesters: retrievedSemesters,
+              loading_semesters: false,
+            });
+          } else {
+            this.setState({
+              displayed_semesters: semesters.concat(retrievedSemesters),
+              loading_semesters: false,
+            });
+          }
+        });
     });
   }
 
