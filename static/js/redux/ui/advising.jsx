@@ -26,6 +26,7 @@ import JHUSignupModalContainer from './containers/modals/jhu_signup_modal_contai
 import UserAcquisitionModalContainer from './containers/modals/user_acquisition_modal_container';
 import {
   getTranscriptCommentsBySemester,
+  postTranscriptCommentsBySemester,
   getRetrievedSemesters,
   getAllTranscripts,
 } from '../constants/endpoints';
@@ -79,37 +80,39 @@ class Advising extends React.Component {
   fetchSemesters(newSelectedAdvisee) {
     this.setState({ loading_semesters: true }, () => {
       const semesters = [`${this.props.semester.name} ${this.props.semester.year}`];
-      // if (newSelectedAdvisee != null) {
-      const jhed = (this.props.userInfo.isAdvisor) ? newSelectedAdvisee.owner_jhed :
+      if (newSelectedAdvisee != null) {
+        const jhed = (this.props.userInfo.isAdvisor) ? newSelectedAdvisee.owner_jhed :
         this.props.userInfo.jhed;
-      this.setState({ selected_advisee: newSelectedAdvisee });
-      fetch(getRetrievedSemesters(jhed))
-        .then(response => response.json())
-        .then((data) => {
-          this.setState({ selected_advisee: newSelectedAdvisee });
-          const retrievedSemesters = data.retrievedSemesters;
-          if (retrievedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
-            this.setState({
-              displayed_semesters: retrievedSemesters,
-              loading_semesters: false,
-            });
-          } else {
-            this.setState({
-              displayed_semesters: semesters.concat(retrievedSemesters),
-              loading_semesters: false,
-            });
-          }
-        });
-    // }
+        this.setState({ selected_advisee: newSelectedAdvisee });
+        fetch(getRetrievedSemesters(jhed))
+          .then(response => response.json())
+          .then((data) => {
+            this.setState({ selected_advisee: newSelectedAdvisee });
+            const retrievedSemesters = data.retrievedSemesters;
+            if (retrievedSemesters.includes(`${this.props.semester.name} ${this.props.semester.year}`)) {
+              this.setState({
+                displayed_semesters: retrievedSemesters,
+                loading_semesters: false,
+              });
+            } else {
+              this.setState({
+                displayed_semesters: semesters.concat(retrievedSemesters),
+                loading_semesters: false,
+              });
+            }
+          });
+      }
     });
   }
 
   fetchTranscript(newSelectedSemester) {
-    if (newSelectedSemester !== null) {
+    if (newSelectedSemester !== null && this.state.selected_advisee !== null) {
       const semesterName = newSelectedSemester.toString().split(' ')[0];
       const semesterYear = newSelectedSemester.toString().split(' ')[1];
+      const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.owner_jhed :
+        this.props.userInfo.jhed;
 
-      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear))
+      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear, jhed))
         .then(response => response.json())
         .then((data) => {
           this.setState({ transcript: data.transcript });
@@ -126,7 +129,7 @@ class Advising extends React.Component {
       const semesterName = this.state.selected_semester.toString().split(' ')[0];
       const semesterYear = this.state.selected_semester.toString().split(' ')[1];
 
-      fetch(getTranscriptCommentsBySemester(semesterName, semesterYear, advisor), {
+      fetch(postTranscriptCommentsBySemester(semesterName, semesterYear), {
         method: 'PATCH',
         headers: {
           'X-CSRFToken': Cookie.get('csrftoken'),
