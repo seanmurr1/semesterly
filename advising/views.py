@@ -200,12 +200,15 @@ class RegisteredCoursesView(ValidateSubdomainMixin, APIView):
         isVerified is True. If no key is provided, all SIS registered courses
         will be returned with isVerified set to True for all of them.
 
-        Optional data:
+        Required data:
             jhed: The jhed of the student whose data is requested
+        Optional data:
             tt_name: The name of the timetable to compare against
+                If not provided, compare against the timetable in the
+                Transcript for this semester if it exists.
         Returns:
             registeredCourses: {
-                {**CourseSerializer(course1), isVerified: bool},
+                {**CourseSerializer(course1).data, isVerified: bool},
                 {...},
             }
         """
@@ -221,6 +224,10 @@ class RegisteredCoursesView(ValidateSubdomainMixin, APIView):
                 PersonalTimetable,
                 student=student, name=tt_name,
                 school=school, semester=semester)
+            courses = self.get_registered_courses(context, timetable)
+        elif self.has_timetable_in_transcript(student, semester):
+            timetable = Transcript.objects.get(
+                owner=student, semester=semester).timetable
             courses = self.get_registered_courses(context, timetable)
         else:
             courses = self.get_registered_courses(context)
@@ -254,3 +261,11 @@ class RegisteredCoursesView(ValidateSubdomainMixin, APIView):
                 courses['registeredCourses'].append(
                     dict(course_data, **CourseSerializer(section.course, context=context).data))
         return courses
+
+    def has_timetable_in_transcript(self, student, semester):
+        try:
+            transcript = Transcript.objects.get(
+                owner=student, semester=semester)
+        except Transcript.DoesNotExist:
+            return False
+        return transcript.timetable is not None
