@@ -150,7 +150,7 @@ class CommentForum extends React.Component {
           id="back-btn-tooltip"
           class="tooltip"
           type="dark"
-          place="top-right"
+          place="right"
           effect="solid"
         >
           <span>Back</span>
