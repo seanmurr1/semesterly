@@ -38,17 +38,17 @@ class AdvisorPanel extends React.Component {
 
     // TODO: add unread comment note under student name (insert in div below)
     const adviseeList = (this.props.displayed_advisees != null) ?
-      this.props.displayed_advisees.map(advisee =>
-        (<button
-          className="empty-state"
-          onClick={
-            () => { this.sendSelectedAdvisee(advisee); }
-          }
-          key={advisee.owner_jhed}
-        >
-          <h3>{ advisee.owner_name }</h3>
-        </button>),
-      ) : (<div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>);
+    this.props.displayed_advisees.map(advisee =>
+      (<div
+        className="advisee-container"
+        onClick={
+          () => { this.sendSelectedAdvisee(advisee); }
+        }e
+        key={advisee.owner_jhed}
+      >
+        { advisee.owner_name }
+      </div>),
+    ) : (<div className="empty-state"><h4> <p> No advisees added yet! </p> </h4></div>);
 
     return (
       <div className="comment-forum no-print">

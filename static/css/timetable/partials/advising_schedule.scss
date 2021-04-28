@@ -164,6 +164,16 @@
     }
   }
 
+  .advisee-container {
+    font-size: 1rem;
+
+    &::after {
+      background-color: #2b406e;
+      position: absolute;
+      width: 100%
+    }
+  }
+
   .as-header {
     clear: both;
     color: $g777;
