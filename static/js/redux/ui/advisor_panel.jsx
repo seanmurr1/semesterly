@@ -53,14 +53,13 @@ class AdvisorPanel extends React.Component {
     return (
       <div className="comment-forum no-print">
         <div className="cf-name">
-          <h3 className="title"> Students </h3>
+          <h3 className="comment-title"> Students </h3>
         </div>
         { searchAdviseesInput }
         <div className="cf-header" />
         <div className="comment-forum-container">
           { adviseeList }
         </div>
-        <div className="as-header" />
       </div>
     );
   }

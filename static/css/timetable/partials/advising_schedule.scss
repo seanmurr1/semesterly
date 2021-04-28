@@ -165,13 +165,38 @@
   }
 
   .advisee-container {
-    font-size: 1rem;
+    font-size: 1.5rem;
+    padding: 10px;
+    border-bottom: solid $gddd 1px;
+    color: #989797;
+    font-weight: 500;
 
-    &::after {
-      background-color: #2b406e;
-      position: absolute;
-      width: 100%
+    &:hover {
+      color: $primary-navy;
+      background-color: #f8f6f6;
+      cursor: pointer;
     }
+  }
+
+  .search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    left: 0;
+    position: relative;
+  }
+
+  .search {
+    flex-shrink: 1;
+    flex-basis: auto;
+    order: 1;
+    width: 400px;
+    resize: none;
+    overflow: visible;
+    line-height: 20px;
+    font-size: 1.5rem;
+    font-weight: 300;
   }
 
   .as-header {
