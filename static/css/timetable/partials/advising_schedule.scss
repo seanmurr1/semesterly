@@ -165,12 +165,18 @@
   }
 
   .advisee-container {
-    font-size: 1rem;
+    clear: both;
+    color: grey;
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 10px;
+    position: relative;
+    border-bottom: $gddd solid 1px;
 
-    &::after {
-      background-color: #2b406e;
-      position: absolute;
-      width: 100%
+    &:hover {
+      color: $primary-navy;
+      background-color: $geee;
+      cursor: pointer;
     }
   }
 
