@@ -293,6 +293,20 @@
 
   }
 
+  .tip-left {
+    display: inline-block;
+    border-color: transparent;
+    border-top-color: #34495e;
+    border-style: solid dashed dashed;
+    border-width: 6.5px 6.5px 0;
+    margin-left: 5px;
+    z-index: 1;
+    height: 0;
+    width: 0;
+    cursor: pointer;
+    transform: rotate(90deg);
+  }
+
   .modal-module {
     .master-slot-actions {
       .fa-share-alt {

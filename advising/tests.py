@@ -488,6 +488,39 @@ class RegisteredCoursesViewTest(APITestCase):
             request, self.student.user, url,
             'Fall', '2019', self.student.jhed, self.tt.name)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+        courses = response.data['registeredCourses']
+        self.assertEquals(len(courses), 3)
+        self.assertTrue(
+            any([course['code'] == self.linalg.course.code for course in courses]))
+        self.assertTrue(
+            any([course['code'] == self.madooei.course.code for course in courses]))
+        self.assertTrue(
+            any([course['code'] == self.discrete.course.code for course in courses]))
+
+        self.assertTrue(all([course['isVerified'] if course['code'] ==
+                             self.linalg.course.code else True for course in courses]))
+        # Although not in timetable, student is registered for this course
+        self.assertTrue(all([course['isVerified'] if course['code'] ==
+                             self.madooei.course.code else True for course in courses]))
+        self.assertTrue(all([not course['isVerified'] if course['code']
+                             == self.discrete.course.code else True for course in courses]))
+
+    def test_student_courses_from_transcript_timetable_verified(self):
+        setUpPersonalTimetable(self)
+        setUpTranscriptForMultipleSemesters(self)
+        self.transcript_fall2019.timetable = self.tt
+        self.transcript_fall2019.save()
+        response = sis_post(self)
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+
+        url = '/advising/sis_courses/Fall/2019/{}/'.format(self.student.jhed)
+        request = self.factory.get(url)
+        response = get_response(
+            request, self.student.user, url,
+            'Fall', '2019', self.student.jhed)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
         courses = response.data['registeredCourses']
         self.assertEquals(len(courses), 3)
         self.assertTrue(
