@@ -400,7 +400,7 @@ class ForumTranscriptViewTest(APITestCase):
         data = {
             'action': 'add',
             'jhed': advisor.jhed,
-            'tt_name': self.tt.name,
+            'tt_id': self.tt.id,
         }
         url = '/advising/forum/Fall/2019/'
         request = self.factory.patch(url, data=data, format='json')
