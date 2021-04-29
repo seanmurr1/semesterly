@@ -66,7 +66,9 @@ class Advising extends React.Component {
 
   componentDidMount() {
     this.fetchSemesters(null);
-    this.fetchAdvisees();
+    if (this.props.userInfo.isAdvisor) {
+      this.fetchAdvisees();
+    }
   }
 
   fetchAdvisees() {
