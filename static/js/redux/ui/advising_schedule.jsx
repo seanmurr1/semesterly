@@ -96,7 +96,8 @@ class AdvisingSchedule extends React.Component {
           courseToColourIndex={this.props.courseToColourIndex}
           isCourseInRoster={this.props.isCourseInRoster}
           fetchCourseInfo={this.props.fetchCourseInfo}
-          timetableName={this.props.timetableName}
+          transcript={this.props.transcript}
+          timetableId={this.props.timetableId}
           userInfo={this.props.userInfo}
         />),
       ) : emptyState;
@@ -134,7 +135,8 @@ AdvisingSchedule.defaultProps = {
   selected_semester: null,
   selected_advisee: null,
   displayed_semesters: null,
-  timetableName: null,
+  timetableId: null,
+  transcript: null,
 };
 
 AdvisingSchedule.propTypes = {
@@ -155,7 +157,7 @@ AdvisingSchedule.propTypes = {
     name: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
   }).isRequired,
-  timetableName: PropTypes.string,
+  timetableId: PropTypes.number,
   selected_advisee: PropTypes.shape({
     owner_name: PropTypes.string,
     owner_jhed: PropTypes.string,
@@ -168,6 +170,7 @@ AdvisingSchedule.propTypes = {
     semester_year: PropTypes.string,
   }),
   loading_semesters: PropTypes.bool.isRequired,
+  transcript: SemesterlyPropTypes.transcript,
 };
 
 export default AdvisingSchedule;

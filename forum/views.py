@@ -107,7 +107,7 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
             action: Either 'add' or 'remove'.
             jhed: The jhed of the advisor being added or removed.
         Optional data:
-            tt_name: The name of the timetable the student wants to show.
+            tt_id: The id of the timetable the student wants to show.
         Returns:
             transcript: The modified transcript.
         """
@@ -122,11 +122,14 @@ class ForumTranscriptView(ValidateSubdomainMixin, RedirectToJHUSignupMixin, APIV
         elif request.data['action'] == 'remove':
             status_code = self.remove_advisor(transcript, request.data['jhed'])
 
-        if 'tt_name' in request.data:
-            timetable = get_object_or_404(
-                PersonalTimetable, student=student, semester=semester,
-                school=request.subdomain, name=request.data['tt_name'])
-            transcript.timetable = timetable
+        if 'tt_id' in request.data:
+            try:
+                timetable = PersonalTimetable.objects.get(
+                    student=student, semester=semester,
+                    school=request.subdomain, id=request.data['tt_id'])
+                transcript.timetable = timetable
+            except PersonalTimetable.DoesNotExist:
+                print('Could not find timetable with id: ', request.data['tt_id'])
         transcript.save()
         return Response({'transcript': TranscriptSerializer(transcript).data},
                         status=status_code)

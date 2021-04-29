@@ -19,12 +19,13 @@ import Advising from '../advising';
 import { saveTimetable } from '../../actions/user_actions';
 import { setActiveTimetable } from '../../actions/timetable_actions';
 import {
+  getActiveTimetable,
   getActiveTimetableCourses,
   getCurrentSemester,
 } from '../../reducers/root_reducer';
 
 const mapStateToProps = (state) => {
-  // const active = state.timetables.active;
+  const timetable = getActiveTimetable(state);
   const activeTTLength = getActiveTimetableCourses(state).length;
   return {
     userInfo: state.userInfo.data,
@@ -44,6 +45,7 @@ const mapStateToProps = (state) => {
       && activeTTLength >= 1),
     explorationModalIsVisible: state.explorationModal.isVisible,
     dataLastUpdated: state.school.dataLastUpdated,
+    timetableId: timetable.id,
   };
 };
 
