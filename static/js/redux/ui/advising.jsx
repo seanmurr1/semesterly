@@ -107,7 +107,8 @@ class Advising extends React.Component {
     if (newSelectedSemester !== null) {
       const semesterName = newSelectedSemester.toString().split(' ')[0];
       const semesterYear = newSelectedSemester.toString().split(' ')[1];
-      const jhed = (this.props.userInfo.isAdvisor && this.state.selected_advisee !== null) ? this.state.selected_advisee.owner_jhed :
+      const jhed = (this.props.userInfo.isAdvisor && this.state.selected_advisee !== null)
+        ? this.state.selected_advisee.owner_jhed :
         this.props.userInfo.jhed;
 
       fetch(getTranscriptCommentsBySemester(semesterName, semesterYear, jhed))
@@ -270,9 +271,13 @@ class Advising extends React.Component {
   }
 }
 
+Advising.defaultProps = {
+  dataLastUpdated: null,
+};
+
 Advising.propTypes = {
   userInfo: SemesterlyPropTypes.userInfo.isRequired,
-  dataLastUpdated: PropTypes.string.isRequired,
+  dataLastUpdated: PropTypes.string,
   semester: PropTypes.shape({
     name: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
