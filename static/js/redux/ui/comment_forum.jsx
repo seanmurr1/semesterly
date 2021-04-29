@@ -119,7 +119,7 @@ class CommentForum extends React.Component {
         <input
           className="send-btn"
           type="submit"
-          value="+"
+          value="&#10148;"
           onClick={() => this.submitContent(semesterName, semesterYear)}
         />
       </form>
