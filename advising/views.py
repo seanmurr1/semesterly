@@ -222,7 +222,7 @@ class RegisteredCoursesView(ValidateSubdomainMixin, APIView):
         if tt_name:
             timetable = get_object_or_404(
                 PersonalTimetable,
-                student=student, id=int(tt_id),
+                student=student, name=tt_name,
                 school=school, semester=semester)
             courses = self.get_registered_courses(context, timetable)
         elif self.has_timetable_in_transcript(student, semester):
