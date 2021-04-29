@@ -178,7 +178,7 @@ CourseListRow.propTypes = {
   parentParentCallback: PropTypes.func.isRequired,
   courseToClassmates: PropTypes.shape({ '*': SemesterlyPropTypes.classmates }).isRequired,
   fetchCourseInfo: PropTypes.func.isRequired,
-  timetableName: PropTypes.string.isRequired,
+  timetableName: PropTypes.string,
   selected_advisee: PropTypes.shape({
     owner_name: PropTypes.string,
     owner_jhed: PropTypes.string,
