@@ -199,6 +199,7 @@ export const transcript = PropTypes.shape({
     content: PropTypes.string,
     timestamp: PropTypes.date,
   })),
+  tt_id: PropTypes.number,
 });
 
 export const schoolSpecificInfo = PropTypes.shape({

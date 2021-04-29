@@ -96,7 +96,7 @@ class AdvisingSchedule extends React.Component {
           courseToColourIndex={this.props.courseToColourIndex}
           isCourseInRoster={this.props.isCourseInRoster}
           fetchCourseInfo={this.props.fetchCourseInfo}
-          timetableName={this.props.timetableName}
+          transcript={this.props.transcript}
           userInfo={this.props.userInfo}
         />),
       ) : emptyState;

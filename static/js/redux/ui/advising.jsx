@@ -248,6 +248,7 @@ class Advising extends React.Component {
                 selected_semester={this.state.selected_semester}
                 displayed_semesters={this.state.displayed_semesters}
                 loading_semesters={this.state.loading_semesters}
+                transcript={this.state.transcript}
               />
               {footer}
             </div>

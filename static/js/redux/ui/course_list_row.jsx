@@ -42,9 +42,10 @@ class CourseListRow extends React.Component {
         // TODO: Change to include selected stuent's JHED vs. userInfo's jhed
         const jhed = (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed :
           this.props.userInfo.jhed;
-        if (this.props.current_semester === this.props.displayed_semester
-          && this.props.timetableName) {
-          fetch(getSISVerifiedCourses(semesterName, semesterYear, jhed, this.props.timetableName))
+        const relevantTimetable = (this.props.userInfo.isAdvisor && this.props.transcript) ?
+          this.props.transcript.tt_id : this.props.timetableId;
+        if (this.props.current_semester === this.props.displayed_semester && relevantTimetable) {
+          fetch(getSISVerifiedCourses(semesterName, semesterYear, jhed, relevantTimetable))
             .then(response => response.json())
             .then((data) => {
               this.setState({
