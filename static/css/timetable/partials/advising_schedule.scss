@@ -164,6 +164,30 @@
     }
   }
 
+  .advisee-container {
+    font-size: 2.0rem;
+    background-color: #ddd;
+    border-radius: 10px;
+    border: solid white 2px;
+    text-align: center;
+    cursor: pointer;
+		padding: 3px;
+    &::after {
+      background-color: #2b406e;
+      position: absolute;
+      width: 100%
+    }
+  }
+
+  .advisor-search-input-bar {
+    position: relative;
+    width: 110%;
+  }
+
+  .advisor-search-icon-wrapper {
+    font-size: 1;
+  }
+
   .as-header {
     clear: both;
     color: $g777;

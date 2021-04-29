@@ -62,16 +62,17 @@ class SearchAdviseesInput extends React.Component {
   render() {
     const { searchBarAdvisees } = this.state;
 
-    return (<div className="cf-text-input">
-      <form action="#0">
-        <textarea
-          className="cf-input"
-          rows="1" placeholder="Search for Student"
-          value={searchBarAdvisees}
-          onChange={event => this.sendContent(event)}
-        />
-      </form>
-    </div>
+    return (
+      <div className="advisor-search-input-bar">
+        <form action="#0">
+          <textarea
+            className="cf-input"
+            rows="1" placeholder="Search for Student"
+            value={searchBarAdvisees}
+            onChange={event => this.sendContent(event)}
+          />
+        </form>
+      </div>
     );
   }
 }

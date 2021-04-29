@@ -169,6 +169,7 @@ class CourseListRow extends React.Component {
 CourseListRow.defaultProps = {
   selected_semester: null,
   selected_advisee: null,
+  timetableName: null,
 };
 
 CourseListRow.propTypes = {
@@ -179,7 +180,7 @@ CourseListRow.propTypes = {
   parentParentCallback: PropTypes.func.isRequired,
   courseToClassmates: PropTypes.shape({ '*': SemesterlyPropTypes.classmates }).isRequired,
   fetchCourseInfo: PropTypes.func.isRequired,
-  timetableName: PropTypes.string.isRequired,
+  timetableName: PropTypes.string,
   selected_advisee: PropTypes.shape({
     owner_name: PropTypes.string,
     owner_jhed: PropTypes.string,

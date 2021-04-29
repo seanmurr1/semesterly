@@ -136,6 +136,7 @@ AdvisingSchedule.defaultProps = {
   selected_semester: null,
   selected_advisee: null,
   displayed_semesters: null,
+  timetableName: null,
 };
 
 AdvisingSchedule.propTypes = {
@@ -156,7 +157,7 @@ AdvisingSchedule.propTypes = {
     name: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
   }).isRequired,
-  timetableName: PropTypes.string.isRequired,
+  timetableName: PropTypes.string,
   selected_advisee: PropTypes.shape({
     owner_name: PropTypes.string,
     owner_jhed: PropTypes.string,

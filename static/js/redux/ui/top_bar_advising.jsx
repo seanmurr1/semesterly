@@ -78,16 +78,19 @@ class TopBarAdvising extends React.Component {
   }
 
   render() {
+    const { userInfo } = this.props;
+
     const ReturnToScheduleButton = (
       <div className="cal-btn-wrapper">
-        <a href="/">
+        {userInfo.isAdvisor === true ? null :
+        (<a href="/">
           <button
             className="return-to-schedule"
             data-tip
           >
             <p style={{ color: 'gray' }}>Return to Schedule</p>
           </button>
-        </a>
+        </a>) }
       </div>
     );
     return (
