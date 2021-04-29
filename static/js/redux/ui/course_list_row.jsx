@@ -16,7 +16,6 @@ import React from 'react';
 import Collapsible from 'react-collapsible';
 import PropTypes from 'prop-types';
 import MasterSlot from './master_slot';
-import CreditTickerContainer from './containers/credit_ticker_container';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import {
   getSISVerifiedCourses,
@@ -31,6 +30,7 @@ class CourseListRow extends React.Component {
     this.state = {
       course_list: null,
       loading: true,
+      num_credits: 0,
     };
   }
 
@@ -51,6 +51,9 @@ class CourseListRow extends React.Component {
                 course_list: data.registeredCourses,
                 loading: false,
               });
+              let numCredits = 0;
+              this.state.course_list.forEach((course) => { numCredits += course.num_credits; });
+              this.setState({ num_credits: numCredits });
             });
         } else {
           fetch(getSISVerifiedCoursesNoTT(semesterName, semesterYear, jhed))
@@ -60,6 +63,9 @@ class CourseListRow extends React.Component {
                 course_list: data.registeredCourses,
                 loading: false,
               });
+              let numCredits = 0;
+              this.state.course_list.forEach((course) => { numCredits += course.num_credits; });
+              this.setState({ num_credits: numCredits });
             });
         }
       }
@@ -104,14 +110,10 @@ class CourseListRow extends React.Component {
         />);
       }) : emptyState;
 
-    const creditTicker = (this.props.displayed_semester === this.props.current_semester) ?
-      <CreditTickerContainer /> : null;
-    /* TODO: Replace null above with:
-     <div className="sb-credits">
+    const creditTicker = (<div className="sb-credits">
       <h3>{Math.abs(this.state.num_credits).toFixed(2)}</h3>
       <h4>credits</h4>
-     </div>
-      here this.state.num_credits is the number of credits from courses on SIS */
+    </div>);
 
     let courseKey = null;
     if (this.state.course_list) {
@@ -129,7 +131,6 @@ class CourseListRow extends React.Component {
     }
 
     const courseList = (<div className="course-list-container">
-      {/* TODO: Get credit ticker to display correct num credits for non-current semesters */}
       { creditTicker }
       <a>
         <h4 className="as-header">

@@ -76,7 +76,7 @@ class AdvisingSchedule extends React.Component {
     );
 
     let courseListRows;
-    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
+    if (this.props.userInfo.isAdvisor && !this.props.selected_advisee) {
       courseListRows = (<div className="empty-state"><h4>
         <p> Click on a Student to see their schedule </p></h4>
       </div>);
@@ -102,17 +102,15 @@ class AdvisingSchedule extends React.Component {
       ) : emptyState;
     }
     let scheduleTitle;
-    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
+    if (this.props.userInfo.isAdvisor && !this.props.selected_advisee) {
       scheduleTitle = (<div className="advising-schedule-header">
         Advising Dashboard - {`${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`}
         &nbsp;&nbsp;&nbsp;
-        { AddAdvisorButton }
       </div>);
-    } else if (this.props.userInfo.isAdvisor && this.props.selected_advisee != null) {
+    } else if (this.props.userInfo.isAdvisor && this.props.selected_advisee) {
       scheduleTitle = (<div className="advising-schedule-header">
         Course Summary for {this.props.selected_advisee.owner_name}
         &nbsp;&nbsp;&nbsp;
-        { AddAdvisorButton }
       </div>);
     } else {
       scheduleTitle = (<div className="advising-schedule-header">
