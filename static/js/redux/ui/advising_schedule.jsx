@@ -97,6 +97,7 @@ class AdvisingSchedule extends React.Component {
           isCourseInRoster={this.props.isCourseInRoster}
           fetchCourseInfo={this.props.fetchCourseInfo}
           transcript={this.props.transcript}
+          timetableId={this.props.timetableId}
           userInfo={this.props.userInfo}
         />),
       ) : emptyState;

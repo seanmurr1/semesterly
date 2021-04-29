@@ -22,7 +22,7 @@ import {
   getActiveTimetable,
   getActiveTimetableCourses,
   getCurrentSemester,
-} from '../../reducers/root_reducer'
+} from '../../reducers/root_reducer';
 
 const mapStateToProps = (state) => {
   const timetable = getActiveTimetable(state);
