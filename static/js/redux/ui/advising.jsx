@@ -104,10 +104,10 @@ class Advising extends React.Component {
   }
 
   fetchTranscript(newSelectedSemester) {
-    if (newSelectedSemester !== null && this.state.selected_advisee !== null) {
+    if (newSelectedSemester !== null) {
       const semesterName = newSelectedSemester.toString().split(' ')[0];
       const semesterYear = newSelectedSemester.toString().split(' ')[1];
-      const jhed = (this.props.userInfo.isAdvisor) ? this.state.selected_advisee.owner_jhed :
+      const jhed = (this.props.userInfo.isAdvisor && this.state.selected_advisee !== null) ? this.state.selected_advisee.owner_jhed :
         this.props.userInfo.jhed;
 
       fetch(getTranscriptCommentsBySemester(semesterName, semesterYear, jhed))
