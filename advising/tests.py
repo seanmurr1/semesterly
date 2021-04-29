@@ -482,11 +482,11 @@ class RegisteredCoursesViewTest(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
         url = '/advising/sis_courses/Fall/2019/{}/{}/'.format(
-            self.student.jhed, self.tt.id)
+            self.student.jhed, self.tt.name)
         request = self.factory.get(url)
         response = get_response(
             request, self.student.user, url,
-            'Fall', '2019', self.student.jhed, self.tt.id)
+            'Fall', '2019', self.student.jhed, self.tt.name)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         courses = response.data['registeredCourses']

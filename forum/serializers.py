@@ -38,7 +38,6 @@ class TranscriptSerializer(serializers.ModelSerializer):
     owner_name = serializers.CharField(source='owner.get_full_name')
     owner_jhed = serializers.CharField(source='owner.jhed')
     advisors = serializers.SerializerMethodField()
-    tt_id = serializers.IntegerField(source='timetable.id')
 
     def get_comments(self, transcript):
         comments = transcript.comments.order_by('timestamp')
@@ -63,5 +62,4 @@ class TranscriptSerializer(serializers.ModelSerializer):
             'owner_name',
             'owner_jhed',
             'advisors',
-            'tt_id',
         )
