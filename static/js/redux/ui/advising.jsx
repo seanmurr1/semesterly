@@ -140,6 +140,7 @@ class Advising extends React.Component {
         body: JSON.stringify({
           jhed: advisor,
           action: isAdding ? 'add' : 'remove',
+          tt_name: this.props.timetableName,
         }),
       }).then(response => response.json())
       .then((data) => {
