@@ -189,13 +189,13 @@ class AddAdvisorView(ValidateSubdomainMixin, APIView):
 class RegisteredCoursesView(ValidateSubdomainMixin, APIView):
     """Handles retrieving timetable and SIS courses from a specific semester"""
 
-    def get(self, request, sem_name, year, jhed, tt_id=None):
+    def get(self, request, sem_name, year, jhed, tt_name=None):
         """If the 'jhed' key is provided, get the courses for the student with
         the corresponding JHED. The request user must be an Advisor. Otherwise,
         get the courses for the requesting student for this semester.
 
-        If the 'tt_id' key is provided, the courses are first pulled from the
-        personal timetable with the id 'tt_id'. These courses are then
+        If the 'tt_name' key is provided, the courses are first pulled from the
+        personal timetable with the name 'tt_name'. These courses are then
         compared against the SIS registered sections, and if they match,
         isVerified is True. If no key is provided, all SIS registered courses
         will be returned with isVerified set to True for all of them.
@@ -203,7 +203,7 @@ class RegisteredCoursesView(ValidateSubdomainMixin, APIView):
         Required data:
             jhed: The jhed of the student whose data is requested
         Optional data:
-            tt_id: The id of the timetable to compare against
+            tt_name: The name of the timetable to compare against
                 If not provided, compare against the timetable in the
                 Transcript for this semester if it exists.
         Returns:
@@ -219,7 +219,7 @@ class RegisteredCoursesView(ValidateSubdomainMixin, APIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         context = {'school': school, 'semester': semester, 'student': student}
-        if tt_id:
+        if tt_name:
             timetable = get_object_or_404(
                 PersonalTimetable,
                 student=student, id=int(tt_id),
