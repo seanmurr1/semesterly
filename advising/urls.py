@@ -33,7 +33,7 @@ urlpatterns = [
         advising.views.StudentSISView.as_view()),
 
     # Get the courses for the student with this JHED and verify it against this student's timetable
-    url(r'^advising/sis_courses/(?P<sem_name>.+)/(?P<year>[0-9]{4})/(?P<jhed>.+)/(?P<tt_id>[0-9]+)/$',
+    url(r'^advising/sis_courses/(?P<sem_name>.+)/(?P<year>[0-9]{4})/(?P<jhed>.+)/(?P<tt_name>.+)/$',
         advising.views.RegisteredCoursesView.as_view()),
     # Get the courses for the student with this JHED
     url(r'^advising/sis_courses/(?P<sem_name>.+)/(?P<year>[0-9]{4})/(?P<jhed>.+)/$',
