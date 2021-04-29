@@ -169,6 +169,7 @@ class CourseListRow extends React.Component {
 CourseListRow.defaultProps = {
   selected_semester: null,
   selected_advisee: null,
+  timetableName: null,
 };
 
 CourseListRow.propTypes = {
