@@ -39,24 +39,23 @@ class CourseListRow extends React.Component {
       if (this.props.displayed_semester != null) {
         const semesterName = this.props.displayed_semester.toString().split(' ')[0];
         const semesterYear = this.props.displayed_semester.toString().split(' ')[1];
-        // TODO: Change to include selected stuent's JHED vs. userInfo's jhed
         const jhed = (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed :
           this.props.userInfo.jhed;
-        console.log(this.props.timetableName);
-        // if (this.props.current_semester === this.props.displayed_semester
-        //   && this.props.timetableName) {
-        //   fetch(getSISVerifiedCourses(semesterName, semesterYear, jhed, this.props.timetableName))
-        //     .then(response => response.json())
-        //     .then((data) => {
-        //       this.setState({
-        //         course_list: data.registeredCourses,
-        //         loading: false,
-        //       });
-        //       let numCredits = 0;
-        //       this.state.course_list.forEach((course) => { numCredits += course.num_credits; });
-        //       this.setState({ num_credits: numCredits });
-        //     });
-        // } else {
+        // TODO: Get student's last updated timetable? or designated one for advisor?
+        if (this.props.current_semester === this.props.displayed_semester
+          && this.props.timetableName && !this.props.userInfo.isAdvisor) {
+          fetch(getSISVerifiedCourses(semesterName, semesterYear, jhed, this.props.timetableName))
+            .then(response => response.json())
+            .then((data) => {
+              this.setState({
+                course_list: data.registeredCourses,
+                loading: false,
+              });
+              let numCredits = 0;
+              this.state.course_list.forEach((course) => { numCredits += course.num_credits; });
+              this.setState({ num_credits: numCredits });
+            });
+        } else {
           fetch(getSISVerifiedCoursesNoTT(semesterName, semesterYear, jhed))
             .then(response => response.json())
             .then((data) => {
@@ -68,7 +67,7 @@ class CourseListRow extends React.Component {
               this.state.course_list.forEach((course) => { numCredits += course.num_credits; });
               this.setState({ num_credits: numCredits });
             });
-        // }
+        }
       }
     });
   }
