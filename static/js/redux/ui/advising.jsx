@@ -140,6 +140,7 @@ class Advising extends React.Component {
         body: JSON.stringify({
           jhed: advisor,
           action: isAdding ? 'add' : 'remove',
+          tt_name: this.props.timetableName,
         }),
       }).then(response => response.json())
       .then((data) => {
@@ -275,6 +276,7 @@ class Advising extends React.Component {
 
 Advising.defaultProps = {
   dataLastUpdated: null,
+  timetableName: null,
 };
 
 Advising.propTypes = {
@@ -284,6 +286,7 @@ Advising.propTypes = {
     name: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
   }).isRequired,
+  timetableName: PropTypes.string,
 };
 
 export default Advising;
