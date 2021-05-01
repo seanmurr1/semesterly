@@ -181,7 +181,7 @@
   .search-bar {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     width: 100%;
     left: 0;
     position: relative;
@@ -197,6 +197,12 @@
     line-height: 20px;
     font-size: 1.5rem;
     font-weight: 300;
+    border-radius: 5px;
+
+    .advisor-search-input-bar {
+      position: relative;
+      width: 110%;
+    }
   }
 
   .as-header {
