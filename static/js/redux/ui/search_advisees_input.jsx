@@ -67,13 +67,13 @@ class SearchAdviseesInput extends React.Component {
         <textarea
           className="search"
           rows="1"
-          placeholder= "Search for Student"
+          placeholder="Search for Student"
           value={searchBarAdvisees}
           onChange={event => this.sendContent(event)}
         />
       </form>
-      <i className="fa fa-search" style={{order: "2", marginLeft: "10px", marginTop: "5px"}} aria-hidden="true"></i>
-      </div>
+      <i className="fa fa-search" style={{ order: '2', marginLeft: '10px', marginTop: '5px' }} aria-hidden="true"></i>
+    </div>
     );
   }
 }
