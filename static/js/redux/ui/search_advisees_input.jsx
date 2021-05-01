@@ -72,7 +72,7 @@ class SearchAdviseesInput extends React.Component {
           onChange={event => this.sendContent(event)}
         />
       </form>
-      <i className="fa fa-search" style={{ order: '2', marginLeft: '10px', marginTop: '5px' }} aria-hidden="true"></i>
+      <i className="fa fa-search" style={{ order: '2', marginLeft: '10px', marginTop: '5px' }} aria-hidden="true" />
     </div>
     );
   }
