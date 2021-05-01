@@ -102,17 +102,15 @@ class AdvisingSchedule extends React.Component {
       ) : emptyState;
     }
     let scheduleTitle;
-    if (this.props.userInfo.isAdvisor && this.props.selected_advisee == null) {
+    if (this.props.userInfo.isAdvisor && !this.props.selected_advisee) {
       scheduleTitle = (<div className="advising-schedule-header">
         Advising Dashboard - {`${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`}
         &nbsp;&nbsp;&nbsp;
-        { AddAdvisorButton }
       </div>);
-    } else if (this.props.userInfo.isAdvisor && this.props.selected_advisee != null) {
+    } else if (this.props.userInfo.isAdvisor && this.props.selected_advisee) {
       scheduleTitle = (<div className="advising-schedule-header">
         Course Summary for {this.props.selected_advisee.owner_name}
         &nbsp;&nbsp;&nbsp;
-        { AddAdvisorButton }
       </div>);
     } else {
       scheduleTitle = (<div className="advising-schedule-header">
@@ -136,6 +134,7 @@ AdvisingSchedule.defaultProps = {
   selected_semester: null,
   selected_advisee: null,
   displayed_semesters: null,
+  timetableName: null,
 };
 
 AdvisingSchedule.propTypes = {
@@ -156,7 +155,7 @@ AdvisingSchedule.propTypes = {
     name: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
   }).isRequired,
-  timetableName: PropTypes.string.isRequired,
+  timetableName: PropTypes.string,
   selected_advisee: PropTypes.shape({
     owner_name: PropTypes.string,
     owner_jhed: PropTypes.string,

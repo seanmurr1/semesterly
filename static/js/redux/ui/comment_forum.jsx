@@ -25,20 +25,8 @@ class CommentForum extends React.Component {
     super(props);
     this.state = {
       userName: `${this.props.userInfo.userFirstName} ${this.props.userInfo.userLastName}`,
-      loading: false,
       comment: '',
     };
-  }
-
-  componentDidUpdate() {
-    if (this.state.loading === true) {
-      this.toggleLoading();
-      this.props.reloadComponent(null);
-    }
-  }
-
-  toggleLoading() {
-    this.setState({ loading: !this.state.loading });
   }
 
   sendContent(event) {
@@ -60,9 +48,11 @@ class CommentForum extends React.Component {
           timestamp: new Date(Date.now()),
           content: this.state.comment,
         }),
-      }).then(this.setState({ comment: this.state.comment = '' }));
+      }).then(() => {
+        this.setState({ comment: this.state.comment = '' });
+        this.props.reloadComponent(this.props.selected_semester);
+      });
     }
-    this.setState({ loading: true });
   }
 
   render() {
@@ -101,7 +91,7 @@ class CommentForum extends React.Component {
             </div>
             <div className="comment-timestamp" style={{ float: 'left' }}>
               {timestamp.toDateString()},
-            {timestamp.toLocaleTimeString()}
+              {timestamp.toLocaleTimeString()}
             </div>
           </span>);
         return (<span key={timestamp}>
@@ -129,7 +119,7 @@ class CommentForum extends React.Component {
         <input
           className="send-btn"
           type="submit"
-          value="+"
+          value="&#10148;"
           onClick={() => this.submitContent(semesterName, semesterYear)}
         />
       </form>
@@ -171,7 +161,7 @@ class CommentForum extends React.Component {
         <div className="cf-name">
           {/* TODO: fix the CSS styling, change title css */}
           <h3 className="comment-title">
-            { backButton } Comments Forum
+            {backButton} Comments Forum
           </h3>
         </div>
         {!this.props.userInfo.isAdvisor && this.props.selected_semester &&
@@ -185,10 +175,10 @@ class CommentForum extends React.Component {
         }
         <div className="cf-header">{this.props.selected_semester && displayAdvisorNames()}</div>
         <div className="comment-forum-container">
-          { transcript }
+          {transcript}
         </div>
         <div className="as-header" />
-        { displayInput }
+        {displayInput}
       </div>
     );
   }

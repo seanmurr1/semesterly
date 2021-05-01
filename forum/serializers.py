@@ -22,6 +22,7 @@ class CommentSerializer(serializers.ModelSerializer):
     author_name = serializers.CharField(source='author.get_full_name')
 
     class Meta:
+        ordering = ['-timestamp']
         model = Comment
         fields = (
             'author_name',
@@ -31,12 +32,16 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class TranscriptSerializer(serializers.ModelSerializer):
-    comments = CommentSerializer(many=True)
+    comments = serializers.SerializerMethodField()
     semester_name = serializers.CharField(source='semester.name')
     semester_year = serializers.CharField(source='semester.year')
     owner_name = serializers.CharField(source='owner.get_full_name')
     owner_jhed = serializers.CharField(source='owner.jhed')
     advisors = serializers.SerializerMethodField()
+
+    def get_comments(self, transcript):
+        comments = transcript.comments.order_by('timestamp')
+        return CommentSerializer(comments, many=True).data
 
     def get_advisors(self, transcript):
         advisors = []

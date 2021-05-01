@@ -16,7 +16,6 @@ import React from 'react';
 import Collapsible from 'react-collapsible';
 import PropTypes from 'prop-types';
 import MasterSlot from './master_slot';
-import CreditTickerContainer from './containers/credit_ticker_container';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import {
   getSISVerifiedCourses,
@@ -31,6 +30,7 @@ class CourseListRow extends React.Component {
     this.state = {
       course_list: null,
       loading: true,
+      num_credits: 0,
     };
   }
 
@@ -39,10 +39,11 @@ class CourseListRow extends React.Component {
       if (this.props.displayed_semester != null) {
         const semesterName = this.props.displayed_semester.toString().split(' ')[0];
         const semesterYear = this.props.displayed_semester.toString().split(' ')[1];
-        // TODO: Change to include selected stuent's JHED vs. userInfo's jhed
         const jhed = (this.props.userInfo.isAdvisor) ? this.props.selected_advisee.owner_jhed :
           this.props.userInfo.jhed;
-        if (this.props.current_semester === this.props.displayed_semester) {
+        // TODO: Get student's last updated timetable? or designated one for advisor?
+        if (this.props.current_semester === this.props.displayed_semester
+          && this.props.timetableName && !this.props.userInfo.isAdvisor) {
           fetch(getSISVerifiedCourses(semesterName, semesterYear, jhed, this.props.timetableName))
             .then(response => response.json())
             .then((data) => {
@@ -50,6 +51,9 @@ class CourseListRow extends React.Component {
                 course_list: data.registeredCourses,
                 loading: false,
               });
+              let numCredits = 0;
+              this.state.course_list.forEach((course) => { numCredits += course.num_credits; });
+              this.setState({ num_credits: numCredits });
             });
         } else {
           fetch(getSISVerifiedCoursesNoTT(semesterName, semesterYear, jhed))
@@ -59,6 +63,9 @@ class CourseListRow extends React.Component {
                 course_list: data.registeredCourses,
                 loading: false,
               });
+              let numCredits = 0;
+              this.state.course_list.forEach((course) => { numCredits += course.num_credits; });
+              this.setState({ num_credits: numCredits });
             });
         }
       }
@@ -103,14 +110,10 @@ class CourseListRow extends React.Component {
         />);
       }) : emptyState;
 
-    const creditTicker = (this.props.displayed_semester === this.props.current_semester) ?
-      <CreditTickerContainer /> : null;
-    /* TODO: Replace null above with:
-     <div className="sb-credits">
+    const creditTicker = (<div className="sb-credits">
       <h3>{Math.abs(this.state.num_credits).toFixed(2)}</h3>
       <h4>credits</h4>
-     </div>
-      here this.state.num_credits is the number of credits from courses on SIS */
+    </div>);
 
     let courseKey = null;
     if (this.state.course_list) {
@@ -128,7 +131,6 @@ class CourseListRow extends React.Component {
     }
 
     const courseList = (<div className="course-list-container">
-      {/* TODO: Get credit ticker to display correct num credits for non-current semesters */}
       { creditTicker }
       <a>
         <h4 className="as-header">
@@ -168,6 +170,7 @@ class CourseListRow extends React.Component {
 CourseListRow.defaultProps = {
   selected_semester: null,
   selected_advisee: null,
+  timetableName: null,
 };
 
 CourseListRow.propTypes = {
@@ -178,7 +181,7 @@ CourseListRow.propTypes = {
   parentParentCallback: PropTypes.func.isRequired,
   courseToClassmates: PropTypes.shape({ '*': SemesterlyPropTypes.classmates }).isRequired,
   fetchCourseInfo: PropTypes.func.isRequired,
-  timetableName: PropTypes.string.isRequired,
+  timetableName: PropTypes.string,
   selected_advisee: PropTypes.shape({
     owner_name: PropTypes.string,
     owner_jhed: PropTypes.string,
