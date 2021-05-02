@@ -57,7 +57,7 @@
 
       h4 {
         color: $gbbb;
-        font-size: 14px;
+        font-size: 2rem;
         margin-bottom: 0;
         margin-top: 5px;
       }
@@ -65,7 +65,7 @@
   }
 
   .comment-forum-container {
-    height: 50vh;
+    height: 82%;
     overflow-y: auto;
 
     .empty-state {
@@ -166,22 +166,43 @@
 
   .advisee-container {
     font-size: 2.0rem;
-    background-color: #ddd;
-    border-radius: 10px;
-    border: solid white 2px;
-    text-align: center;
-    cursor: pointer;
-		padding: 3px;
-    &::after {
-      background-color: #2b406e;
-      position: absolute;
-      width: 100%
+    padding: 10px;
+    border-bottom: solid $gddd 1px;
+    color: #989797;
+    font-weight: 500;
+
+    &:hover {
+      color: $primary-navy;
+      background-color: #f8f6f6;
+      cursor: pointer;
     }
   }
 
-  .advisor-search-input-bar {
+  .search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    left: 0;
     position: relative;
-    width: 110%;
+  }
+
+  .search {
+    flex-shrink: 1;
+    flex-basis: auto;
+    order: 1;
+    width: 450px;
+    resize: none;
+    overflow: visible;
+    line-height: 20px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    border-radius: 5px;
+
+    .advisor-search-input-bar {
+      position: relative;
+      width: 110%;
+    }
   }
 
   .advisor-search-icon-wrapper {

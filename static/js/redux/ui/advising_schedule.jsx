@@ -76,9 +76,9 @@ class AdvisingSchedule extends React.Component {
     );
 
     let courseListRows;
-    if (this.props.userInfo.isAdvisor && !this.props.selected_advisee) {
-      courseListRows = (<div className="empty-state"><h4>
-        <p> Click on a Student to see their schedule </p></h4>
+    if (this.props.userInfo.isAdvisor && this.props.selected_advisee === null) {
+      courseListRows = (<div className="empty-state">
+        <h4 style={{ marginTop: '50%' }}> Click on a Student to see their schedule </h4>
       </div>);
     } else {
       // TODO: get timetable name from invited transcripts if user is advisor
