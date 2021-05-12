@@ -29,6 +29,48 @@ spec:
           limits:
             cpu: 750m   
             memory: 2048M
+      - name: pgbouncer
+        image: uisacr.azurecr.io/pgbouncer:latest
+        ports:
+        - containerPort: 5432
+        resources:
+          requests:
+            cpu: 500m
+          limits:
+            cpu: 2048m   
+            memory: 4096M
+        env:
+            - name: NODE_ENV
+              value: stage
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: DB_PASSWORD
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: DB_PORT
+            - name: AUTH_TYPE
+              value: plain
+            - name: SERVER_TLS_SSLMODE
+              value: verify-ca
       - name: gunicorn
         image: semesterly.azurecr.io/semesterly:Version
         command: ["bash"]
@@ -40,10 +82,7 @@ spec:
             - name: NODE_ENV
               value: stage
             - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: semesterly-secrets
-                  key: DB_HOST
+              value: localhost
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
