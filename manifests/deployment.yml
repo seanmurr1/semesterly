@@ -40,8 +40,6 @@ spec:
             cpu: 2048m   
             memory: 4096M
         env:
-            - name: NODE_ENV
-              value: stage
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
