@@ -1,6 +1,6 @@
 #FROM nginx:latest
 #Use ACR Image due to pull rate issues
-FROM semesterly.azurecr.io/nginx:latest
+FROM nginx:latest
 
 # Need curl for health checks
 RUN apt-get update && apt-get install -y curl && apt-get clean
