@@ -84,7 +84,7 @@ spec:
         - containerPort: 8000
         env:
             - name: NODE_ENV
-              value: production
+              value: stage
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
