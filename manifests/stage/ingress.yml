@@ -23,5 +23,5 @@ spec:
         pathType: ImplementationSpecific
   tls:
   - hosts:
-    - semesterly-stage.az.sis.jhu.edusemesterly-stage.az.sis.jhu.edu
+    - semesterly-stage.az.sis.jhu.edu
     secretName: az-wildcard-tls
