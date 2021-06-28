@@ -1,4 +1,4 @@
-FROM semesterly.azurecr.io/semesterly:base
+FROM jhuopensource/semesterly-base:latest
 
 RUN mkdir /code
 WORKDIR /code
