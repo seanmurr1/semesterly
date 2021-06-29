@@ -1,4 +1,4 @@
-FROM semesterly.azurecr.io/nginx:latest
+FROM jhuopensource/semesterly-base:latest
 
 RUN mkdir /code
 WORKDIR /code
