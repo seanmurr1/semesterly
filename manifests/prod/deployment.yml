@@ -86,7 +86,10 @@ spec:
             - name: NODE_ENV
               value: production
             - name: DB_HOST
-              value: localhost
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: DB_HOST
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
