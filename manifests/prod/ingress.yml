@@ -5,7 +5,7 @@ metadata:
   namespace: semesterly-prod
 spec:
   rules:
-  - host: jhu.semester.ly
+  - host: semester.ly
     http:
       paths:
       - backend:
@@ -24,4 +24,4 @@ spec:
   tls:
   - hosts:
     - semester.ly
-    secretName: semesterly-wildcard-tls
+    secretName: semesterly-tls
