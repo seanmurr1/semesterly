@@ -20,7 +20,7 @@ class SubdomainMiddleware(object):
                                 .strip()\
                                 .lower()
         # Define domain suffixes for non-prod environments
-        nonprod_suffixes = ("-dev", "-test", "-stage")
+        nonprod_suffixes = ("-dev", "-test", "-stage", "-prod")
         if subdomain in ACTIVE_SCHOOLS:
             request.subdomain = subdomain
         elif subdomain.endswith(nonprod_suffixes):
