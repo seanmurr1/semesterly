@@ -5,7 +5,7 @@
 trigger:
     branches:
         include:
-        - SEM-157C
+        - az-prod
 
 pr: none # will disable PR builds 
 
