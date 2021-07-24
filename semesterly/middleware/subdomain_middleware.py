@@ -23,6 +23,6 @@ class SubdomainMiddleware(object):
 		if subdomain in ACTIVE_SCHOOLS:
 			request.subdomain = subdomain
 		elif subdomain(nonprod_subdomains):
-			request.subdomain = subdomain
+			request.subdomain = None
 		else:
 			request.subdomain = None
