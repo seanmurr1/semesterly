@@ -18,11 +18,7 @@ class SubdomainMiddleware(object):
 					.split('.')[0]\
 					.strip()\
 					.lower()
-		# Define domain suffixes for non-prod environments
-        nonprod_subdomains = ("semesterly-dev", "semesterly-stage")
 		if subdomain in ACTIVE_SCHOOLS:
 			request.subdomain = subdomain
-		elif subdomain(nonprod_subdomains):
-			request.subdomain = None
 		else:
 			request.subdomain = None
