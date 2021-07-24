@@ -18,7 +18,12 @@ class SubdomainMiddleware(object):
 					.split('.')[0]\
 					.strip()\
 					.lower()
+		# Define domain suffixes for non-prod environments
+        nonprod_suffixes = ("-dev", "-test", "-stage", "-prod")
 		if subdomain in ACTIVE_SCHOOLS:
 			request.subdomain = subdomain
+		elif subdomain.endswith(nonprod_suffixes):
+            # Default to JHU for non-prod URLs for ease of setup/testing
+            request.subdomain = "jhu"
 		else:
 			request.subdomain = None
