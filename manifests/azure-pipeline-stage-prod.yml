@@ -5,7 +5,7 @@
 trigger:
     branches:
         include:
-        - az-stage
+        - az-prod
 
 pr: none # will disable PR builds 
 
@@ -69,18 +69,18 @@ stages:
       artifact: manifests
       
 
-- stage: DeployStage
-  displayName: DeployStage
+- stage: Deploy
+  displayName: Deploy stage
   dependsOn: Build
 
 # Deploy is false for now
   jobs:
-  - deployment: DeployStage
+  - deployment: Deploy
     condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))) 
-    displayName: DeployStage
+    displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'uis-prod.semesterly-stage'
+    environment: 'uis-prod.semesterly-prod'
     strategy:
       runOnce:
         deploy:
@@ -97,14 +97,14 @@ stages:
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/manifests/stage/deployment.yml
-                $(Pipeline.Workspace)/manifests/stage/service.yml
-                $(Pipeline.Workspace)/manifests/stage/ingress.yml
-                $(Pipeline.Workspace)/manifests/stage/cronjob.yml
+                $(Pipeline.Workspace)/manifests/prod/deployment.yml
+                $(Pipeline.Workspace)/manifests/prod/service.yml
+                $(Pipeline.Workspace)/manifests/prod/ingress.yml
+                $(Pipeline.Workspace)/manifests/prod/cronjob.yml
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
                 $(containerRegistry)/semesterly-nginx:$(tag)
-
+                
 
   # - deployment: DeployPullRequest
   #   displayName: Deploy Pull request
