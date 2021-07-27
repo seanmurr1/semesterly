@@ -5,7 +5,7 @@ metadata:
   namespace: semesterly-prod
 spec:
   rules:
-  - host: "semester.ly"
+  - host: "semesterly-prod.az.sis.jhu.edu"
     http:
       paths:
       - backend:
@@ -13,7 +13,7 @@ spec:
           servicePort: 80
         path: /
         pathType: ImplementationSpecific
-  - host: "*.semester.ly"
+  - host: "*.semesterly-prod.az.sis.jhu.edu"
     http:
       paths:
       - backend:
@@ -24,7 +24,7 @@ spec:
 
   tls:
   - hosts:
-    - "semester.ly"
-    - "*.semester.ly"
-    secretName: semesterly-wildcard-tls
+    - "semesterly-prod.az.sis.jhu.edu"
+    - "*.semesterly-prod.az.sis.jhu.edu"
+    secretName: az-wildcard-tls
     
