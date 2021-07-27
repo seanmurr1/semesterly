@@ -15,12 +15,21 @@ from parsing.schools.active import ACTIVE_SCHOOLS
 
 class SubdomainMiddleware(object):
     def process_request(self, request):
-        subdomain = request.META.get('HTTP_HOST', '')\
-                                .split('.')[0]\
-                                .strip()\
-                                .lower()
+
+        if 'X-Original-Host' in request.headers:
+            subdomain = request.META.get('X-Original-Host', '')\
+                                    .split('.')[0]\
+                                    .strip()\
+                                    .lower()
+        else:
+            subdomain = request.META.get('HTTP_HOST', '')\
+                                    .split('.')[0]\
+                                    .strip()\
+                                    .lower()
+
         # Define domain suffixes for non-prod environments
         nonprod_suffixes = ("-dev", "-test", "-stage", "-prod")
+        
         if subdomain in ACTIVE_SCHOOLS:
             request.subdomain = subdomain
         elif subdomain.endswith(nonprod_suffixes):
