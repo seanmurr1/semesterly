@@ -9,13 +9,17 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+import logging
 
 from parsing.schools.active import ACTIVE_SCHOOLS
 
 
 class SubdomainMiddleware(object):
     def process_request(self, request):
+        logging.error(request.META)
+        
         # Define domain suffixes for non-prod environments
+        
         nonprod_suffixes = ("-dev", "-test", "-stage", "-prod")
         prod_suffixes = ("sem", "semester")
 
@@ -24,13 +28,13 @@ class SubdomainMiddleware(object):
         else:
             subdomain = request.META.get('HTTP_HOST', '')
 
-        print ("XOH compared to HTTP_HOST:")
-        print (subdomain)
+        logging.error('XOH compared to HTTP_HOST: ')
+        logging.error(subdomain)
 
         subdomain = subdomain.split('.')[0].strip().lower()
 
-        print ("Following split")
-        print (subdomain)
+        logging.error("Following split")
+        logging.error(subdomain)
 
         if subdomain in ACTIVE_SCHOOLS:
             request.subdomain = subdomain
