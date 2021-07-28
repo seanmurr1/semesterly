@@ -13,13 +13,11 @@ import logging
 
 from parsing.schools.active import ACTIVE_SCHOOLS
 
-
 class SubdomainMiddleware(object):
     def process_request(self, request):
 
         # Define domain suffixes for non-prod environments
         nonprod_suffixes = ("-dev", "-test", "-stage", "-prod", "sem")
-
         # Define domain suffixes for prod environments
         prod_suffixes = ("semester")
 
@@ -33,13 +31,10 @@ class SubdomainMiddleware(object):
         if subdomain in ACTIVE_SCHOOLS:
             request.subdomain = subdomain
             logging.error("ACTIVE SCHOOLS")
-
         elif subdomain.endswith(nonprod_suffixes):
             # Default to JHU for non-prod URLs for ease of setup/testing
             request.subdomain = "jhu"
-
         elif subdomain in (prod_suffixes):
             request.subdomain = None
-
         else:
             request.subdomain = None
