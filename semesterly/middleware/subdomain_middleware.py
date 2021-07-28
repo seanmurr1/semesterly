@@ -26,8 +26,8 @@ class SubdomainMiddleware(object):
         nonprod_suffixes = ("-dev", "-test", "-stage", "-prod")
         prod_suffixes = ("sem", "semester")
 
-        if 'HTTP_X_Original_Host' in request.META:
-            subdomain = request.META.get('HTTP_X_Original_Host', '')
+        if 'HTTP_X_ORIGINAL_HOST' in request.META:
+            subdomain = request.META.get('HTTP_X_ORIGINAL_HOST', '')
         else:
             subdomain = request.META.get('HTTP_HOST', '')
 
