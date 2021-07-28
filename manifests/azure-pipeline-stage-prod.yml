@@ -100,6 +100,7 @@ stages:
                 $(Pipeline.Workspace)/manifests/stage/deployment.yml
                 $(Pipeline.Workspace)/manifests/stage/service.yml
                 $(Pipeline.Workspace)/manifests/stage/ingress.yml
+                $(Pipeline.Workspace)/manifests/stage/ingress-config-map.yml
                 $(Pipeline.Workspace)/manifests/stage/cronjob.yml
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
@@ -156,6 +157,7 @@ stages:
                 $(Pipeline.Workspace)/manifests/prod/deployment.yml
                 $(Pipeline.Workspace)/manifests/prod/service.yml
                 $(Pipeline.Workspace)/manifests/prod/ingress.yml
+                $(Pipeline.Workspace)/manifests/prod/ingress-config-map.yml
                 $(Pipeline.Workspace)/manifests/prod/cronjob.yml
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
