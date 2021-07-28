@@ -16,19 +16,20 @@ from parsing.schools.active import ACTIVE_SCHOOLS
 
 class SubdomainMiddleware(object):
     def process_request(self, request):
-        logging.error(request.META)
-        
+
+
+
         # Define domain suffixes for non-prod environments
         
         nonprod_suffixes = ("-dev", "-test", "-stage", "-prod")
         prod_suffixes = ("sem", "semester")
 
-        if 'X-Original-Host' in request.META:
-            subdomain = request.META.get('X-Original-Host', '')
+        if 'HTTP_X_FORWARDED_HOST' in request.META:
+            subdomain = request.META.get('HTTP_X_FORWARDED_HOST', '')
         else:
             subdomain = request.META.get('HTTP_HOST', '')
 
-        logging.error('XOH compared to HTTP_HOST: ')
+        logging.error('XOH compared to HTTP_X_FORWARDED_HOST: ')
         logging.error(subdomain)
 
         subdomain = subdomain.split('.')[0].strip().lower()
