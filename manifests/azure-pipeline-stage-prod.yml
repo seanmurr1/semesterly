@@ -121,7 +121,7 @@ stages:
       timeoutInMinutes: 10080 # task times out in 7 days
       inputs:
           notifyUsers: |
-              isistechops@lists.johnshopkins.edu
+              itjh-uis-techops@lists.johnshopkins.edu
           instructions: 'Please validate the build as deployed to https://semesterly-stage.az.sis.jhu.edu'
           onTimeout: 'reject'
 
