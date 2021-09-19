@@ -308,6 +308,28 @@ class Calendar extends React.Component {
       </div>
         );
 
+        const mockModalButton = (
+          <div className="cal-btn-wrapper">
+            <button
+              onClick={() => this.props.toggleMockModal()}
+              className="save-timetable"
+              data-tip
+              data-for="mock-btn-tooltip"
+            >
+              <img src="/static/img/star.png" alt="star" />
+            </button>
+            <ReactTooltip
+              id="mock-btn-tooltip"
+              class="tooltip"
+              type="dark"
+              place="bottom"
+              effect="solid"
+            >
+              <span>Mock</span>
+            </ReactTooltip>
+          </div>
+            );
+
 
     const pilotButton = (
       <a href={'/pilot/'} className="pilot-link">
@@ -342,6 +364,7 @@ class Calendar extends React.Component {
             { pilot }
           </div>
           <div className="fc-right">
+            { mockModalButton }
             { addSISButton }
             { addCustomEventButton }
             { shareButton }
@@ -453,6 +476,7 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   togglePreferenceModal: PropTypes.func.isRequired,
   triggerSaveCalendarModal: PropTypes.func.isRequired,
+  triggerMockModal: PropTypes.func.isRequired,
   isFetchingShareLink: PropTypes.bool.isRequired,
   endHour: PropTypes.number.isRequired,
   handleCreateNewTimetable: PropTypes.func.isRequired,
