@@ -14,9 +14,16 @@ GNU General Public License for more details.
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import Modal from 'boron/FadeModal';
+import Modal from 'boron/WaveModal';
+import * as SemesterlyPropTypes from '../../constants/semesterlyPropTypes';
 
 class MockModal extends React.Component {
+  componentDidMount() {
+    if (this.props.isVisible) {
+      this.modal.show();
+    }
+  }
+
   componentDidUpdate() {
     if (this.props.isVisible) {
       this.modal.show();
@@ -25,38 +32,44 @@ class MockModal extends React.Component {
 
   render() {
     const modalHeader =
-            (<div className="modal-content">
-              <div className="modal-header">
-                <h1>Mock Modal!</h1>
-              </div>
-            </div>);
+      (<div className="modal-content">
+        <div className="modal-header">
+          <h1>Mock Modal!</h1>
+        </div>
+      </div>);
     const modalStyle = {
       width: '100%',
     };
+
     return (
       <Modal
         ref={(c) => { this.modal = c; }}
-        className="pref-modal max-modal"
+        className="mock-modal abnb-modal max-modal"
         modalStyle={modalStyle}
-        onHide={this.props.toggleMockModal}
+        onHide={() => {
+          this.props.toggleMockModal();
+          history.replaceState({}, 'Semester.ly', '/');
+        }}
       >
-        <div id="perf-modal-wrapper">
-          {modalHeader}
-          <h4>First Name: </h4>
-          <h4>Last Name: </h4>
-          <h4>Graduating class: </h4>
+        {modalHeader}
+
+        <div className="mock-modal__container">
+          <br />
+          <h3>First Name: {this.props.mockUserInfo.first_name}</h3>
+          <h3>Last Name: {this.props.mockUserInfo.last_name}</h3>
+          <h3>Graduating class: {this.props.mockUserInfo.class_year}</h3>
+          <br />
         </div>
-
-
-
       </Modal>
     );
   }
 }
 
 MockModal.propTypes = {
-  toggleMockModal: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
+  toggleMockModal: PropTypes.func.isRequired,
+  mockUserInfo: SemesterlyPropTypes.mockUserInfo.isRequired,
+  userInfo: SemesterlyPropTypes.userInfo.isRequired,
 };
 
 export default MockModal;

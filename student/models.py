@@ -98,6 +98,11 @@ class Student(models.Model):
                                  "https://accounts.google.com/o/oauth2/token", 'my-user-agent/1.0')
 
 
+class MockStudent(models.Model):
+    mock_first_name = models.CharField(max_length=255, default='John', null=True)
+    mock_last_name = models.CharField(max_length=255, default='Smith', null=True)
+    mock_class_year = models.IntegerField(blank=True, null=True, default=2019)
+
 class Reaction(models.Model):
     """ Database object representing a reaction to a course.
 

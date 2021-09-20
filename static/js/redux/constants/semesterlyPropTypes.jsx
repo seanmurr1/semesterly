@@ -175,6 +175,12 @@ export const userInfo = PropTypes.shape({
   timeAcceptedTos: PropTypes.string,
 });
 
+export const mockUserInfo = PropTypes.shape({
+  mock_class_year: PropTypes.number,
+  mock_first_name: PropTypes.string,
+  mock_last_name: PropTypes.string,
+});
+
 export const schoolSpecificInfo = PropTypes.shape({
   areasName: PropTypes.string.isRequired,
   campuses: PropTypes.shape({}),
