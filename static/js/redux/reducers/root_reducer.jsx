@@ -26,6 +26,7 @@ import courseInfo, * as fromCourseInfo from './course_info_reducer';
 import alerts from './alerts_reducer';
 import ui from './ui_reducer';
 import userInfo, * as fromUserInfo from './user_info_reducer';
+import mockUserInfo from './mock_user_info_reducer';
 import savingTimetable from './saving_timetable_reducer';
 import classmates from './classmates_reducer';
 import optionalCourses from './optional_courses_reducer';
@@ -34,6 +35,7 @@ import customSlots from './custom_slots_reducer';
 import signupModal from './signup_modal_reducer';
 import peerModal from './peer_modal_reducer';
 import preferenceModal from './preference_modal_reducer';
+import mockModal from './mock_modal_reducer';
 import friends from './friends_reducer';
 import notificationToken from './notification_token_reducer';
 import integrationModal from './integration_modal_reducer';
@@ -64,6 +66,7 @@ const rootReducer = combineReducers({
   optionalCourses,
   peerModal,
   preferenceModal,
+  mockModal,
   preferences,
   registrar,
   saveCalendarModal,
@@ -79,6 +82,7 @@ const rootReducer = combineReducers({
   ui,
   userAcquisitionModal,
   userInfo,
+  mockUserInfo,
 });
 
 // timetable/entity selectors
