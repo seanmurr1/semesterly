@@ -38,6 +38,7 @@ class Student(models.Model):
     SOPHOMORE = 'SO'
     JUNIOR = 'JR'
     SENIOR = 'SR'
+    favorite_number = models.IntegerField(blank=True, null=True)
     class_year = models.IntegerField(blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
     img_url = models.CharField(max_length=300, default=-1)

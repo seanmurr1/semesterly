@@ -156,6 +156,7 @@ export const denormalizedSlot = PropTypes.shape({
 export const userInfo = PropTypes.shape({
   isLoggedIn: PropTypes.bool.isRequired,
   class_year: PropTypes.number,
+  favorite_number: PropTypes.number,
   img_url: PropTypes.string,
   fbook_uid: PropTypes.string,
   major: PropTypes.string,

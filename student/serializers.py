@@ -36,6 +36,7 @@ def get_student_dict(school, student, semester):
 class StudentSerializer(serializers.ModelSerializer):
     userFirstName = serializers.CharField(source='user.first_name')
     userLastName = serializers.CharField(source='user.last_name')
+    favorite_number = serializers.IntegerField(source='user.favorite_number')
     # TODO: switch to camelCase
     FacebookSignedUp = serializers.BooleanField(source='is_signed_up_through_fb')
     GoogleSignedUp = serializers.BooleanField(source='is_signed_up_through_google')
@@ -48,6 +49,7 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = (
             'class_year',
+            'favorite_number',
             'img_url',
             'fbook_uid',
             'major',
